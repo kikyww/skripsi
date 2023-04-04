@@ -28,7 +28,10 @@
                 <div class="card-header">
                     Kelurahan
                 </div>
-                <a class="btn btn-primary" style="margin-right:20px;" href="create.php"><i class="fa fa-plus"></i></a>
+                <div class="buttons">
+                    <a class="btn btn-secondary" style="margin-right:20px;" href="../wilayah/wilayah.php"><i class="fa fa-arrow-left"></i></a>
+                    <a class="btn btn-primary" style="margin-right:20px;" href="create.php"><i class="fa fa-plus"></i></a>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="table1">

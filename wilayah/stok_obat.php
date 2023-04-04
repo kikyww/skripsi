@@ -9,7 +9,7 @@
 
     $kec = $_GET['kec'];
     $query = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec'");
-
+    
 ?>
 <div class="page-heading">
     <div class="page-title">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 31 Mar 2023 pada 09.04
+-- Waktu pembuatan: 04 Apr 2023 pada 13.42
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -127,6 +127,7 @@ CREATE TABLE `tb_kepkel` (
   `id_kepkel` int(11) NOT NULL,
   `no_kk` int(11) NOT NULL,
   `nama_kepkel` varchar(100) NOT NULL,
+  `tl_kepkel` varchar(100) NOT NULL,
   `lahir_kepkel` date NOT NULL,
   `alamat_kepkel` varchar(100) NOT NULL,
   `jk_kepkel` enum('L','P') NOT NULL,
@@ -134,6 +135,19 @@ CREATE TABLE `tb_kepkel` (
   `kecamatan_id` int(11) NOT NULL,
   `kelurahan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_kepkel`
+--
+
+INSERT INTO `tb_kepkel` (`id_kepkel`, `no_kk`, `nama_kepkel`, `tl_kepkel`, `lahir_kepkel`, `alamat_kepkel`, `jk_kepkel`, `telp_kepkel`, `kecamatan_id`, `kelurahan_id`) VALUES
+(1, 213123213, 'Adits', 'Banjarmasins', '2000-06-22', 'jl. hksns', 'L', '35353434342', 1, 3),
+(2, 44444444, 'Rizky Aditya', 'Banjarmasin', '2000-09-25', 'jl. hksn', 'L', '242323232323', 1, 1),
+(3, 2147483647, 'Adit', 'Banjarmasin', '2000-09-25', 'jl. hksn', 'L', '24235235234', 2, 2),
+(4, 124124123, 'Aditya Rizky', 'Banjarmasin', '2000-09-25', 'jl. hksn', 'L', '124324324', 2, 2),
+(5, 12314234, 'Adit', 'Banjarmasin', '2003-02-23', 'jl. hksn', 'L', '45454545', 1, 4),
+(6, 34343434, 'Rizky Aditya', 'Banjarmasin', '2001-08-24', 'jl. hksn', 'L', '24325243', 1, 1),
+(7, 45356234, 'Adit', 'Banjarmasin', '2000-09-22', 'jl. hksn', 'L', '2412423525', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -340,7 +354,7 @@ ALTER TABLE `tb_kelurahan`
 -- AUTO_INCREMENT untuk tabel `tb_kepkel`
 --
 ALTER TABLE `tb_kepkel`
-  MODIFY `id_kepkel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kepkel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_minstok`

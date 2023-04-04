@@ -26,14 +26,14 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h6>Keluarga</h6>
-                        <div class="buttons">
-                            <a href="keluarga.php" class="btn btn-primary">Masuk</a>
-                        </div>
-                        <hr>
                         <h6>Kepala Keluarga</h6>
                         <div class="buttons">
-                            <a href="../kepkel/kepkel.php" class="btn btn-primary">Masuk</a>
+                            <a href="../kepkel/kecamatan.php" class="btn btn-primary">Masuk</a>
+                        </div>
+                        <hr>
+                        <h6>Keluarga</h6>
+                        <div class="buttons">
+                            <a href="kecamatan.php" class="btn btn-primary">Masuk</a>
                         </div>
                     </div>
                 </div>

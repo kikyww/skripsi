@@ -16,8 +16,8 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Wilayah</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Stok Obat</li>
+                        <li class="breadcrumb-item"><a href="#">Keluarga</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Pilih Kecamatan</li>
                     </ol>
                 </nav>
             </div>
@@ -30,13 +30,13 @@ if (!isset($id_user)) {
                     <div class="card-header">
                         <h4>Pilih Wilayah</h4>
                     </div>
-                    <form method="GET" action="stok_obat.php" class="">
+                    <form method="GET" action="kepkel.php" class="">
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="col-md-8 form-group">
                                     <fieldset class="form-group">
                                         <select class="form-select" name="kec" id="basicSelect" required>
-                                            <option value="" selected disabled hidden>Pilih Kecamatan</option>
+                                            <option value="" selected hidden>Pilih Kecamatan</option>
                                             <?php
                                             $getKecamatan = getKecamatan();
                                             foreach($getKecamatan as $row):

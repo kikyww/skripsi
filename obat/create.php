@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="obat" class="form-control" name="obat"
-                                                placeholder="Nama Obat/Alat" required>
+                                                placeholder="Nama Obat/Alat" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label>Jenis Obat</label>

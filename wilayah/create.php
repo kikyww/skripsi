@@ -93,7 +93,7 @@
                                             <label>Jumlah Obat/Alat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" id="jumlah" class="form-control" name="jumlah" placeholder="Jumlah Obat/Alat" required>
+                                            <input type="number" id="jumlah" class="form-control" name="jumlah" placeholder="Jumlah Obat/Alat" autocomplete="off" required>
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Simpan</button>

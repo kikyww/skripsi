@@ -1,12 +1,14 @@
 <?php 
 include '../utilities/sidebar.php';
 include '../koneksi.php';
-include_once('../function/Kecamatan.php');
+include_once('../function/Kelurahan.php');
 $id_user = $_SESSION['id_user'];
 
 if (!isset($id_user)) {
     header('Location: ../index.php');
 }
+
+$kec = $_GET['kec'];
 
 ?>
 <div class="page-heading">
@@ -16,8 +18,8 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Keluarga</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pilih Kecamatan</li>
+                        <li class="breadcrumb-item"><a href="#">Kepala Keluarga</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Pilih Kelurahan</li>
                     </ol>
                 </nav>
             </div>
@@ -28,27 +30,28 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Pilih Wilayah</h4>
+                        <h4>Kelurahan</h4>
                     </div>
-                    <form method="GET" action="kelurahan.php" class="">
+                    <form method="GET" action="kepkel.php" class="">
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="col-md-8 form-group">
+                                    <input type="hidden" name="kec" value="<?= $kec ?>">
                                     <fieldset class="form-group">
-                                        <select class="form-select" name="kec" id="basicSelect" required>
-                                            <option value="" selected hidden>Pilih Kecamatan</option>
+                                        <select class="form-select" name="kel" id="basicSelect" required>
+                                            <option value="" selected hidden>Pilih Kelurahan</option>
                                             <?php
-                                            $getKecamatan = getKecamatan();
-                                            foreach($getKecamatan as $row):
+                                            $getKelurahan = getKelurahan();
+                                            foreach($getKelurahan as $row):
                                             ?>
-                                            <option value="<?= $row['nama_kecamatan'] ?>"><?= $row['nama_kecamatan']; ?></option>
+                                            <option value="<?= $row['nama_kelurahan'] ?>"><?= $row['nama_kelurahan']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </fieldset>
                                 </div>
                                 <div class="buttons" style="margin-left : 1rem">
                                     <button type="submit" class="btn btn-primary">Masuk</button>
-                                    <a href="wilayah.php" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>
+                                    <a href="kecamatan.php" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>
                                 </div>
                             </div>
                         </div>

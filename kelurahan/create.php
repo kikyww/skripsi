@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="kelurahan" class="form-control" name="kelurahan"
-                                                placeholder="Nama Kelurahan" required>
+                                                placeholder="Nama Kelurahan" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-4">
                                             <label>Nama Kecamatan</label>

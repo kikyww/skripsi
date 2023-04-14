@@ -12,7 +12,7 @@
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_keluarga LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_keluarga.id_keluarga = '$id'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_kepkel LEFT JOIN tb_kelurahan ON tb_kepkel.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kepkel.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kepkel.id_kepkel = '$id'");
         $row = $q->fetch_array();
     }
     
@@ -21,18 +21,16 @@
         $nama = htmlspecialchars($_POST['nama']);
         $tempat = htmlspecialchars($_POST['tempat']);
         $tgl = htmlspecialchars($_POST['tgl']);
+        $alamat = htmlspecialchars($_POST['alamat']);
         $jk = htmlspecialchars($_POST['jk']);
         $telp = htmlspecialchars($_POST['telp']);
-        $status = htmlspecialchars($_POST['status']);
-        $keterangan = htmlspecialchars($_POST['keterangan']);
-        $jmlanak = htmlspecialchars($_POST['jmlanak']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan']);
 
-        $sql = "UPDATE tb_keluarga SET kepkel_id = '$kk', nama_keluarga = '$nama', tl_keluarga = '$tempat', lahir_keluarga = '$tgl', jk_keluarga = '$jk', telp_keluarga = '$telp', status_kb = '$status', keterangan_kb = '$keterangan', jumlah_anak ='$jmlanak', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan' WHERE id_keluarga = '$id'";
+        $sql = "UPDATE tb_kepkel SET no_kk = '$kk', nama_kepkel = '$nama', tl_kepkel = '$tempat', lahir_kepkel = '$tgl', alamat_kepkel = '$alamat', jk_kepkel = '$jk', telp_kepkel = '$telp', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan' WHERE id_kepkel = '$id'";
         if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('Keluarga Berhasil di Update!');</script>";
-            echo "<meta http-equiv='refresh' content='0; url=keluarga.php?kec=".$kec."&kel=".$kel."'>";
+            echo "<script>alert('Kepala Keluarga Berhasil di Update!');</script>";
+            echo "<meta http-equiv='refresh' content='0; url=kepkel.php?kec=".$kec."&kel=".$kel."'>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);
         }
@@ -47,7 +45,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="kecamatan.php">Keluarga</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Keluarga <?= $kec ?></li>
+                        <li class="breadcrumb-item active" aria-current="page">Kepala Keluarga <?= $kec ?></li>
                     </ol>
                 </nav>
             </div>
@@ -60,9 +58,9 @@
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="card-header">
-                            <h4 class="card-title">Update Keluarga <?= $kel ?></h4>
+                            <h4 class="card-title">Update Kepala Keluarga <?= $kel ?></h4>
                         </div>
-                        <a class="btn btn-secondary" style="margin-right:28px;" href="keluarga.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
+                        <a class="btn btn-secondary" style="margin-right:28px;" href="kepkel.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -70,32 +68,38 @@
                                 <div class="form-body">
                                     <div class="row">
                                     <div class="col-md-4">
-                                            <label>Nama Kepkel</label>
+                                            <label>No. KK</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="hidden" id="kk" class="form-control" name="kk" value="<?= $row['kepkel_id'] ?>" placeholder="No. KK" required readonly>
-                                            <input type="text" class="form-control" value="<?= $row['nama_kepkel'] ?>" placeholder="No. KK" required readonly>
+                                            <input type="number" id="kk" class="form-control" name="kk" value="<?= $row['no_kk'] ?>" placeholder="No. KK" required>
                                         </div>
                                         
                                         <div class="col-md-4">
                                             <label>Nama</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="nama" id="nama" value="<?= $row['nama_keluarga'] ?>" class="form-control" placeholder="Nama Keluarga" required>
+                                            <input type="text" name="nama" id="nama" value="<?= $row['nama_kepkel'] ?>" class="form-control" placeholder="Nama Kepala Keluarga" required>
                                         </div>
                                         
                                         <div class="col-md-4">
                                             <label>Tempat Lahir</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="tempat" id="tempat" value="<?= $row['tl_keluarga'] ?>" class="form-control" placeholder="Tempat Lahir" required>
+                                            <input type="text" name="tempat" id="tempat" value="<?= $row['tl_kepkel'] ?>" class="form-control" placeholder="Tempat Lahir" required>
                                         </div>
                                         
                                         <div class="col-md-4">
                                             <label>Tanggal Lahir</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="date" name="tgl" id="tgl" value="<?= $row['lahir_keluarga'] ?>" class="form-control" placeholder="Tanggal Lahir" required>
+                                            <input type="date" name="tgl" id="tgl" value="<?= $row['lahir_kepkel'] ?>" class="form-control" placeholder="Tanggal Lahir" required>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <label>Alamat</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="text" name="alamat" id="alamat" value="<?= $row['alamat_kepkel'] ?>" class="form-control" placeholder="Alamat Sekarang" required>
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -104,7 +108,7 @@
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="jk" id="basicSelect" required>
-                                                    <option value="<?= $row['jk_keluarga'] ?>" selected hidden><?= $row['jk_keluarga'] ?></option>
+                                                    <option value="<?= $row['jk_kepkel'] ?>" selected hidden><?= $row['jk_kepkel'] ?></option>
                                                     <option value="L">Laki-Laki</option>
                                                     <option value="P">Perempuan</option>
                                                 </select>
@@ -115,34 +119,7 @@
                                             <label>Telepon Aktif</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" name="telp" id="telp" value="<?= $row['telp_keluarga'] ?>" class="form-control" placeholder="No. Telepon/Whats App" required>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <label>Jenis Kelamin</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="status" id="basicSelect" required>
-                                                    <option value="<?= $row['status_kb'] ?>" selected hidden><?= $row['status_kb'] ?></option>
-                                                    <option value="Tidak KB">Tidak KB</option>
-                                                    <option value="KB">KB</option>
-                                                </select>
-                                            </fieldset>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            <label>Keterangan KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="text" name="keterangan" id="keterangan" value="<?= $row['keterangan_kb'] ?>" class="form-control" placeholder="Keterangan" required>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            <label>Jumlah Anak</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="number" name="jmlanak" id="jmlanak" value="<?= $row['jumlah_anak'] ?>" class="form-control" placeholder="Jumlah Anak" required>
+                                            <input type="number" name="telp" id="telp" value="<?= $row['telp_kepkel'] ?>" class="form-control" placeholder="No. Telepon/Whats App" required>
                                         </div>
                                         
                                         <div class="col-md-4">

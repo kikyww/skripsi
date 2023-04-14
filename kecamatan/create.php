@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" id="kecamatan" class="form-control" name="kecamatan"
-                                                placeholder="Nama Kecamatan" required>
+                                                placeholder="Nama Kecamatan" autocomplete="off" required>
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Simpan</button>

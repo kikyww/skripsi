@@ -33,10 +33,16 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
     <script src="../assets/extensions/sweetalert2/sweetalert2.min.js"></script>
     <script src="../assets/js/pages/sweetalert2.js"></script>
 
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- jQuery UI CDN -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
     <!-- Sweet Alert2 -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script> -->
-
 
     <!-- jquery -->
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"> -->
@@ -95,7 +101,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                         <a href="../keluarga/select.php">Keluarga</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="../kb/kb.php">Catatan KB</a>
+                        <a href="../kb/kecamatan.php">Catatan KB</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="../intervensi/intervensi.php">Intervensi</a>

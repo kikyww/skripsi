@@ -16,7 +16,7 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Keluarga</a></li>
+                        <li class="breadcrumb-item"><a href="#">Kepala Keluarga</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Pilih Kecamatan</li>
                     </ol>
                 </nav>
@@ -28,7 +28,7 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Pilih Wilayah</h4>
+                        <h4>Kecamatan</h4>
                     </div>
                     <form method="GET" action="kelurahan.php" class="">
                         <div class="card-body">
@@ -48,7 +48,7 @@ if (!isset($id_user)) {
                                 </div>
                                 <div class="buttons" style="margin-left : 1rem">
                                     <button type="submit" class="btn btn-primary">Masuk</button>
-                                    <a href="wilayah.php" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>
+                                    <a href="../keluarga/select.php" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>
                                 </div>
                             </div>
                         </div>

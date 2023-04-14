@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Apr 2023 pada 13.42
+-- Waktu pembuatan: 14 Apr 2023 pada 08.41
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -33,6 +33,7 @@ CREATE TABLE `tb_intervensi` (
   `kelurahan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `nama_intervensi` varchar(255) NOT NULL,
+  `waktu_intervensi` time NOT NULL,
   `jenis_intervensi` varchar(255) NOT NULL,
   `pembuat_intervensi` varchar(255) NOT NULL,
   `kunjungan_intervensi` varchar(255) NOT NULL,
@@ -86,14 +87,24 @@ CREATE TABLE `tb_keluarga` (
   `id_keluarga` int(11) NOT NULL,
   `kepkel_id` int(11) NOT NULL,
   `nama_keluarga` varchar(100) NOT NULL,
+  `tl_keluarga` varchar(100) NOT NULL,
   `lahir_keluarga` date NOT NULL,
   `jk_keluarga` enum('L','P') NOT NULL,
   `telp_keluarga` varchar(15) NOT NULL,
-  `status_kb` enum('KB','Tidak') NOT NULL,
-  `kb_id` int(11) NOT NULL,
+  `status_kb` enum('Tidak KB','KB') NOT NULL,
   `keterangan_kb` varchar(255) NOT NULL,
-  `jumlah_anak` int(11) NOT NULL
+  `jumlah_anak` int(11) NOT NULL,
+  `kecamatan_id` int(11) NOT NULL,
+  `kelurahan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_keluarga`
+--
+
+INSERT INTO `tb_keluarga` (`id_keluarga`, `kepkel_id`, `nama_keluarga`, `tl_keluarga`, `lahir_keluarga`, `jk_keluarga`, `telp_keluarga`, `status_kb`, `keterangan_kb`, `jumlah_anak`, `kecamatan_id`, `kelurahan_id`) VALUES
+(1, 2, 'Arfina', 'Banjarmasin', '2001-08-08', 'P', '086374673647', 'Tidak KB', 'a', 4, 1, 1),
+(2, 6, 'Meyii', 'Banjarmasinn', '2003-03-04', 'P', '97876767565999', 'Tidak KB', 'a', 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -266,8 +277,9 @@ ALTER TABLE `tb_kecamatan`
 --
 ALTER TABLE `tb_keluarga`
   ADD PRIMARY KEY (`id_keluarga`),
-  ADD KEY `obat_id` (`kb_id`),
-  ADD KEY `kepkel_id` (`kepkel_id`);
+  ADD KEY `kepkel_id` (`kepkel_id`),
+  ADD KEY `kecamatan_id` (`kecamatan_id`),
+  ADD KEY `kelurahan_id` (`kelurahan_id`);
 
 --
 -- Indeks untuk tabel `tb_kelurahan`
@@ -342,7 +354,7 @@ ALTER TABLE `tb_kecamatan`
 -- AUTO_INCREMENT untuk tabel `tb_keluarga`
 --
 ALTER TABLE `tb_keluarga`
-  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelurahan`
@@ -407,7 +419,8 @@ ALTER TABLE `tb_kb`
 --
 ALTER TABLE `tb_keluarga`
   ADD CONSTRAINT `tb_keluarga_ibfk_3` FOREIGN KEY (`kepkel_id`) REFERENCES `tb_kepkel` (`id_kepkel`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_keluarga_ibfk_4` FOREIGN KEY (`kb_id`) REFERENCES `tb_kb` (`id_kb`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_keluarga_ibfk_4` FOREIGN KEY (`kecamatan_id`) REFERENCES `tb_kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_keluarga_ibfk_5` FOREIGN KEY (`kelurahan_id`) REFERENCES `tb_kelurahan` (`id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_kelurahan`

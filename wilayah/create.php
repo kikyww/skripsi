@@ -5,6 +5,7 @@
 
     $id_user = $_SESSION['id_user'];
     $kec = $_GET['kec'];
+    $tgl = date("Y-m-d");
 
     if (!isset($id_user)) {
         header("Location: ../index.php");
@@ -13,6 +14,8 @@
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $obat = htmlspecialchars($_POST['obat']);
         $jumlah = htmlspecialchars($_POST['jumlah']);
+        $tgl_awal = htmlspecialchars($_POST['tgl_awal']);
+        $tgl_akhir = htmlspecialchars($_POST['tgl_akhir']);
 
         $num = mysqli_query($konek, "SELECT id_stok FROM tb_stok ORDER BY id_stok DESC");
         if (mysqli_num_rows($num) > 0) {
@@ -21,7 +24,7 @@
         }else {
             $idstok = 1;
         }
-        $sql = "INSERT INTO tb_stok (id_stok, kecamatan_id, obat_id, jumlah_stok) VALUES ('$idstok', '$kecamatan', '$obat', '$jumlah')";
+        $sql = "INSERT INTO tb_stok (id_stok, kecamatan_id, obat_id, stok_awal, stok_akhir, tgl_awal, tgl_akhir) VALUES ('$idstok', '$kecamatan', '$obat', '$jumlah', '$jumlah', '$tgl_awal', '$tgl_akhir')";
         if (mysqli_query($konek, $sql)) {
             echo "<script>alert('Stok telah berhasil ditambahkan!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=stok_obat.php?kec=".$kec."'>";
@@ -61,6 +64,7 @@
                             <form method="POST" class="form form-horizontal">
                                 <div class="form-body">
                                     <div class="row">
+
                                         <div class="col-md-4">
                                             <label>Nama Kecamatan</label>
                                         </div>
@@ -73,6 +77,7 @@
                                         <?php } ?>
                                             <input type="text" class="form-control" placeholder="<?= $kec; ?>" readonly>
                                         </div>
+
                                         <div class="col-md-4">
                                             <label>Jenis Obat</label>
                                         </div>
@@ -89,12 +94,28 @@
                                                 </select>
                                             </fieldset>
                                         </div>
+
                                         <div class="col-md-4">
                                             <label>Jumlah Obat/Alat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="number" id="jumlah" class="form-control" name="jumlah" placeholder="Jumlah Obat/Alat" autocomplete="off" required>
                                         </div>
+
+                                        <div class="col-md-4">
+                                            <label>Tanggal di Stok</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="date" value="<?= $tgl; ?>" class="form-control" name="tgl_awal" placeholder="Tanggal" autocomplete="off" required>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label>Sampai Tanggal</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="date" class="form-control" name="tgl_akhir" placeholder="Tanggal" autocomplete="off" required>
+                                        </div>
+
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Simpan</button>
                                             <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>

@@ -16,7 +16,7 @@ if (!isset($id_user)) {
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Kepala Keluarga</a></li>
+                        <li class="breadcrumb-item"><a href="#">KB</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Pilih Kecamatan</li>
                     </ol>
                 </nav>
@@ -48,7 +48,6 @@ if (!isset($id_user)) {
                                 </div>
                                 <div class="buttons" style="margin-left : 1rem">
                                     <button type="submit" class="btn btn-primary">Masuk</button>
-                                    <a href="../keluarga/select.php" class="btn btn-secondary"><i class="fa fa-arrow-left"></i></a>
                                 </div>
                             </div>
                         </div>

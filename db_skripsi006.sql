@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Apr 2023 pada 08.41
+-- Waktu pembuatan: 26 Apr 2023 pada 04.25
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -33,7 +33,7 @@ CREATE TABLE `tb_intervensi` (
   `kelurahan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `nama_intervensi` varchar(255) NOT NULL,
-  `waktu_intervensi` time NOT NULL,
+  `tgl_intervensi` date NOT NULL,
   `jenis_intervensi` varchar(255) NOT NULL,
   `pembuat_intervensi` varchar(255) NOT NULL,
   `kunjungan_intervensi` varchar(255) NOT NULL,
@@ -53,8 +53,11 @@ CREATE TABLE `tb_kb` (
   `keluarga_id` int(11) NOT NULL,
   `kecamatan_id` int(11) NOT NULL,
   `kelurahan_id` int(11) NOT NULL,
+  `tgl_kb` date NOT NULL,
   `obat_id` int(11) NOT NULL,
-  `jumlah_obat` int(11) NOT NULL
+  `stok_id` int(11) NOT NULL,
+  `jumlah_obat` int(11) NOT NULL,
+  `kb_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -163,21 +166,6 @@ INSERT INTO `tb_kepkel` (`id_kepkel`, `no_kk`, `nama_kepkel`, `tl_kepkel`, `lahi
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_minstok`
---
-
-CREATE TABLE `tb_minstok` (
-  `id_minstok` int(11) NOT NULL,
-  `obat_id` int(11) NOT NULL,
-  `kecamatan_id` int(11) NOT NULL,
-  `stok_id` int(11) NOT NULL,
-  `minstok` int(11) NOT NULL,
-  `minstok_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `tb_obat`
 --
 
@@ -206,7 +194,10 @@ CREATE TABLE `tb_stok` (
   `id_stok` int(11) NOT NULL,
   `kecamatan_id` int(11) NOT NULL,
   `obat_id` int(11) NOT NULL,
-  `jumlah_stok` int(11) NOT NULL,
+  `stok_awal` int(11) NOT NULL,
+  `stok_akhir` int(11) NOT NULL,
+  `tgl_awal` date NOT NULL,
+  `tgl_akhir` date NOT NULL,
   `stok_stamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -214,11 +205,11 @@ CREATE TABLE `tb_stok` (
 -- Dumping data untuk tabel `tb_stok`
 --
 
-INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `jumlah_stok`, `stok_stamp`) VALUES
-(1, 2, 4, 5000, '2023-03-30 13:11:38'),
-(2, 3, 4, 800, '2023-03-30 13:11:38'),
-(3, 3, 2, 800, '2023-03-30 13:11:38'),
-(4, 3, 5, 900, '2023-03-30 13:13:26');
+INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_akhir`, `tgl_awal`, `tgl_akhir`, `stok_stamp`) VALUES
+(1, 1, 2, 9600, 8980, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
+(2, 1, 5, 7800, 7800, '2023-04-20', '2023-04-20', '2023-04-20 06:27:41'),
+(3, 2, 5, 9000, 9000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:06'),
+(4, 2, 4, 8000, 8000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:44');
 
 -- --------------------------------------------------------
 
@@ -264,7 +255,9 @@ ALTER TABLE `tb_kb`
   ADD KEY `keluarga_id` (`keluarga_id`),
   ADD KEY `kecamatan_id` (`kecamatan_id`),
   ADD KEY `kelurahan_id` (`kelurahan_id`),
-  ADD KEY `obat_id` (`obat_id`);
+  ADD KEY `obat_id` (`stok_id`),
+  ADD KEY `stok_id` (`stok_id`),
+  ADD KEY `obat_id_2` (`obat_id`);
 
 --
 -- Indeks untuk tabel `tb_kecamatan`
@@ -296,15 +289,6 @@ ALTER TABLE `tb_kepkel`
   ADD UNIQUE KEY `no_kk` (`no_kk`),
   ADD KEY `kecamatan_id` (`kecamatan_id`),
   ADD KEY `kelurahan_id` (`kelurahan_id`);
-
---
--- Indeks untuk tabel `tb_minstok`
---
-ALTER TABLE `tb_minstok`
-  ADD PRIMARY KEY (`id_minstok`),
-  ADD KEY `obat_id` (`obat_id`),
-  ADD KEY `kecamatan_id` (`kecamatan_id`),
-  ADD KEY `stok_id` (`stok_id`);
 
 --
 -- Indeks untuk tabel `tb_obat`
@@ -369,12 +353,6 @@ ALTER TABLE `tb_kepkel`
   MODIFY `id_kepkel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_minstok`
---
-ALTER TABLE `tb_minstok`
-  MODIFY `id_minstok` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT untuk tabel `tb_obat`
 --
 ALTER TABLE `tb_obat`
@@ -412,7 +390,8 @@ ALTER TABLE `tb_kb`
   ADD CONSTRAINT `tb_kb_ibfk_2` FOREIGN KEY (`keluarga_id`) REFERENCES `tb_keluarga` (`id_keluarga`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_kb_ibfk_3` FOREIGN KEY (`kelurahan_id`) REFERENCES `tb_kelurahan` (`id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_kb_ibfk_4` FOREIGN KEY (`kepkel_id`) REFERENCES `tb_kepkel` (`id_kepkel`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_kb_ibfk_5` FOREIGN KEY (`obat_id`) REFERENCES `tb_obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_kb_ibfk_5` FOREIGN KEY (`stok_id`) REFERENCES `tb_stok` (`id_stok`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_kb_ibfk_6` FOREIGN KEY (`obat_id`) REFERENCES `tb_obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_keluarga`
@@ -434,14 +413,6 @@ ALTER TABLE `tb_kelurahan`
 ALTER TABLE `tb_kepkel`
   ADD CONSTRAINT `tb_kepkel_ibfk_1` FOREIGN KEY (`kecamatan_id`) REFERENCES `tb_kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_kepkel_ibfk_2` FOREIGN KEY (`kelurahan_id`) REFERENCES `tb_kelurahan` (`id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `tb_minstok`
---
-ALTER TABLE `tb_minstok`
-  ADD CONSTRAINT `tb_minstok_ibfk_1` FOREIGN KEY (`kecamatan_id`) REFERENCES `tb_kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_minstok_ibfk_2` FOREIGN KEY (`obat_id`) REFERENCES `tb_obat` (`id_obat`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_minstok_ibfk_3` FOREIGN KEY (`stok_id`) REFERENCES `tb_stok` (`id_stok`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_stok`

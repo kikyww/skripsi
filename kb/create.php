@@ -46,8 +46,8 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="kecamatan.php">Kepala Keluarga</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tambah Kepala Keluarga</li>
+                        <li class="breadcrumb-item"><a href="kecamatan.php">KB</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah KB <?= $kec ?></li>
                     </ol>
                 </nav>
             </div>
@@ -60,9 +60,9 @@
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Kepala Keluarga <?= $kec ?></h4>
+                            <h4 class="card-title">KB <?= $kel ?></h4>
                         </div>
-                        <a class="btn btn-secondary" style="margin-right:28px;" href="kepkel.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
+                        <a class="btn btn-secondary" style="margin-right:28px;" href="kb.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -70,60 +70,50 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>No. KK</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="number" name="kk" class="form-control" placeholder="No. KK" autocomplete="off" required>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
                                             <label>Nama</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Kepala Keluarga" autocomplete="off" required>
+                                            <input type="text" name="nama" class="form-control" placeholder="Nama" autocomplete="off" required>
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            <label>Tempat Lahir</label>
+                                            <label>Nama Kepala Keluarga</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="tempat" id="tempat" class="form-control" placeholder="Tempat Lahir" autocomplete="off" required>
+                                            <input type="text" name="kepkel" id="kepkel" class="form-control" placeholder="Nama Kepala Keluarga" autocomplete="off" required>
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            <label>Tanggal Lahir</label>
+                                            <label>Tanggal KB</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="date" name="tgl" id="tgl" class="form-control" placeholder="Tanggal Lahir" autocomplete="off" required>
+                                            <input type="text" name="tgl" id="tgl" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            <label>Alamat</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat Sekarang" autocomplete="off" required>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            <label>Jenis Kelamin</label>
+                                            <label>Obat/Alat KB</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
-                                                <select class="form-select" name="jk" id="basicSelect" required>
-                                                    <option value="" selected hidden>Jenis Kelamin</option>
-                                                    <option value="L">Laki-Laki</option>
-                                                    <option value="P">Perempuan</option>
+                                                <select class="form-select" name="kelurahan" id="basicSelect" required>
+                                                    <option value="" selected hidden>Pilih Obat/Alat</option> 
+                                                    <?php
+                                                    $stokObat = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec'");
+                                                    foreach ($stokObat as $dataObat) : 
+                                                    ?>
+                                                    <option value="<?= $dataObat['id_stok'] ?>"><?= $dataObat['nama_obat']; ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </fieldset>
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            <label>Telepon Aktif</label>
+                                            <label>Jumlah</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" name="telp" id="telp" class="form-control" placeholder="No. Telepon/Whats App" autocomplete="off" required>
+                                            <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
                                         </div>
-                                        
+                                    
                                         <div class="col-md-4">
                                             <label>Nama Kecamatan</label>
                                         </div>

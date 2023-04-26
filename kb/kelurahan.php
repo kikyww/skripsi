@@ -3,12 +3,11 @@ include '../utilities/sidebar.php';
 include '../koneksi.php';
 include_once('../function/Kelurahan.php');
 $id_user = $_SESSION['id_user'];
+$kec = $_GET['kec'];
 
 if (!isset($id_user)) {
     header('Location: ../index.php');
 }
-
-$kec = $_GET['kec'];
 
 ?>
 <div class="page-heading">
@@ -18,7 +17,7 @@ $kec = $_GET['kec'];
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Kepala Keluarga</a></li>
+                        <li class="breadcrumb-item"><a href="#">KB</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Pilih Kelurahan</li>
                     </ol>
                 </nav>
@@ -32,7 +31,7 @@ $kec = $_GET['kec'];
                     <div class="card-header">
                         <h4>Kelurahan</h4>
                     </div>
-                    <form method="GET" action="kepkel.php" class="">
+                    <form method="GET" action="kb.php" class="">
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="col-md-8 form-group">

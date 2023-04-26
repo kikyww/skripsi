@@ -8,8 +8,9 @@
     }
 
     $kec = $_GET['kec'];
-    $query = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec'");
-    
+    $query = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_stok.tgl_awal <= CURDATE() AND tb_stok.tgl_akhir >= CURDATE()");
+
+
 ?>
 <div class="page-heading">
     <div class="page-title">
@@ -41,8 +42,11 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th>Obat / Alat</th>
-                            <th>Stok Obat</th>
+                            <th>Obat/Alat</th>
+                            <th>Stok Awal</th>
+                            <th>Sisa Stok</th>
+                            <th>Tanggal di Stok</th>
+                            <th>Sampai Tanggal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -54,7 +58,10 @@
                     echo"
                         <tr>
                             <td>$row[nama_obat]</td>
-                            <td>$row[jumlah_stok]</td>
+                            <td>$row[stok_awal]</td>
+                            <td>$row[stok_akhir]</td>
+                            <td>$row[tgl_awal]</td>
+                            <td>$row[tgl_akhir]</td>
                             <td>
                             <a href='update.php?kec=$kec&id=$row[0]' class='btn icon btn-primary'><i class='bi bi-pencil'></i></a>
                             <a href='delete.php?kec=$kec&id=$row[0]' onclick='return confirm(\" Hapus?\");' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>

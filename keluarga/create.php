@@ -92,14 +92,14 @@
                                                                 success: function(response) {
                                                                     $('#search-results').html(response)
                                                                     if (!$(this).hasClass('disabled')) {
-                                                                    $('#search-results li').on('click', function() {
-                                                                        var id = $(this).attr('data-id')
-                                                                        var name = $(this).text()
-                                                                        $('#id-input').val(id)
-                                                                        $('#search-kk').val(name)
-                                                                        $('#search-results').html('')
-                                                                    });
-                                                                }
+                                                                        $('#search-results li').on('click', function() {
+                                                                            var id = $(this).attr('data-id')
+                                                                            var name = $(this).text()
+                                                                            $('#id-input').val(id)
+                                                                            $('#search-kk').val(name)
+                                                                            $('#search-results').html('')
+                                                                        })
+                                                                    }
                                                                 }   
                                                             })
                                                         } else {

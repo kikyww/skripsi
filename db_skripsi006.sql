@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Apr 2023 pada 04.25
+-- Waktu pembuatan: 06 Bulan Mei 2023 pada 05.41
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -54,11 +54,29 @@ CREATE TABLE `tb_kb` (
   `kecamatan_id` int(11) NOT NULL,
   `kelurahan_id` int(11) NOT NULL,
   `tgl_kb` date NOT NULL,
+  `tgl_kembali` date NOT NULL,
   `obat_id` int(11) NOT NULL,
   `stok_id` int(11) NOT NULL,
   `jumlah_obat` int(11) NOT NULL,
   `kb_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_kb`
+--
+
+INSERT INTO `tb_kb` (`id_kb`, `kepkel_id`, `keluarga_id`, `kecamatan_id`, `kelurahan_id`, `tgl_kb`, `tgl_kembali`, `obat_id`, `stok_id`, `jumlah_obat`, `kb_stamp`) VALUES
+(3, 2, 1, 1, 1, '2023-04-29', '2023-10-29', 2, 1, 1, '2023-04-29 05:56:04'),
+(4, 6, 2, 1, 1, '2023-05-02', '2023-11-02', 2, 1, 1, '2023-05-02 03:40:38'),
+(5, 2, 1, 1, 1, '2024-04-03', '2024-10-03', 2, 1, 1, '2023-05-03 06:52:10'),
+(6, 2, 1, 1, 1, '2029-08-11', '2030-02-11', 2, 1, 1, '2023-05-03 10:03:58'),
+(7, 4, 3, 2, 2, '2029-08-17', '2030-02-17', 5, 3, 1, '2023-05-03 10:10:55'),
+(8, 4, 3, 2, 2, '2023-05-03', '2023-11-03', 5, 3, 1, '2023-05-03 10:13:53'),
+(9, 4, 3, 2, 2, '2023-05-04', '2023-11-04', 5, 3, 1, '2023-05-03 10:20:46'),
+(10, 4, 3, 2, 2, '2023-04-29', '2023-10-29', 5, 3, 1, '2023-05-03 10:21:37'),
+(11, 2, 1, 1, 1, '2023-05-03', '2023-11-03', 2, 1, 1, '2023-05-03 10:22:11'),
+(12, 6, 2, 1, 1, '2023-05-04', '2023-11-04', 2, 1, 1, '2023-05-04 01:50:45'),
+(13, 4, 3, 2, 2, '2023-05-05', '2023-11-05', 5, 3, 1, '2023-05-04 01:58:28');
 
 -- --------------------------------------------------------
 
@@ -78,7 +96,8 @@ CREATE TABLE `tb_kecamatan` (
 INSERT INTO `tb_kecamatan` (`id_kecamatan`, `nama_kecamatan`) VALUES
 (1, 'Banjarmasin Utara'),
 (2, 'Banjarmasin Barat'),
-(3, 'Banjarmasin Tengah');
+(3, 'Banjarmasin Tengah'),
+(4, 'Banjarmasin Selatan');
 
 -- --------------------------------------------------------
 
@@ -106,8 +125,9 @@ CREATE TABLE `tb_keluarga` (
 --
 
 INSERT INTO `tb_keluarga` (`id_keluarga`, `kepkel_id`, `nama_keluarga`, `tl_keluarga`, `lahir_keluarga`, `jk_keluarga`, `telp_keluarga`, `status_kb`, `keterangan_kb`, `jumlah_anak`, `kecamatan_id`, `kelurahan_id`) VALUES
-(1, 2, 'Arfina', 'Banjarmasin', '2001-08-08', 'P', '086374673647', 'Tidak KB', 'a', 4, 1, 1),
-(2, 6, 'Meyii', 'Banjarmasinn', '2003-03-04', 'P', '97876767565999', 'Tidak KB', 'a', 4, 1, 1);
+(1, 2, 'Arfina', 'Banjarmasin', '2001-08-08', 'P', '086374673647', 'KB', 'a', 4, 1, 1),
+(2, 6, 'Meyii', 'Banjarmasinn', '2003-03-04', 'P', '97876767565999', 'KB', 'a', 4, 1, 1),
+(3, 4, 'Yaya', 'Banjarmasin', '2000-07-20', 'P', '087248248', 'KB', '8', 0, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -206,9 +226,9 @@ CREATE TABLE `tb_stok` (
 --
 
 INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_akhir`, `tgl_awal`, `tgl_akhir`, `stok_stamp`) VALUES
-(1, 1, 2, 9600, 8980, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
-(2, 1, 5, 7800, 7800, '2023-04-20', '2023-04-20', '2023-04-20 06:27:41'),
-(3, 2, 5, 9000, 9000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:06'),
+(1, 1, 2, 9600, 8972, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
+(2, 1, 5, 7800, 7800, '2023-04-20', '2023-09-20', '2023-04-20 06:27:41'),
+(3, 2, 5, 9000, 8995, '2023-04-24', '2023-11-24', '2023-04-24 12:55:06'),
 (4, 2, 4, 8000, 8000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:44');
 
 -- --------------------------------------------------------
@@ -326,19 +346,19 @@ ALTER TABLE `tb_intervensi`
 -- AUTO_INCREMENT untuk tabel `tb_kb`
 --
 ALTER TABLE `tb_kb`
-  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kecamatan`
 --
 ALTER TABLE `tb_kecamatan`
-  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_keluarga`
 --
 ALTER TABLE `tb_keluarga`
-  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelurahan`

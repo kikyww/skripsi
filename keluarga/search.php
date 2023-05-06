@@ -5,6 +5,8 @@ $kec = $_GET['kec'];
 $kel = $_GET['kel'];
 $search = $_POST['search'];
 
+$search = $konek->real_escape_string($search);
+
 if (isset($search)) {
     $sql = "SELECT * FROM tb_kepkel LEFT JOIN tb_kelurahan ON tb_kepkel.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kepkel.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kepkel.nama_kepkel LIKE '%$search%' AND tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'";
     $result = $konek->query($sql);

@@ -10,9 +10,21 @@ if(!isset($id_user)){
     header('Location: ../index.php');
 }
 
-$delete = mysqli_query($konek, "DELETE FROM tb_kepkel WHERE id_kepkel = '$id'");
+$resultJumlahObat = mysqli_query($konek, "SELECT jumlah_obat FROM tb_kb WHERE id_kb = '$id'");
+$rowJumlahObat = $resultJumlahObat->fetch_assoc();
+$jumlahObat = $rowJumlahObat['jumlah_obat'];
+
+$resultStokId = mysqli_query($konek, "SELECT stok_id FROM tb_kb WHERE id_kb = '$id'");
+$rowStokId = $resultStokId->fetch_assoc();
+$stokId = $rowStokId['stok_id'];
+
+mysqli_query($konek, "UPDATE tb_stok SET stok_akhir = stok_akhir + $jumlahObat WHERE id_stok = '$stokId'");
+
+$delete = mysqli_query($konek, "DELETE FROM tb_kb WHERE id_kb = '$id'");
 
 if($delete){
-    echo "<script>alert('Kepala Keluarga telah berhasil dihapus!');</script>";
-    echo "<meta http-equiv='refresh' content='0; url=kepkel.php?kec=".$kec."&kel=".$kel."'>";
+    echo "<script>alert('Catatan KB telah berhasil dihapus!');</script>";
+    echo "<meta http-equiv='refresh' content='0; url=kb.php?kec=".$kec."&kel=".$kel."'>";
+} else {
+    echo "Error: " . mysqli_error($conn);
 }

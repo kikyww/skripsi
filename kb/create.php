@@ -12,27 +12,34 @@
         header("Location: ../index.php");
     }
     if (isset($_POST['submit'])) {
-        $kk = htmlspecialchars($_POST['kk']);
         $nama = htmlspecialchars($_POST['nama']);
-        $tempat = htmlspecialchars($_POST['tempat']);
+        $kepkel = htmlspecialchars($_POST['kepkel']);
         $tgl = htmlspecialchars($_POST['tgl']);
-        $alamat = htmlspecialchars($_POST['alamat']);
-        $jk = htmlspecialchars($_POST['jk']);
-        $telp = htmlspecialchars($_POST['telp']);
+        $stok = htmlspecialchars($_POST['stok']);
+        $jumlah = htmlspecialchars($_POST['jumlah']);
+        $obatId = htmlspecialchars($_POST['obat_id']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan']);
-
-        $num = mysqli_query($konek, "SELECT id_kepkel FROM tb_kepkel ORDER BY id_kepkel DESC");
+        $plusenam = htmlspecialchars($_POST['enam']);
+        $enam_bulan = date('Y-m-d', strtotime('+6 months', strtotime($tgl)));
+        
+        $num = mysqli_query($konek, "SELECT id_kb FROM tb_kb ORDER BY id_kb DESC");
         if (mysqli_num_rows($num) > 0) {
             $num = mysqli_fetch_array($num);
-            $idkepkel = $num['id_kepkel'] + 1;
+            $idkb = $num['id_kb'] + 1;
         }else {
-            $idkepkel = 1;
+            $idkb = 1;
         }
-        $sql = "INSERT INTO tb_kepkel (id_kepkel, no_kk, nama_kepkel, tl_kepkel, lahir_kepkel, alamat_kepkel, jk_kepkel, telp_kepkel, kecamatan_id, kelurahan_id) VALUES ('$idkepkel', '$kk', '$nama', '$tempat', '$tgl', '$alamat', '$jk', '$telp', '$kecamatan', '$kelurahan')";
-        if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('Kepala Keluarga telah berhasil ditambahkan!');</script>";
-            echo "<meta http-equiv='refresh' content='0; url=kepkel.php?kec=".$kec."&kel=".$kel."'>";
+
+        $queryInsert = "INSERT INTO tb_kb (id_kb, kepkel_id, keluarga_id, kecamatan_id, kelurahan_id, tgl_kb, tgl_kembali, obat_id, stok_id, jumlah_obat) VALUES ('$idkb', '$kepkel', '$nama', '$kecamatan', '$kelurahan', '$tgl', '$plusenam', '$obatId', '$stok', '$jumlah')";
+        
+        if (mysqli_query($konek, $queryInsert)) {
+            mysqli_query($konek, "UPDATE tb_stok SET stok_akhir = stok_akhir - $jumlah WHERE id_stok = '$stok'");
+            mysqli_query($konek, "UPDATE tb_keluarga SET status_kb = 'KB' WHERE id_keluarga = '$nama'");
+
+            echo "<script>alert('Catatan KB telah berhasil ditambahkan!');</script>";
+            echo "<meta http-equiv='refresh' content='0; url=kb.php?kec=".$kec."&kel=".$kel."'>";
+
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);
         }
@@ -70,24 +77,77 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Nama</label>
+                                            <label>Nama | Kepala Keluarga</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="nama" class="form-control" placeholder="Nama" autocomplete="off" required>
+                                            <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Nama Keluarga" autocomplete="off" readonly required>
+                                            <input type="hidden" name="kepkel" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" readonly required>
+                                            <input type="text" id="search-input" class="form-control" placeholder="Nama" autocomplete="off" required>
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#search-input').keyup(function() {
+                                                        var search = $(this).val()
+                                                        if (search.length >= 1) {
+                                                            $.ajax({
+                                                                url: 'search.php?kec=<?= $kec ?>&kel=<?= $kel ?>',
+                                                                type: 'POST',
+                                                                data: {search: search},
+                                                                dataType: 'html',
+                                                                success: function(response) {
+                                                                    $('#search-results').html(response)
+                                                                    if (!$(this).hasClass('disabled')) {
+                                                                        $('#search-results li').on('click', function() {
+                                                                            var id = $(this).attr('data-id')
+                                                                            var idKepkel = $(this).attr('kepkel-id')
+                                                                            var name = $(this).text()
+                                                                            $('#id-input').val(id)
+                                                                            $('#id-kepkel').val(idKepkel)
+                                                                            $('#search-input').val(name)
+                                                                            $('#search-results').html('')
+                                                                        })
+                                                                    }
+                                                                }   
+                                                            })
+                                                        } else {
+                                                            $('#search-results').html('')
+                                                        }
+                                                    })
+                                                    $('#search-input').on('input', function() {
+                                                        if ($(this).val() === '') {
+                                                            $('#id-input').val('')
+                                                            $('#id-kepkel').val('')
+                                                        }
+                                                    })
+                                                })
+                                            </script>                                            
+                                            <ul id="search-results" class="list-group"></ul>
                                         </div>
-                                        
-                                        <div class="col-md-4">
-                                            <label>Nama Kepala Keluarga</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="text" name="kepkel" id="kepkel" class="form-control" placeholder="Nama Kepala Keluarga" autocomplete="off" required>
-                                        </div>
-                                        
+
                                         <div class="col-md-4">
                                             <label>Tanggal KB</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="tgl" id="tgl" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
+                                            <input type="date" name="tgl" id="tgl" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
+                                        </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#tgl').on('change', function() {
+                                                    var selectedDate = $(this).val();
+                                                    var newDate = new Date(selectedDate);
+                                                    newDate.setMonth(newDate.getMonth() + 6);
+                                                    var formattedDate = newDate.toISOString().substr(0, 10);
+                                                    $('#enambulan').val(formattedDate);
+                                                });
+                                            });
+                                        </script>
+
+                                        <div class="col-md-4">
+                                            <label>Tanggal Kembali KB</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="date" name="enam" id="enambulan" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -95,25 +155,35 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
-                                                <select class="form-select" name="kelurahan" id="basicSelect" required>
+                                                <select class="form-select" name="stok" id="basicSelect" required>
                                                     <option value="" selected hidden>Pilih Obat/Alat</option> 
                                                     <?php
-                                                    $stokObat = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec'");
+                                                    $stokObat = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_stok.tgl_awal <= CURDATE() AND tb_stok.tgl_akhir >= CURDATE()");
                                                     foreach ($stokObat as $dataObat) : 
                                                     ?>
-                                                    <option value="<?= $dataObat['id_stok'] ?>"><?= $dataObat['nama_obat']; ?></option>
+                                                    <option value="<?= $dataObat['id_stok'] ?>" data-obatid="<?= $dataObat['obat_id'] ?>"><?= $dataObat['nama_obat']; ?> | Sisa : <?= $dataObat['stok_akhir']; ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </fieldset>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('#basicSelect').on('change', function() {
+                                                        var selectedOption = $(this).find('option:selected')
+                                                        var obatId = selectedOption.data('obatid')
+                                                        $('#obat-id').val(obatId)
+                                                    })
+                                                })
+                                            </script>
+                                            <input type="hidden" name="obat_id" id="obat-id" class="form-control" value="" placeholder="ID Obat" autocomplete="off" required>
                                         </div>
-                                        
+
                                         <div class="col-md-4">
-                                            <label>Jumlah</label>
+                                            <label>Jumlah Obat / Alat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
+                                            <input type="number" name="jumlah" id="jumlah" class="form-control" value="1" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
                                         </div>
-                                    
+
                                         <div class="col-md-4">
                                             <label>Nama Kecamatan</label>
                                         </div>

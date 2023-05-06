@@ -40,6 +40,12 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Alpine.js -->
+    <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script> -->
+    
     <!-- Sweet Alert2 -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script> -->
@@ -115,7 +121,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan KB</a>
+                        <a href="../l-kb/report.php">Laporan KB</a>
                     </li>
                     <li class="submenu-item">
                         <a href="../laporan/">Lokasi KB</a>

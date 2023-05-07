@@ -47,37 +47,41 @@
                     <p class="text-muted">Rincian dari laporan kb</p>
                     <div class="buttons">
                         <button class="btn btn-secondary" id="btn-filter">Date Filter</button>
-                        <a href="chart.php" class="btn btn-secondary">Chart</a>
                         <button class="btn btn-secondary" id="btn-pdf">PDF</button>
+                        <button class="btn btn-secondary" id="csv-export">CSV (All)</button>
+                        <button class="btn btn-secondary" id="excell-export">Excell (All)</button>
+                        <a href="chart.php" class="btn btn-secondary">Chart</a>
                     </div>
                 </div>
             </div>
 
-            <form method="POST" action="tes-cetak.php" id="filter_form">
+            <form method="POST" action="cetak-pdf.php" target="_blank" id="filter_form">
                 <div id='date-filter'>
                     <div class="row m-3">
                         <label for="start_date" class="col-sm-2 col-form-label">Mulai Tanggal:</label>
                         <div class="col-sm-4">
-                            <input type="date" class="form-control" id="start_date" name="start_date">
+                            <input type="date" class="form-control" id="start_date" name="start_date" required>
                         </div>
                         <label for="end_date" class="col-sm-2 col-form-label">Sampai Tanggal:</label>
                         <div class="col-sm-4">
-                            <input type="date" class="form-control" id="end_date" name="end_date">
+                            <input type="date" class="form-control" id="end_date" name="end_date" required>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" name="submit" class="btn btn-primary" style="margin-right:10px;">Cetak PDF</button>
-                        <button type="submit" class="btn btn-primary" style="margin-right:30px;">Filter</button>
+                        <button class="btn btn-primary" id="csv-start" style="margin-right:10px;">CSV</button>
+                        <button class="btn btn-primary" id="excel-start" style="margin-right:10px;">Excel</button>
+                        <button type="submit" name="submit" class="btn btn-primary" id="pdf-start" style="margin-right:10px;">PDF</button>
+                        <button class="btn btn-primary" id="filter-btn" style="margin-right:30px;">Filter</button>
                     </div>
                 </div>
             </form>
 
             <script>
                 $(document).ready(function() {
-                    $('#filter_form').submit(function(event) {
+                    $('#filter-btn').click(function(event) {
                         event.preventDefault()
-                        var start_date = $('#start_date').val();
-                        var end_date = $('#end_date').val();
+                        let start_date = $('#start_date').val();
+                        let end_date = $('#end_date').val();
                     
                         $.ajax({
                             url: 'filter.php',
@@ -91,7 +95,67 @@
                             }
                         })
                     })
+
+                    $('#csv-start').click(function(event) {
+                        event.preventDefault();
+                        let start_date = $('#start_date').val();
+                        let end_date = $('#end_date').val();
+                        let url = 'export-csv.php';
+                        let xhr = new XMLHttpRequest();
+
+                        xhr.open('POST', url, true);
+                        xhr.responseType = 'blob';
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        xhr.onload = function() {
+                            if (this.status === 200) {
+                                let blob = new Blob([this.response], { type: 'text/csv' });
+                                let link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = 'data-kb.csv';
+                                link.click();
+                            }
+                        };
+                        xhr.send('start_date=' + start_date + '&end_date=' + end_date);
+                    })
+
+                    $('#excel-start').click(function(event) {
+                        event.preventDefault();
+                        let start_date = $('#start_date').val();
+                        let end_date = $('#end_date').val();
+                        let url = 'export-excel.php';
+                        let xhr = new XMLHttpRequest();
+
+                        xhr.open('POST', url, true);
+                        xhr.responseType = 'blob';
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        xhr.onload = function() {
+                            if (this.status === 200) {
+                                let blob = new Blob([this.response], { type: 'text/xls' });
+                                let link = document.createElement('a');
+                                link.href = window.URL.createObjectURL(blob);
+                                link.download = 'data-kb.xlsx';
+                                link.click();
+                            }
+                        };
+                        xhr.send('start_date=' + start_date + '&end_date=' + end_date);
+                    });
                 })
+
+                $(document).on('click', '#csv-export', function(e) {
+                    e.preventDefault();
+                    var url = 'export-csv.php'
+                    window.open(url, '_blank');
+                });
+
+                $(document).on('click', '#excel-export', function(e) {
+                    e.preventDefault();
+                    var url = 'export-excel.php'
+                    window.open(url, '_blank');
+                });
+
+
             </script>
 
             <div class="card-body">
@@ -114,19 +178,19 @@
                     $no = 0;
                     while ($row = $query->fetch_array()) {
                         $no++;
-                    echo"
+                    ?>
                         <tr>
-                            <td>$no</td>
-                            <td>$row[nama_kepkel]</td>
-                            <td>$row[nama_keluarga]</td>
-                            <td>$row[tgl_kb]</td>
-                            <td>$row[tgl_kembali]</td>
-                            <td>$row[nama_obat]</td>
-                            <td>$row[jumlah_obat]</td>
-                            <td>$row[nama_kecamatan]</td>
-                            <td>$row[nama_kelurahan]</td>
-                        </tr>";
-                    }?>
+                            <td><?= $no; ?></td>
+                            <td><?= $row['nama_kepkel']; ?></td>
+                            <td><?= $row['nama_keluarga']; ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['tgl_kembali'])); ?></td>
+                            <td><?= $row['nama_obat']; ?></td>
+                            <td><?= $row['jumlah_obat']; ?></td>
+                            <td><?= $row['nama_kecamatan']; ?></td>
+                            <td><?= $row['nama_kelurahan']; ?></td>
+                        </tr>
+                    <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -138,29 +202,42 @@
         $('#btn-rincian').hide()
         $('#filter_form').hide()
         $(document).ready(function(){
-            var isBtnShow = $('#btn-rincian').hide()
-            var isBtnHide = false
+            let isBtnHide = $('#btn-rincian').hide()
+            let isBtnShow = false
             $('#rincian').click(function(){
-                if(isBtnShow){
+                if(isBtnHide){
                     $('#btn-rincian').show()
-                } if(isBtnHide) {
+                } if(isBtnShow) {
                     $('#btn-rincian').hide()
                 }
-                isBtnHide = !isBtnHide
+                isBtnShow = !isBtnShow
             })
 
-            var isFilterShow = $('#filter_form').hide()
-            var isFilterHide = false
+            let isFilterHide = $('#filter_form').hide()
+            let isFilterShow = false
             $('#btn-filter').click(function(){
-                if(isFilterShow){
+                if(isFilterHide){
                     $('#filter_form').show()
-                } if(isFilterHide) {
+                } if(isFilterShow) {
                     $('#filter_form').hide()
                 }
-                isFilterHide = !isFilterHide
+                isFilterShow = !isFilterShow
             })
 
-            
+
+            let isPDFShow = false
+            $('#btn-pdf').click(function(){
+                if(isFilterHide){
+                    $('#filter_form').show()
+                    $('#pdf-start').show()
+                    $('#btn-pdf').hide()                
+                } if(isPDFShow){
+                    $('#filter_form').hide()
+                    $('#pdf-start').hide()
+                    $('#btn-pdf').show()
+                }
+                isPDFShow = !isPDFShow
+            })
 
         })
     

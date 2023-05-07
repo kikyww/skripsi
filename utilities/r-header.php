@@ -80,9 +80,10 @@
 
     </style>
 
-    <div style="display:flex;">
-        <div style="justify-content: center; align-items: center; margin:auto;">
-            <div class="logos">
+    <div style=" position:relative; display:flex;">
+        <div style="justify-content: center; align-items: center; margin:auto; ">
+        <div style="display:flex; justify-content: center; width:650px; margin:auto; align-items: center;">    
+        <div class="logos">
                 <img src="../assets/images/logo/pemko.png" width="100" height="130">
             </div>
         <div class="cop">
@@ -90,4 +91,5 @@
             <h1 class="style2">DINAS PENGENDALIAN PENDUDUK KELUARGA BERENCANA DAN PEMERDAYAAN MASYARAKAT</h1>
             Jalan Brig Jend. Hasan Basri No. 16 <br />
             Telp./Fax. (0511) 3301346 Banjarmasin 70124</div>
-            <hr>
+        </div>
+        <hr>

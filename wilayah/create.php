@@ -106,14 +106,26 @@
                                             <label>Tanggal di Stok</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="date" value="<?= $tgl; ?>" class="form-control" name="tgl_awal" placeholder="Tanggal" autocomplete="off" required>
+                                            <input type="date" id="tgl" class="form-control" name="tgl_awal" placeholder="Tanggal" autocomplete="off" required>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#tgl').on('change', function() {
+                                                    var selectedDate = $(this).val();
+                                                    var newDate = new Date(selectedDate);
+                                                    newDate.setMonth(newDate.getMonth() + 12);
+                                                    var formattedDate = newDate.toISOString().substr(0, 10);
+                                                    $('#tgl-plus').val(formattedDate);
+                                                });
+                                            });
+                                        </script>
 
                                         <div class="col-md-4">
                                             <label>Sampai Tanggal</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="date" class="form-control" name="tgl_akhir" placeholder="Tanggal" autocomplete="off" required>
+                                            <input type="date" id="tgl-plus" class="form-control" name="tgl_akhir" placeholder="Tanggal" autocomplete="off" required>
                                         </div>
 
                                         <div class="col-sm-12 d-flex justify-content-end">

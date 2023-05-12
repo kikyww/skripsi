@@ -135,7 +135,7 @@
                                             <label>Keterangan KB</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" name="keterangan" id="keterangan" value="<?= $row['keterangan_kb'] ?>" class="form-control" placeholder="Keterangan" required>
+                                            <input type="text" name="keterangan" id="keterangan" value="<?= $row['keterangan_kb'] ?>" class="form-control" placeholder="Keterangan">
                                         </div>
                                         
                                         <div class="col-md-4">

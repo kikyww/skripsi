@@ -3,11 +3,8 @@ include '../koneksi.php';
 
 $tahun = $_GET['tahun'];
 
-$query = "SELECT tb_kecamatan.nama_kecamatan, MONTH(tb_kb.tgl_kb) AS bulan, COUNT(tb_kb.id_kb) AS jumlah
-          FROM tb_kb
-          LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan
-          WHERE YEAR(tb_kb.tgl_kb) = '$tahun'
-          GROUP BY tb_kecamatan.nama_kecamatan, MONTH(tb_kb.tgl_kb)";
+
+$query = "SELECT tb_kecamatan.nama_kecamatan, MONTH(tb_kb.tgl_kb) AS bulan, COUNT(tb_kb.id_kb) AS jumlah FROM tb_kb LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan WHERE YEAR(tb_kb.tgl_kb) = '$tahun' GROUP BY tb_kecamatan.nama_kecamatan, MONTH(tb_kb.tgl_kb)";
 
 $result = mysqli_query($konek, $query);
 

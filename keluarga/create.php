@@ -31,7 +31,7 @@
         } else {
             $idkeluarga = 1;
         }
-        $sql = "INSERT INTO tb_keluarga (id_keluarga, kepkel_id, nama_keluarga, tl_keluarga, lahir_keluarga, jk_keluarga, telp_keluarga, status_kb, keterangan_kb, jumlah_anak, kecamatan_id, kelurahan_id) VALUES ('$idkeluarga', '$kk', '$nama', '$tempat', '$tgl', '$jk', '$telp', '$keterangan', '$jmlanak', '$status', '$kecamatan', '$kelurahan')";
+        $sql = "INSERT INTO tb_keluarga (id_keluarga, kepkel_id, nama_keluarga, tl_keluarga, lahir_keluarga, jk_keluarga, telp_keluarga, status_kb, keterangan_kb, jumlah_anak, kecamatan_id, kelurahan_id) VALUES ('$idkeluarga', '$kk', '$nama', '$tempat', '$tgl', '$jk', '$telp', '$status', '$keterangan', '$jmlanak', '$kecamatan', '$kelurahan')";
         if (mysqli_query($konek, $sql)) {
             echo "<script>alert('Keluarga telah berhasil ditambahkan!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=keluarga.php?kec=".$kec."&kel=".$kel."'>";

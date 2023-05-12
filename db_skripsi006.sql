@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Bulan Mei 2023 pada 16.00
+-- Waktu pembuatan: 12 Bulan Mei 2023 pada 02.19
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -69,14 +69,15 @@ INSERT INTO `tb_kb` (`id_kb`, `kepkel_id`, `keluarga_id`, `kecamatan_id`, `kelur
 (3, 2, 1, 1, 1, '2023-04-29', '2023-10-29', 2, 1, 1, '2023-04-29 05:56:04'),
 (4, 6, 2, 1, 1, '2023-05-02', '2023-11-02', 2, 1, 1, '2023-05-02 03:40:38'),
 (5, 2, 1, 1, 1, '2024-04-03', '2024-10-03', 2, 1, 1, '2023-05-03 06:52:10'),
-(6, 2, 1, 1, 1, '2029-08-11', '2030-02-11', 2, 1, 1, '2023-05-03 10:03:58'),
-(7, 4, 3, 2, 2, '2029-08-17', '2030-02-17', 5, 3, 1, '2023-05-03 10:10:55'),
 (8, 4, 3, 2, 2, '2023-05-03', '2023-11-03', 5, 3, 1, '2023-05-03 10:13:53'),
 (9, 4, 3, 2, 2, '2023-05-04', '2023-11-04', 5, 3, 1, '2023-05-03 10:20:46'),
 (10, 4, 3, 2, 2, '2023-04-29', '2023-10-29', 5, 3, 1, '2023-05-03 10:21:37'),
 (11, 2, 1, 1, 1, '2023-05-03', '2023-11-03', 2, 1, 1, '2023-05-03 10:22:11'),
 (12, 6, 2, 1, 1, '2023-05-04', '2023-11-04', 2, 1, 1, '2023-05-04 01:50:45'),
-(13, 4, 3, 2, 2, '2023-05-05', '2023-11-05', 5, 3, 1, '2023-05-04 01:58:28');
+(13, 4, 3, 2, 2, '2023-05-05', '2023-11-05', 5, 3, 1, '2023-05-04 01:58:28'),
+(14, 6, 2, 1, 1, '2023-05-03', '2023-11-03', 5, 2, 1, '2023-05-09 10:28:39'),
+(15, 6, 2, 1, 1, '2026-05-10', '2026-11-10', 4, 6, 1, '2026-05-10 03:22:16'),
+(16, 1, 4, 1, 3, '2023-05-11', '2023-11-11', 2, 1, 1, '2023-05-11 03:54:22');
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,8 @@ CREATE TABLE `tb_keluarga` (
 INSERT INTO `tb_keluarga` (`id_keluarga`, `kepkel_id`, `nama_keluarga`, `tl_keluarga`, `lahir_keluarga`, `jk_keluarga`, `telp_keluarga`, `status_kb`, `keterangan_kb`, `jumlah_anak`, `kecamatan_id`, `kelurahan_id`) VALUES
 (1, 2, 'Arfina', 'Banjarmasin', '2001-08-08', 'P', '086374673647', 'KB', 'a', 4, 1, 1),
 (2, 6, 'Meyii', 'Banjarmasinn', '2003-03-04', 'P', '97876767565999', 'KB', 'a', 4, 1, 1),
-(3, 4, 'Yaya', 'Banjarmasin', '2000-07-20', 'P', '087248248', 'KB', '8', 0, 2, 2);
+(3, 4, 'Yaya', 'Banjarmasin', '2000-07-20', 'P', '087248248', 'KB', '8', 0, 2, 2),
+(4, 1, 'nyai', 'Banjarmasin', '2000-03-03', 'P', '08967345534', 'KB', '', 3, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -226,10 +228,11 @@ CREATE TABLE `tb_stok` (
 --
 
 INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_akhir`, `tgl_awal`, `tgl_akhir`, `stok_stamp`) VALUES
-(1, 1, 2, 9600, 8972, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
-(2, 1, 5, 7800, 7800, '2023-04-20', '2023-09-20', '2023-04-20 06:27:41'),
+(1, 1, 2, 9600, 8971, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
+(2, 1, 5, 7800, 7799, '2023-04-20', '2023-09-20', '2023-04-20 06:27:41'),
 (3, 2, 5, 9000, 8995, '2023-04-24', '2023-11-24', '2023-04-24 12:55:06'),
-(4, 2, 4, 8000, 8000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:44');
+(4, 2, 4, 8000, 8000, '2023-04-24', '2023-11-24', '2023-04-24 12:55:44'),
+(6, 1, 4, 400, 399, '2026-05-10', '2026-12-10', '2026-05-10 03:21:20');
 
 -- --------------------------------------------------------
 
@@ -346,7 +349,7 @@ ALTER TABLE `tb_intervensi`
 -- AUTO_INCREMENT untuk tabel `tb_kb`
 --
 ALTER TABLE `tb_kb`
-  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kecamatan`
@@ -358,7 +361,7 @@ ALTER TABLE `tb_kecamatan`
 -- AUTO_INCREMENT untuk tabel `tb_keluarga`
 --
 ALTER TABLE `tb_keluarga`
-  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelurahan`
@@ -382,7 +385,7 @@ ALTER TABLE `tb_obat`
 -- AUTO_INCREMENT untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
-  MODIFY `id_stok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_stok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_user`

@@ -7,7 +7,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_kb.kepkel_id = tb_kepkel.id_kepkel LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok ORDER BY tb_kecamatan.nama_kecamatan ASC, tb_kelurahan.nama_kelurahan ASC");
+    $query = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan ORDER BY tb_stok.stok_stamp DESC");
 
 ?>
 
@@ -19,7 +19,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Laporan</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Laporan KB</li>
+                        <li class="breadcrumb-item active" aria-current="page">Laporan Obat/Alat</li>
                     </ol>
                 </nav>
             </div>
@@ -31,7 +31,7 @@
         <div class="card">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="card-header">
-                    Laporan KB
+                    Laporan Obat/Alat
                 </div>
                 <div class="buttons">
                     <button class="btn btn-primary" style="margin-right:30px;" id="rincian">Rincian</button>
@@ -40,7 +40,7 @@
 
             <div class="col-12" id="btn-rincian">
                 <div class="card-header">
-                    <h4>Rincian Laporan KB</h4>
+                    <h4>Rincian Laporan Obat</h4>
                 </div>
                 <div class="card-body">
                     <div class="buttons">
@@ -48,7 +48,7 @@
                         <button class="btn btn-secondary" id="btn-pdf">PDF</button>
                         <button class="btn btn-secondary" id="csv-export">CSV (All)</button>
                         <button class="btn btn-secondary" id="excel-export">Excell (All)</button>
-                        <a href="chart.php" class="btn btn-secondary">Chart</a>
+                        <a href="detail.php" class="btn btn-secondary">Detail</a>
                     </div>
                 </div>
             </div>
@@ -77,24 +77,23 @@
             <script>
                 $(document).ready(function() {
                     $('#filter-btn').click(function(event) {
-                            event.preventDefault()
-
-                            var start_date = $('#start_date').val()
-                            var end_date = $('#end_date').val()
-                        
-                            $.ajax({
-                                url: 'filter.php',
-                                type: 'POST',
-                                data: {
-                                    start_date: start_date,
-                                    end_date: end_date
-                                },
-                                success: function(response) {
-                                    $('#table1 tbody').html(response)
-                                }
-                            })
+                        event.preventDefault()
+                        var start_date = $('#start_date').val()
+                        var end_date = $('#end_date').val()
+                    
+                        $.ajax({
+                            url: 'filter.php',
+                            type: 'POST',
+                            data: {
+                                start_date: start_date,
+                                end_date: end_date
+                            },
+                            success: function(response) {
+                                $('#table1 tbody').html(response)
+                            }
                         })
-
+                    })
+                
                     $('#csv-start').click(function(event) {
                         event.preventDefault()
                         var start_date = $('#start_date').val()
@@ -111,13 +110,13 @@
                                 var blob = new Blob([this.response], { type: 'text/csv' })
                                 var link = document.createElement('a')
                                 link.href = window.URL.createObjectURL(blob)
-                                link.download = 'data-kb.csv'
+                                link.download = 'data-obat.csv'
                                 link.click()
                             }
                         }
                         xhr.send('start_date=' + start_date + '&end_date=' + end_date)
                     })
-
+                
                     $('#excel-start').click(function(event) {
                         event.preventDefault()
                         var start_date = $('#start_date').val()
@@ -132,12 +131,12 @@
                         xhr.onload = function() {
                             if (this.status === 200) {
                                 var blob = new Blob([this.response], { type: 'text/xls' })
-                                var link = document.createElement('a');
+                                var link = document.createElement('a')
                                 link.href = window.URL.createObjectURL(blob)
-                                link.download = 'data-kb.xlsx'
+                                link.download = 'data-obat.xlsx'
                                 link.click()
                             }
-                        }
+                        
                         xhr.send('start_date=' + start_date + '&end_date=' + end_date)
                     })
                 })
@@ -149,7 +148,7 @@
                 })
 
                 $(document).on('click', '#excel-export', function(e) {
-                    e.preventDefault()
+                    e.preventDefault();
                     var url = 'export-excel.php'
                     window.open(url, '_blank')
                 })
@@ -160,14 +159,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kepala Keluarga</th>
-                            <th>Nama (KB)</th>
-                            <th>Tanggal KB</th>
-                            <th>KB Ulang</th>
-                            <th>Obat/Alat</th>
-                            <th>Jumlah</th>
+                            <th>Obat / Alat KB</th>
+                            <th>Stok Awal</th>
+                            <th>Stok Sisa</th>
+                            <th>Tanggal Di Stok</th>
+                            <th>Tanggal Pengembalian</th>
                             <th>Kecamatan</th>
-                            <th>Kelurahan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,14 +175,12 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $row['nama_kepkel']; ?></td>
-                            <td><?= $row['nama_keluarga']; ?></td>
-                            <td><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
-                            <td><?= date('d-m-Y', strtotime($row['tgl_kembali'])); ?></td>
                             <td><?= $row['nama_obat']; ?></td>
-                            <td><?= $row['jumlah_obat']; ?></td>
+                            <td><?= $row['stok_awal']; ?></td>
+                            <td><?= $row['stok_akhir']; ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['tgl_awal'])); ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['tgl_akhir'])); ?></td>
                             <td><?= $row['nama_kecamatan']; ?></td>
-                            <td><?= $row['nama_kelurahan']; ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>
@@ -193,7 +188,6 @@
             </div>
         </div>
     </section>
-
 
     <script>
         $('#btn-rincian').hide()
@@ -237,7 +231,6 @@
             })
 
         })
-    
     </script>
 
 <?php 

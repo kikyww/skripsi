@@ -46,7 +46,7 @@ if(!isset($id_user)){
             <div class="w-25">
                 <label class="mb-2" for="yearSelect">Pilih Tahun:</label>
                 <select class="form-select" id="yearSelect" onchange="onYearSelectChange()">
-                    <option value="">+</option>
+                    <option class="text-center" value="">+</option>
                     <option selected value="2023">2023</option>
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>

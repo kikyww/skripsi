@@ -57,23 +57,23 @@
                     $no = 0;
                     while ($row = $query->fetch_array()) {
                         $no++;
-                    echo"
+                    ?>
                         <tr>
-                            <td>$no</td>
-                            <td>$row[nama_kepkel]</td>
-                            <td>$row[nama_keluarga]</td>
-                            <td>$row[tl_keluarga], $row[lahir_keluarga]</td>
-                            <td>$row[alamat_kepkel]</td>
-                            <td>$row[jk_keluarga]</td>
-                            <td>$row[telp_kepkel]</td>
-                            <td>$row[status_kb]</td>
-                            <td>$row[jumlah_anak]</td>
+                            <td><?= $no ?></td>
+                            <td><?=$row['nama_kepkel']?></td>
+                            <td><?=$row['nama_keluarga']?></td>
+                            <td><?=$row['tl_keluarga']?>, <?= date('d-m-Y', strtotime($row['lahir_keluarga'])) ?></td>
+                            <td><?=$row['alamat_kepkel']?></td>
+                            <td><?=$row['jk_keluarga']?></td>
+                            <td><?=$row['telp_keluarga']?></td>
+                            <td><?=$row['status_kb']?></td>
+                            <td><?=$row['jumlah_anak']?></td>
                             <td>
-                            <a href='update.php?kec=$kec&kel=$kel&id=$row[0]' class='btn icon btn-primary'><i class='bi bi-pencil'></i></a>
-                            <a href='delete.php?kec=$kec&kel=$kel&id=$row[0]' onclick='return confirm(\" Hapus?\");' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>
+                            <a href='update.php?kec=<?= $kec ?>&kel=<?= $kel ?>&id=<?= $row[0] ?>' class='btn icon btn-primary'><i class='bi bi-pencil'></i></a>
+                            <a href='delete.php?kec=<?= $kec ?>&kel=<?= $kel ?>&id=<?= $row[0] ?>' onclick='return confirm(\" Hapus?\");' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>
                             </td>
                         </tr>";
-                    }?>
+                    <?php } ?>
                     </tbody>
                 </table>
             </div>

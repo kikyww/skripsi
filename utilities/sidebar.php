@@ -124,10 +124,10 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                         <a href="../l-kb/report.php">Laporan KB</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Lokasi KB</a>
+                        <a href="../l-obat/report.php">Obat/Alat Digunakan</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Obat/Alat Digunakan</a>
+                        <a href="../laporan/">Lokasi KB</a>
                     </li>
                     <li class="submenu-item">
                         <a href="../laporan/">Laporan Tidak KB</a>

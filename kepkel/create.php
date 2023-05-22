@@ -12,7 +12,6 @@
         header("Location: ../index.php");
     }
     if (isset($_POST['submit'])) {
-        $kk = htmlspecialchars($_POST['kk']);
         $nama = htmlspecialchars($_POST['nama']);
         $tempat = htmlspecialchars($_POST['tempat']);
         $tgl = htmlspecialchars($_POST['tgl']);
@@ -29,7 +28,7 @@
         }else {
             $idkepkel = 1;
         }
-        $sql = "INSERT INTO tb_kepkel (id_kepkel, no_kk, nama_kepkel, tl_kepkel, lahir_kepkel, alamat_kepkel, jk_kepkel, telp_kepkel, kecamatan_id, kelurahan_id) VALUES ('$idkepkel', '$kk', '$nama', '$tempat', '$tgl', '$alamat', '$jk', '$telp', '$kecamatan', '$kelurahan')";
+        $sql = "INSERT INTO tb_kepkel (id_kepkel, nama_kepkel, tl_kepkel, lahir_kepkel, alamat_kepkel, jk_kepkel, telp_kepkel, kecamatan_id, kelurahan_id) VALUES ('$idkepkel', '$nama', '$tempat', '$tgl', '$alamat', '$jk', '$telp', '$kecamatan', '$kelurahan')";
         if (mysqli_query($konek, $sql)) {
             echo "<script>alert('Kepala Keluarga telah berhasil ditambahkan!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=kepkel.php?kec=".$kec."&kel=".$kel."'>";
@@ -60,7 +59,7 @@
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Kepala Keluarga <?= $kec ?></h4>
+                            <h4 class="card-title">Tambah Kepala Keluarga <?= $kel ?></h4>
                         </div>
                         <a class="btn btn-secondary" style="margin-right:28px;" href="kepkel.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
                     </div>
@@ -69,13 +68,7 @@
                             <form method="POST" class="form form-horizontal">
                                 <div class="form-body">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <label>No. KK</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="number" name="kk" class="form-control" placeholder="No. KK" autocomplete="off" required>
-                                        </div>
-                                        
+                                    
                                         <div class="col-md-4">
                                             <label>Nama</label>
                                         </div>

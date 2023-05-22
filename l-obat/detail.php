@@ -29,9 +29,14 @@
 
     <section class="section">
         <div class="card">
+            <div class="d-flex justify-content-between align-items-center">
                 <div class="card-header">
-                    Analisa Sasaran Obat
+                    Detail Sasaran Obat
                 </div>
+                <div class="buttons">
+                    <a class="btn btn-secondary" style="margin-right:20px;" href="report.php"><i class="fa fa-arrow-left"></i></a>
+                </div>
+            </div>
 
                 <form action="POST" id="filter_form">
                     <div class="row m-3">
@@ -81,7 +86,7 @@
                             <th>Obat / Alat KB</th>
                             <th>Total</th>
                             <th>Tanggal</th>
-                            <th>Detail</th>
+                            <th>Rincian</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +102,7 @@
                             <td><?= $row['jumlah']; ?></td>
                             <td><?= date('d-m-Y', strtotime($row['tgl_awal'])); ?></td>
                             <td>
-                                <a href="rincian.php?id=<?=$row['id_stok'] ?>&kec=<?=$row['nama_kecamatan'] ?>&tgl=<?= $row['tgl_awal'] ?>" class="btn btn-primary">Detail</a>
+                                <a href="rincian.php?id=<?=$row['id_stok'] ?>&kec=<?=$row['nama_kecamatan'] ?>&tgl=<?= $row['tgl_awal'] ?>" class="btn btn-primary"><i class="fa fa-book-open"></i></a>
                             </td>
                         </tr>
                     <?php } ?>

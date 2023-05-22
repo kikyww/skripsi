@@ -13,6 +13,7 @@ $data = array(
     'Banjarmasin Barat' => array(),
     'Banjarmasin Selatan' => array(),
     'Banjarmasin Tengah' => array(),
+    'Banjarmasin Timur' => array(),
     'labels' => array()
 );
 

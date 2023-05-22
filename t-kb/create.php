@@ -3,43 +3,33 @@
     include '../koneksi.php';
     include_once('../function/Kecamatan.php');
     include_once('../function/Kelurahan.php');
-
+    
     $id_user = $_SESSION['id_user'];
     $kec = $_GET['kec'];
     $kel = $_GET['kel'];
-
+    $now = date('Y-m-d');
+    
     if (!isset($id_user)) {
         header("Location: ../index.php");
     }
     if (isset($_POST['submit'])) {
         $nama = htmlspecialchars($_POST['nama']);
-        $kepkel = htmlspecialchars($_POST['kepkel']);
-        $tgl = htmlspecialchars($_POST['tgl']);
-        $stok = htmlspecialchars($_POST['stok']);
-        $jumlah = htmlspecialchars($_POST['jumlah']);
-        $obatId = htmlspecialchars($_POST['obat_id']);
+        $status = htmlspecialchars($_POST['status']);
+        $keterangan = htmlspecialchars($_POST['alasan']);
+        $alasan = htmlspecialchars($_POST['keterangan']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan']);
-        $plusenam = htmlspecialchars($_POST['enam']);
-        $enam_bulan = date('Y-m-d', strtotime('+6 months', strtotime($tgl)));
         
-        $num = mysqli_query($konek, "SELECT id_kb FROM tb_kb ORDER BY id_kb DESC");
-        if (mysqli_num_rows($num) > 0) {
-            $num = mysqli_fetch_array($num);
-            $idkb = $num['id_kb'] + 1;
-        }else {
-            $idkb = 1;
-        }
+        $queryGet = mysqli_query($konek, "SELECT tgl_kb, tgl_kembali FROM tb_kb WHERE keluarga_id = '$nama'");
+        $getTgl = $queryGet->fetch_assoc();
 
-        $queryInsert = "INSERT INTO tb_kb (id_kb, kepkel_id, keluarga_id, kecamatan_id, kelurahan_id, tgl_kb, tgl_kembali, obat_id, stok_id, jumlah_obat) VALUES ('$idkb', '$kepkel', '$nama', '$kecamatan', '$kelurahan', '$tgl', '$plusenam', '$obatId', '$stok', '$jumlah')";
-        
-        if (mysqli_query($konek, $queryInsert)) {
-            mysqli_query($konek, "UPDATE tb_stok SET stok_akhir = stok_akhir - $jumlah WHERE id_stok = '$stok'");
-            mysqli_query($konek, "UPDATE tb_keluarga SET status_kb = 'KB', keterangan_kb = 'KB', alasan_kb = '' WHERE id_keluarga = '$nama'");
-
-            echo "<script>alert('Catatan KB telah berhasil ditambahkan!');</script>";
-            echo "<meta http-equiv='refresh' content='0; url=kb.php?kec=".$kec."&kel=".$kel."'>";
-
+        $queryInsert = "UPDATE tb_keluarga SET status_kb = '$status', keterangan_kb = '$keterangan', alasan_kb = '$alasan' WHERE id_keluarga = '$nama'";
+        if ($status = 'KB' && $now < $getTgl['tgl_kembali']) {
+            echo "<script>alert('Gagal diubah, karena sedang masa KB!');</script>";
+            echo "<meta http-equiv='refresh' content='0; url=./create.php?kec=".$kec."&kel=".$kel."'>";
+        } else if (mysqli_query($konek, $queryInsert)) {
+            echo "<script>alert('Telah berhasil diubah!');</script>";
+            echo "<meta http-equiv='refresh' content='0; url=./t-kb.php?kec=".$kec."&kel=".$kel."'>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);
         }
@@ -53,8 +43,8 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="kecamatan.php">KB</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tambah KB <?= $kec ?></li>
+                        <li class="breadcrumb-item"><a href="kecamatan.php">Tidak KB</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> <?= $kec ?></li>
                     </ol>
                 </nav>
             </div>
@@ -125,63 +115,39 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label>Tanggal KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="date" name="tgl" id="tgl" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
-                                        </div>
-
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#tgl').on('change', function() {
-                                                    var selectedDate = $(this).val();
-                                                    var newDate = new Date(selectedDate);
-                                                    newDate.setMonth(newDate.getMonth() + 6);
-                                                    var formattedDate = newDate.toISOString().substr(0, 10);
-                                                    $('#enambulan').val(formattedDate);
-                                                });
-                                            });
-                                        </script>
-
-                                        <div class="col-md-4">
-                                            <label>Tanggal Kembali KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="date" name="enam" id="enambulan" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            <label>Obat/Alat KB</label>
+                                            <label>Status KB</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
-                                                <select class="form-select" name="stok" id="basicSelect" required>
-                                                    <option value="" selected hidden>Pilih Obat/Alat</option> 
-                                                    <?php
-                                                    $stokObat = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_stok.tgl_awal <= CURDATE() AND tb_stok.tgl_akhir >= CURDATE()");
-                                                    foreach ($stokObat as $dataObat) : 
-                                                    ?>
-                                                    <option value="<?= $dataObat['id_stok'] ?>" data-obatid="<?= $dataObat['obat_id'] ?>"><?= $dataObat['nama_obat']; ?> | Sisa : <?= $dataObat['stok_akhir']; ?></option>
-                                                    <?php endforeach; ?>
+                                                <select class="form-select" name="status" id="basicSelect" required>
+                                                    <option selected hidden>Status KB</option>
+                                                    <option value="Tidak KB">Tidak KB</option>
+                                                    <option value="KB"> KB</option>
                                                 </select>
                                             </fieldset>
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#basicSelect').on('change', function() {
-                                                        var selectedOption = $(this).find('option:selected')
-                                                        var obatId = selectedOption.data('obatid')
-                                                        $('#obat-id').val(obatId)
-                                                    })
-                                                })
-                                            </script>
-                                            <input type="hidden" name="obat_id" id="obat-id" class="form-control" value="" placeholder="ID Obat" autocomplete="off" required>
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label>Jumlah Obat / Alat</label>
+                                            <label>Alasan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" name="jumlah" id="jumlah" class="form-control" value="1" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
+                                            <fieldset class="form-group">
+                                                <select class="form-select" name="alasan" id="basicSelect" required>
+                                                    <option selected hidden>Pilih Alasan</option>
+                                                    <option value="KB">KB</option>
+                                                    <option value="Program Hamil">Program Hamil</option>
+                                                    <option value="Hamil">Hamil</option>
+                                                    <option value="Belum Konfirmasi">Belum Konfirmasi</option>
+                                                    <option value="Lainnya">Lainnya (sertakan keterangan)</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label>Keterangan</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <textarea type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan (tidak wajib di isi)" autocomplete="off"></textarea>
                                         </div>
 
                                         <div class="col-md-4">

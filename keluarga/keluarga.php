@@ -72,7 +72,7 @@
                             <a href='update.php?kec=<?= $kec ?>&kel=<?= $kel ?>&id=<?= $row[0] ?>' class='btn icon btn-primary'><i class='bi bi-pencil'></i></a>
                             <a href='delete.php?kec=<?= $kec ?>&kel=<?= $kel ?>&id=<?= $row[0] ?>' onclick='return confirm(\" Hapus?\");' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>
                             </td>
-                        </tr>";
+                        </tr>
                     <?php } ?>
                     </tbody>
                 </table>

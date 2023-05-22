@@ -41,7 +41,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>No. KK</th>
                             <th>Nama</th>
                             <th>TTL</th>
                             <th>Alamat</th>
@@ -59,16 +58,16 @@
                     echo"
                         <tr>
                             <td>$no</td>
-                            <td>$row[no_kk]</td>
-                            <td>$row[nama_kepkel]</td>
-                            <td>$row[tl_kepkel], $row[lahir_kepkel]</td>
-                            <td>$row[alamat_kepkel]</td>
+                            <td>$row[nama_kepkel]</td>";
+                            ?>
+                            <td><?= $row['tl_kepkel'] ?>, <?= date('d-m-Y', strtotime($row['lahir_kepkel']))?></td>
+                <?php echo" <td>$row[alamat_kepkel]</td>
                             <td>$row[jk_kepkel]</td>
                             <td>$row[telp_kepkel]</td>
                             <td>$row[nama_kelurahan]</td>
                             <td>
                             <a href='update.php?kec=$kec&kel=$kel&id=$row[0]' class='btn icon btn-primary'><i class='bi bi-pencil'></i></a>
-                            <a href='delete.php?kec=$kec&kel=$kel&id=$row[0]' onclick='return confirm(\" Hapus?\");' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>
+                            <a href='delete.php?kec=$kec&kel=$kel&id=$row[0]' onclick='return confirm(\" Hapus?\")' class='btn icon btn-danger'><i class='bi bi-trash'></i></a>
                             </td>
                         </tr>";
                     }?>

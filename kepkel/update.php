@@ -17,7 +17,6 @@
     }
     
     if (isset($_POST['submit'])) {
-        $kk = htmlspecialchars($_POST['kk']);
         $nama = htmlspecialchars($_POST['nama']);
         $tempat = htmlspecialchars($_POST['tempat']);
         $tgl = htmlspecialchars($_POST['tgl']);
@@ -27,7 +26,7 @@
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan']);
 
-        $sql = "UPDATE tb_kepkel SET no_kk = '$kk', nama_kepkel = '$nama', tl_kepkel = '$tempat', lahir_kepkel = '$tgl', alamat_kepkel = '$alamat', jk_kepkel = '$jk', telp_kepkel = '$telp', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan' WHERE id_kepkel = '$id'";
+        $sql = "UPDATE tb_kepkel SET nama_kepkel = '$nama', tl_kepkel = '$tempat', lahir_kepkel = '$tgl', alamat_kepkel = '$alamat', jk_kepkel = '$jk', telp_kepkel = '$telp', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan' WHERE id_kepkel = '$id'";
         if (mysqli_query($konek, $sql)) {
             echo "<script>alert('Kepala Keluarga Berhasil di Update!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=kepkel.php?kec=".$kec."&kel=".$kel."'>";
@@ -67,12 +66,6 @@
                             <form method="POST" class="form form-horizontal">
                                 <div class="form-body">
                                     <div class="row">
-                                    <div class="col-md-4">
-                                            <label>No. KK</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="number" id="kk" class="form-control" name="kk" value="<?= $row['no_kk'] ?>" placeholder="No. KK" required>
-                                        </div>
                                         
                                         <div class="col-md-4">
                                             <label>Nama</label>

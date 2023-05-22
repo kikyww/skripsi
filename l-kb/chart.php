@@ -84,6 +84,7 @@ function getData(tahun) {
             myChart.data.datasets[1].data = chartData['Banjarmasin Barat']
             myChart.data.datasets[2].data = chartData['Banjarmasin Selatan']
             myChart.data.datasets[3].data = chartData['Banjarmasin Tengah']
+            myChart.data.datasets[4].data = chartData['Banjarmasin Timur']
 
             myChart.update()
         }
@@ -134,6 +135,11 @@ function initChart() {
                     label: 'Banjarmasin Tengah',
                     data: [],
                     backgroundColor: 'orange'
+                },
+                {
+                    label: 'Banjarmasin Timur',
+                    data: [],
+                    backgroundColor: 'purple'
                 }
             ]
         },

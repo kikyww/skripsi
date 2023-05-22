@@ -110,6 +110,9 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                         <a href="../kb/kecamatan.php">Catatan KB</a>
                     </li>
                     <li class="submenu-item ">
+                        <a href="../t-kb/kecamatan.php">Catatan Tidak KB</a>
+                    </li>
+                    <li class="submenu-item ">
                         <a href="../intervensi/intervensi.php">Intervensi</a>
                     </li>
                 </ul>
@@ -127,13 +130,13 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                         <a href="../l-obat/report.php">Obat/Alat Digunakan</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Lokasi KB</a>
+                        <a href="../l-lok/">Lokasi KB</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan Tidak KB</a>
+                        <a href="../lt-kb/report.php">Laporan Tidak KB</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan PUS</a>
+                        <a href="../l-pus/report.php">Laporan PUS</a>
                     </li>
                     <li class="submenu-item">
                         <a href="../laporan/">Laporan Intervensi</a>

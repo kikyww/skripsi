@@ -157,24 +157,16 @@
                                             <input type="number" name="telp" id="telp" class="form-control" placeholder="No. Telepon/WhatsApp" autocomplete="off" required>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label>Status KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
+                                        <div class="col-md-8 form-group" hidden>
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="status" id="basicSelect" required>
-                                                    <option value="" selected hidden>Status</option>
-                                                    <option value="Tidak KB">Tidak KB</option>
-                                                    <option value="KB">KB</option>
+                                                    <option selected value="Tidak KB">Tidak KB</option>
                                                 </select>
                                             </fieldset>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label>Keterangan KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan KB" autocomplete="off">
+                                        <div class="col-md-8 form-group" hidden>
+                                            <input type="text" name="keterangan" id="keterangan" value="Belum Konfirmasi" class="form-control" placeholder="Keterangan KB" autocomplete="off">
                                         </div>
 
                                         <div class="col-md-4">

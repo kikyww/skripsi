@@ -26,5 +26,5 @@ if($delete){
     echo "<script>alert('Catatan KB telah berhasil dihapus!');</script>";
     echo "<meta http-equiv='refresh' content='0; url=kb.php?kec=".$kec."&kel=".$kel."'>";
 } else {
-    echo "Error: " . mysqli_error($conn);
+    echo "Error: " . mysqli_error($konek);
 }

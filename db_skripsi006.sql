@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Bulan Mei 2023 pada 16.21
+-- Waktu pembuatan: 12 Jun 2023 pada 09.16
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -32,14 +32,41 @@ CREATE TABLE `tb_intervensi` (
   `kecamatan_id` int(11) NOT NULL,
   `kelurahan_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `nama_intervensi` varchar(255) NOT NULL,
+  `judul_intervensi` varchar(255) NOT NULL,
   `tgl_intervensi` date NOT NULL,
-  `jenis_intervensi` varchar(255) NOT NULL,
-  `pembuat_intervensi` varchar(255) NOT NULL,
-  `kunjungan_intervensi` varchar(255) NOT NULL,
-  `foto_intervensi` varchar(2255) NOT NULL,
+  `tempat_intervensi` varchar(255) NOT NULL,
+  `deskripsi_intervensi` varchar(255) NOT NULL,
+  `jenis_id` int(11) NOT NULL,
+  `seksi_intervensi` varchar(255) NOT NULL,
+  `pesertai_intervensi` varchar(255) NOT NULL,
+  `pesertaii_intervensi` varchar(255) NOT NULL,
+  `pesertaiii_intervensi` varchar(255) NOT NULL,
+  `opd_id` int(11) NOT NULL,
+  `kunjungan_id` int(11) NOT NULL,
+  `foto_intervensi` mediumblob NOT NULL,
   `intervensi_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_jenisinv`
+--
+
+CREATE TABLE `tb_jenisinv` (
+  `id_jenis` int(11) NOT NULL,
+  `nama_jenis` varchar(255) NOT NULL,
+  `deskripsi_jenisinv` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_jenisinv`
+--
+
+INSERT INTO `tb_jenisinv` (`id_jenis`, `nama_jenis`, `deskripsi_jenisinv`) VALUES
+(1, 'Lainnya', 'Kategori tidak terdaftar'),
+(2, 'p', 'ini p'),
+(3, 'L', 'ini l');
 
 -- --------------------------------------------------------
 
@@ -216,6 +243,25 @@ INSERT INTO `tb_obat` (`id_obat`, `jenis_obat`, `nama_obat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tb_opd`
+--
+
+CREATE TABLE `tb_opd` (
+  `id_opd` int(11) NOT NULL,
+  `nama_opd` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_opd`
+--
+
+INSERT INTO `tb_opd` (`id_opd`, `nama_opd`) VALUES
+(1, 'opde'),
+(2, 'opdr');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tb_stok`
 --
 
@@ -253,7 +299,7 @@ CREATE TABLE `tb_user` (
   `nama` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `roles` enum('admin','pkb','pegawai','kabid') NOT NULL
+  `roles` enum('ADMIN','PKB','KABID','PEGAWAI') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -261,7 +307,7 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nip`, `nama`, `username`, `password`, `roles`) VALUES
-(1, 1, 'Admin', 'admin', 'admin', 'admin');
+(1, 1, 'Admin', 'admin', 'admin', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -274,7 +320,16 @@ ALTER TABLE `tb_intervensi`
   ADD PRIMARY KEY (`id_intervensi`),
   ADD KEY `kecamatan_id` (`kecamatan_id`),
   ADD KEY `kelurahan_id` (`kelurahan_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `jenis_id` (`jenis_id`),
+  ADD KEY `opd_id` (`opd_id`),
+  ADD KEY `kunjungan_id` (`kunjungan_id`);
+
+--
+-- Indeks untuk tabel `tb_jenisinv`
+--
+ALTER TABLE `tb_jenisinv`
+  ADD PRIMARY KEY (`id_jenis`);
 
 --
 -- Indeks untuk tabel `tb_kb`
@@ -326,6 +381,12 @@ ALTER TABLE `tb_obat`
   ADD PRIMARY KEY (`id_obat`);
 
 --
+-- Indeks untuk tabel `tb_opd`
+--
+ALTER TABLE `tb_opd`
+  ADD PRIMARY KEY (`id_opd`);
+
+--
 -- Indeks untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
@@ -350,6 +411,12 @@ ALTER TABLE `tb_user`
 --
 ALTER TABLE `tb_intervensi`
   MODIFY `id_intervensi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_jenisinv`
+--
+ALTER TABLE `tb_jenisinv`
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kb`
@@ -388,6 +455,12 @@ ALTER TABLE `tb_obat`
   MODIFY `id_obat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_opd`
+--
+ALTER TABLE `tb_opd`
+  MODIFY `id_opd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
@@ -409,7 +482,10 @@ ALTER TABLE `tb_user`
 ALTER TABLE `tb_intervensi`
   ADD CONSTRAINT `tb_intervensi_ibfk_1` FOREIGN KEY (`kecamatan_id`) REFERENCES `tb_kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_intervensi_ibfk_2` FOREIGN KEY (`kelurahan_id`) REFERENCES `tb_kelurahan` (`id_kelurahan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_intervensi_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id_user`);
+  ADD CONSTRAINT `tb_intervensi_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_intervensi_ibfk_4` FOREIGN KEY (`jenis_id`) REFERENCES `tb_jenisinv` (`id_jenis`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_intervensi_ibfk_5` FOREIGN KEY (`opd_id`) REFERENCES `tb_opd` (`id_opd`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_intervensi_ibfk_6` FOREIGN KEY (`kunjungan_id`) REFERENCES `tb_opd` (`id_opd`);
 
 --
 -- Ketidakleluasaan untuk tabel `tb_kb`

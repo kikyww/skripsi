@@ -46,8 +46,6 @@
                     <div class="buttons">
                         <button class="btn btn-secondary" id="btn-filter">Filter</button>
                         <button class="btn btn-secondary" id="btn-pdf">PDF</button>
-                        <button class="btn btn-secondary" id="csv-export">CSV (All)</button>
-                        <button class="btn btn-secondary" id="excel-export">Excell (All)</button>
                         <a href="chart.php" class="btn btn-secondary">Chart</a>
                     </div>
                 </div>
@@ -139,29 +137,6 @@
                         })
                     })
                 
-                    $('#csv-start').click(function(event) {
-                        event.preventDefault()
-                        var filKecamatan = $('#filKecamatan').val()
-                        var filKelurahan = $('#filKelurahan').val()
-                        var url = 'export-csv.php'
-                        var xhr = new XMLHttpRequest()
-
-                        xhr.open('POST', url, true)
-                        xhr.responseType = 'blob'
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-
-                        xhr.onload = function() {
-                            if (this.status === 200) {
-                                var blob = new Blob([this.response], { type: 'text/csv' })
-                                var link = document.createElement('a')
-                                link.href = window.URL.createObjectURL(blob)
-                                link.download = 'tidak_kb.csv'
-                                link.click()
-                            }
-                        }
-                        xhr.send('kecamatan_id=' + filKecamatan + '&kelurahan_id=' + filKelurahan)
-                    })
-                
                     $('#excel-start').click(function(event) {
                         event.preventDefault()
                         var filKecamatan = $('#filKecamatan').val()
@@ -185,18 +160,6 @@
                         }
                         xhr.send('kecamatan_id=' + filKecamatan + '&kelurahan_id=' + filKelurahan + '&kategori=' + kategori)
                     })
-                })
-
-                $(document).on('click', '#csv-export', function(e) {
-                    e.preventDefault()
-                    var url = 'export-csv.php'
-                    window.open(url, '_blank')
-                })
-
-                $(document).on('click', '#excel-export', function(e) {
-                    e.preventDefault();
-                    var url = 'export-excel.php'
-                    window.open(url, '_blank')
                 })
             </script>
 

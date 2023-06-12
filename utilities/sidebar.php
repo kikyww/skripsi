@@ -93,16 +93,38 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
             </li>
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
-                    <i class="bi bi-stack"></i>
-                    <span>Master Data</span>
+                    <i class="bi bi-house-fill"></i>
+                    <span>Master Wilayah</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../obat/obat.php">Obat/Alat</a>
+                        <a href="../kecamatan/kecamatan.php">Kecamatan</a>
                     </li>
                     <li class="submenu-item ">
-                        <a href="../wilayah/wilayah.php">Wilayah</a>
+                        <a href="../kelurahan/kelurahan.php">Kelurahan</a>
                     </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-thermometer-half"></i>
+                    <span>Master Obat</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="../obat/obat.php">Obat/Alat KB</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="../stok/stok.php">Kelola Stok Obat/Alat</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-stack"></i>
+                    <span>Master KB</span>
+                </a>
+                <ul class="submenu ">
                     <li class="submenu-item ">
                         <a href="../keluarga/select.php">Keluarga</a>
                     </li>
@@ -112,8 +134,22 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                     <li class="submenu-item ">
                         <a href="../t-kb/kecamatan.php">Catatan Tidak KB</a>
                     </li>
+                </ul>
+            </li>
+            <li class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-building"></i>
+                    <span>Master Intervensi</span>
+                </a>
+                <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../intervensi/intervensi.php">Intervensi</a>
+                        <a href="../jenis-inv/jenis.php">Jenis Intervensi</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="../opd/opd.php">OPD</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="../intervensi/kecamatan.php">Intervensi</a>
                     </li>
                 </ul>
             </li>

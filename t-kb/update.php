@@ -12,7 +12,7 @@
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_keluarga LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_keluarga.id_keluarga = '$id'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_keluarga LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_keluarga.id_keluarga = '$id'");
         $row = $q->fetch_array();
     }
     
@@ -65,12 +65,12 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Nama | Kepala Keluarga</label>
+                                            <label>Nama | NIK</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Nama Keluarga" autocomplete="off" readonly required>
                                             <input type="hidden" name="kepkel" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" readonly required>
-                                            <input type="text" id="search-input" class="form-control" value="<?= $row['nama_keluarga'] ?> | <?= $row['nama_kepkel'] ?>" autocomplete="off" readonly required>
+                                            <input type="text" id="search-input" class="form-control" value="<?= $row['nama_keluarga'] ?> | <?= $row['nik'] ?>" autocomplete="off" readonly required>
 
                                             <script>
                                                 $(document).ready(function() {

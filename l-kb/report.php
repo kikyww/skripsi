@@ -7,7 +7,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_kb.kepkel_id = tb_kepkel.id_kepkel LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok ORDER BY tb_kecamatan.nama_kecamatan ASC, tb_kelurahan.nama_kelurahan ASC");
+    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok ORDER BY tb_kecamatan.nama_kecamatan ASC, tb_kelurahan.nama_kelurahan ASC");
 
 ?>
 
@@ -18,7 +18,7 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Laporan</a></li>
+                        <li class="breadcrumb-item"><a href="#">Laporan KB</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Laporan KB</li>
                     </ol>
                 </nav>
@@ -160,8 +160,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kepala Keluarga</th>
+                            <th>NIK</th>
                             <th>Nama (KB)</th>
+                            <th>Kepala Keluarga</th>
                             <th>Tanggal KB</th>
                             <th>KB Ulang</th>
                             <th>Obat/Alat</th>
@@ -178,8 +179,9 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $row['nama_kepkel']; ?></td>
+                            <td><?= $row['nik']; ?></td>
                             <td><?= $row['nama_keluarga']; ?></td>
+                            <td><?= $row['kepala_keluarga']; ?></td>
                             <td><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
                             <td><?= date('d-m-Y', strtotime($row['tgl_kembali'])); ?></td>
                             <td><?= $row['nama_obat']; ?></td>

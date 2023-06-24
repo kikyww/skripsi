@@ -24,7 +24,7 @@
         $getTgl = $queryGet->fetch_assoc();
 
         $queryInsert = "UPDATE tb_keluarga SET status_kb = '$status', keterangan_kb = '$keterangan', alasan_kb = '$alasan' WHERE id_keluarga = '$nama'";
-        if ($status = 'KB' && $now < $getTgl['tgl_kembali']) {
+        if ($status == 'KB' && $now < $getTgl['tgl_kembali']) {
             echo "<script>alert('Gagal diubah, karena sedang masa KB!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=./create.php?kec=".$kec."&kel=".$kel."'>";
         } else if (mysqli_query($konek, $queryInsert)) {
@@ -67,7 +67,7 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Nama | Kepala Keluarga</label>
+                                            <label>Nama | NIK</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Nama Keluarga" autocomplete="off" readonly required>

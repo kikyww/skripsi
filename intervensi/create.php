@@ -24,23 +24,33 @@
         $pesertaiii = htmlspecialchars($_POST['pesertaiii']);
         $instansi = htmlspecialchars($_POST['instansi']);
         $kunjungan = htmlspecialchars($_POST['kunjungan']);
-        $foto = htmlspecialchars($_POST['foto']);
+        $status = htmlspecialchars($_POST['status']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan']);
 
-        $num = mysqli_query($konek, "SELECT id_intervensi FROM tb_intervensi ORDER BY id_intervensi DESC");
-        if (mysqli_num_rows($num) > 0) {
-            $num = mysqli_fetch_array($num);
-            $idintervensi = $num['id_intervensi'] + 1;
-        }else {
-            $idintervensi = 1;
-        }
-        $sql = "INSERT INTO tb_intervensi (id_intervensi, kecamatan_id, kelurahan_id, user_id,judul_intervensi, tgl_intervensi, tempat_intervensi, deksripsi_intervensi, jenis_id, seksi_intervensi, pesertai_intervensi, pesertaii_intervensi, pesertaiii_intervensi, opd_id, kunjungan_id, foto_intervensi) VALUES ('$idintervensi', '$kecamatan', '$kelurahan', '$users', '$judul', '$tgl', '$tempat', '$deskripsi', '$kategori', '$seksi', '$pesertai', '$$pesertaii', '$$pesertaiii', '$instansi', '$kunjungan', '$foto')";
-        if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('Intervensi telah berhasil ditambahkan!');</script>";
-            echo '<meta http-equiv="refresh" content="0; url=intervensi.php?kec'. $kec .'&kel='. $kel .'">';
+        $namaFile = $_FILES['foto']['name'];
+        $tmpFile = $_FILES['foto']['tmp_name'];
+        $folderTujuan = 'D:/xampp/htdocs/dist-skripsi/assets/images/intervensi/';
+        $pathFile = $folderTujuan . $namaFile;
+
+        if (move_uploaded_file($tmpFile, $pathFile)) {
+            $num = mysqli_query($konek, "SELECT id_intervensi FROM tb_intervensi ORDER BY id_intervensi DESC");
+            if (mysqli_num_rows($num) > 0) {
+                $num = mysqli_fetch_array($num);
+                $idintervensi = $num['id_intervensi'] + 1;
+            }else {
+                $idintervensi = 1;
+            }
+            
+            $sql = "INSERT INTO tb_intervensi (id_intervensi, kecamatan_id, kelurahan_id, user_id, judul_intervensi, tgl_intervensi, tempat_intervensi, deskripsi_intervensi, jenis_id, seksi_intervensi, pesertai_intervensi, pesertaii_intervensi, pesertaiii_intervensi, opd_id, kunjungan_id, foto_intervensi, status_intervensi) VALUES ('$idintervensi', '$kecamatan', '$kelurahan', '$users', '$judul', '$tgl', '$tempat', '$deskripsi', '$kategori', '$seksi', '$pesertai', '$pesertaii', '$pesertaiii', '$instansi', '$kunjungan', '$namaFile', '$status')";
+            if (mysqli_query($konek, $sql)) {
+                echo "<script>alert('Intervensi telah berhasil ditambahkan!');</script>";
+                echo '<meta http-equiv="refresh" content="0; url=intervensi.php?kec='. $kec .'&kel='. $kel .'">';
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($konek);
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($konek);
+            echo "<script>alert('Gagal Mengupload Foto!');</script>";
         }
     }
     mysqli_close($konek);
@@ -53,7 +63,7 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="./intervensi.php?kec<?= $kec ?>&kel=<?= $kel ?>">Intervensi</a></li>
+                        <li class="breadcrumb-item"><a href="./intervensi.php?kec=<?= $kec ?>&kel=<?= $kel ?>">Intervensi</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Tambah Intervensi</li>
                     </ol>
                 </nav>
@@ -73,7 +83,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form method="POST" class="form form-horizontal">
+                            <form method="POST" class="form form-horizontal" enctype="multipart/form-data">
                                 <div class="form-body">
                                     <div class="row">
                                     <input type="hidden" class="form-control" value="<?= $id_user ?>" name="users" autocomplete="off" required>
@@ -356,11 +366,13 @@
                                             <ul id="kunjungan-results" class="list-group" style="max-height: 200px; overflow-y: auto;"></ul>
                                         </div>
 
+                                        <input type="hidden" value="Selesai" class="form-control" name="status" readonly required>
+
                                         <div class="col-md-4">
                                             <label>*Lampiran Foto Kegiatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="file" id="foto" class="form-control" name="foto" placeholder="" autocomplete="off" required>
+                                            <input type="file" id="foto" class="form-control" name="foto" autocomplete="off" required>
                                         </div>
 
                                         <div class="col-md-4">
@@ -429,7 +441,6 @@
                 $('#pesertaiii').hide()
                 $('#plus-form').show()
             })
-
         })
     </script>
 

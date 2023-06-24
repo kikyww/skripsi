@@ -7,7 +7,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek,"SELECT *, SUM(tb_keluarga.status_kb = 'Tidak KB') AS status, COUNT(tb_keluarga.id_keluarga) AS id_keluarga FROM tb_keluarga INNER JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel INNER JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_keluarga.kecamatan_id ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
+    $query = mysqli_query($konek,"SELECT *, SUM(tb_keluarga.status_kb = 'Tidak KB') AS status, COUNT(tb_keluarga.id_keluarga) AS id_keluarga FROM tb_keluarga LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_keluarga.kecamatan_id ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
 
 
 ?>

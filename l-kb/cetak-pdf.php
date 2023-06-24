@@ -14,7 +14,7 @@
         $start_date = $_POST['start_date'];
         $end_date = $_POST['end_date'];
         
-        $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_kb.kepkel_id = tb_kepkel.id_kepkel LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok WHERE tb_kb.tgl_kb BETWEEN '$start_date' AND '$end_date' ORDER BY tb_kecamatan.nama_kecamatan ASC, tb_kelurahan.nama_kelurahan ASC");
+        $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok WHERE tb_kb.tgl_kb BETWEEN '$start_date' AND '$end_date' ORDER BY tb_kecamatan.nama_kecamatan ASC, tb_kelurahan.nama_kelurahan ASC");
     }
 
 
@@ -30,8 +30,9 @@
 <thead>
     <tr>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>No</th>
+        <th rowspan=3 style='text-align:center; vertical-align: middle;'>NIK</th>
+        <th rowspan=3 style='text-align:center; vertical-align: middle;'>Akseptor</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Kepala Keluarga</th>
-        <th rowspan=3 style='text-align:center; vertical-align: middle;'>Nama</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Tempat Tanggal Lahir</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Tanggal KB</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Obat / Alat KB</th>        
@@ -49,8 +50,9 @@
         ?>
             <tr>
             <td style='text-align:center;' class='td1'><?= $no; ?></td>
-                <td style='text-align:center;' class='td1'><?= $row['nama_kepkel']; ?></td>
+                <td style='text-align:center;' class='td1'><?= $row['nik']; ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['nama_keluarga']; ?></td>
+                <td style='text-align:center;' class='td1'><?= $row['kepala_keluarga']; ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['tl_keluarga']; ?>, <?= date('d-m-Y', strtotime($row['lahir_keluarga'])); ?></td>
                 <td style='text-align:center;' class='td1'><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['nama_obat']; ?></td>

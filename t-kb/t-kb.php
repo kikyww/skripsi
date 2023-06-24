@@ -8,7 +8,7 @@
     }
     $kec = $_GET['kec'];
     $kel = $_GET['kel'];
-    $query = mysqli_query($konek, "SELECT * FROM tb_keluarga INNER JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel INNER JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_keluarga.status_kb = 'Tidak KB'");
+    $query = mysqli_query($konek, "SELECT * FROM tb_keluarga LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_keluarga.status_kb = 'Tidak KB'");
 
 
 ?>
@@ -43,7 +43,7 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th class="text-center">No</th>
+                            <th class="text-center">NIK</th>
                             <th class="text-center">Nama</th>
                             <th class="text-center">Kepala Keluarga</th>
                             <th class="text-center">Status KB</th>
@@ -60,9 +60,9 @@
                         $no++;
                     ?> 
                         <tr>
-                            <td class="text-center"><?= $no ?></td>
+                            <td class="text-center"><?= $row['nik'] ?></td>
                             <td class="text-center"><?= $row['nama_keluarga'] ?></td>
-                            <td class="text-center"><?= $row['nama_kepkel'] ?></td>
+                            <td class="text-center"><?= $row['kepala_keluarga'] ?></td>
                             <td class="text-center"><?= $row['status_kb'] ?></td>
                             <td class="text-center"><?= $row['keterangan_kb'] ?></td>
                             <?php 

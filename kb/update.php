@@ -12,13 +12,12 @@
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kepkel ON tb_kb.kepkel_id = tb_kepkel.id_kepkel LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_keluarga ON tb_kb.keluarga_id = tb_keluarga.id_keluarga LEFT JOIN tb_obat ON tb_kb.obat_id = tb_obat.id_obat LEFT JOIN tb_stok ON tb_kb.stok_id = tb_stok.id_stok WHERE tb_kb.id_kb = '$id' AND tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'");
         $row = $q->fetch_array();
     }
     
     if (isset($_POST['submit'])) {
         $nama = htmlspecialchars($_POST['nama']);
-        $kepkel = htmlspecialchars($_POST['kepkel']);
         $tgl = htmlspecialchars($_POST['tgl']);
         $stok = htmlspecialchars($_POST['stok']);
         $jumlah = htmlspecialchars($_POST['jumlah']);
@@ -30,7 +29,7 @@
         $jumlahawal = htmlspecialchars($_POST['jumlahawal']);
         $enam_bulan = date('Y-m-d', strtotime('+6 months', strtotime($tgl)));
 
-        $sql = "UPDATE tb_kb SET kepkel_id = '$kepkel', keluarga_id = '$nama', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan', tgl_kb = '$tgl', tgl_kembali = '$plusenam', obat_id = '$obatId', stok_id = '$stok', jumlah_obat = '$jumlah' WHERE id_kb = '$id'";
+        $sql = "UPDATE tb_kb SET keluarga_id = '$nama', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan', tgl_kb = '$tgl', tgl_kembali = '$plusenam', obat_id = '$obatId', stok_id = '$stok', jumlah_obat = '$jumlah' WHERE id_kb = '$id'";
 
         if (mysqli_query($konek, $sql)) {
             mysqli_query($konek, "UPDATE tb_stok SET stok_akhir = stok_akhir + $jumlahawal WHERE id_stok = '$idstok'");
@@ -81,8 +80,8 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Nama Keluarga" autocomplete="off" value="<?= $row['id_keluarga']; ?>" readonly required>
-                                            <input type="hidden" name="kepkel" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" value="<?= $row['id_kepkel']; ?>" readonly required>
-                                            <input type="text" id="search-input" class="form-control" placeholder="Nama" autocomplete="off" value="<?= $row['nama_keluarga']; ?> | <?= $row['nama_kepkel']; ?>" required>
+                                            <input type="hidden" name="kepkel" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" value="" readonly required>
+                                            <input type="text" id="search-input" class="form-control" placeholder="Nama" autocomplete="off" value="<?= $row['nama_keluarga']; ?> | <?= $row['nik']; ?>" required>
 
                                             <script>
                                                 $(document).ready(function() {
@@ -181,8 +180,8 @@
                                             <label>Jumlah Obat / Alat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="number" name="idstok" id="jumlah" class="form-control" value="<?= $row['id_stok']; ?>" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
-                                            <input type="number" name="jumlahawal" id="jumlah" class="form-control" value="<?= $row['jumlah_obat']; ?>" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
+                                            <input type="hidden" name="idstok" id="jumlah" class="form-control" value="<?= $row['id_stok']; ?>" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
+                                            <input type="hidden" name="jumlahawal" id="jumlah" class="form-control" value="<?= $row['jumlah_obat']; ?>" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
                                             <input type="number" name="jumlah" id="jumlah" class="form-control" value="<?= $row['jumlah_obat']; ?>" placeholder="Jumlah Obat/Alat (pcs)" autocomplete="off" required>
                                         </div>
 

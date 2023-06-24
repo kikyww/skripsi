@@ -14,7 +14,7 @@
         $kecamatan_id = $_POST['kecamatan_id'];
         $kelurahan_id = $_POST['kelurahan_id'];
         
-        $query = mysqli_query($konek, "SELECT * FROM tb_keluarga INNER JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel INNER JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_keluarga.kecamatan_id = '$kecamatan_id' AND tb_keluarga.kelurahan_id = '$kelurahan_id' AND tb_keluarga.status_kb = 'Tidak KB' ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
+        $query = mysqli_query($konek, "SELECT * FROM tb_keluarga LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_keluarga.kecamatan_id = '$kecamatan_id' AND tb_keluarga.kelurahan_id = '$kelurahan_id' AND tb_keluarga.status_kb = 'Tidak KB' ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
     }
 
 
@@ -34,6 +34,7 @@
 <thead>
     <tr>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>No</th>
+        <th rowspan=3 style='text-align:center; vertical-align: middle;'>NIK</th>       
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Nama</th>       
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Kepala Keluarga</th>       
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Status KB</th>       
@@ -51,8 +52,9 @@
         ?>
         <tr>
                 <td style='text-align:center;' class='td1'><?= $no ?></td>
+                <td style='text-align:center;' class='td1'><?= $row['nik'] ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['nama_keluarga'] ?></td>
-                <td style='text-align:center;' class='td1'><?= $row['nama_kepkel'] ?></td>
+                <td style='text-align:center;' class='td1'><?= $row['kepala_keluarga'] ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['status_kb'] ?></td>
                 <td style='text-align:center;' class='td1'><?= $row['keterangan_kb'] ?></td>
                 <?php 

@@ -13,7 +13,6 @@
     }
     if (isset($_POST['submit'])) {
         $nama = htmlspecialchars($_POST['nama']);
-        $kepkel = htmlspecialchars($_POST['kepkel']);
         $tgl = htmlspecialchars($_POST['tgl']);
         $stok = htmlspecialchars($_POST['stok']);
         $jumlah = htmlspecialchars($_POST['jumlah']);
@@ -31,7 +30,7 @@
             $idkb = 1;
         }
 
-        $queryInsert = "INSERT INTO tb_kb (id_kb, kepkel_id, keluarga_id, kecamatan_id, kelurahan_id, tgl_kb, tgl_kembali, obat_id, stok_id, jumlah_obat) VALUES ('$idkb', '$kepkel', '$nama', '$kecamatan', '$kelurahan', '$tgl', '$plusenam', '$obatId', '$stok', '$jumlah')";
+        $queryInsert = "INSERT INTO tb_kb (id_kb, keluarga_id, kecamatan_id, kelurahan_id, tgl_kb, tgl_kembali, obat_id, stok_id, jumlah_obat) VALUES ('$idkb', '$nama', '$kecamatan', '$kelurahan', '$tgl', '$plusenam', '$obatId', '$stok', '$jumlah')";
         
         if (mysqli_query($konek, $queryInsert)) {
             mysqli_query($konek, "UPDATE tb_stok SET stok_akhir = stok_akhir - $jumlah WHERE id_stok = '$stok'");
@@ -77,12 +76,12 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Nama | Kepala Keluarga</label>
+                                            <label>Nama | Nik</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Nama Keluarga" autocomplete="off" readonly required>
-                                            <input type="hidden" name="kepkel" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" readonly required>
-                                            <input type="text" id="search-input" class="form-control" placeholder="Nama" autocomplete="off" required>
+                                            <input type="hidden" name="nama" id="id-input" class="form-control" placeholder="ID Akseptor" autocomplete="off" readonly required>
+                                            <input type="hidden" name="" id="id-kepkel" class="form-control" placeholder="ID Kepala Keluarga" autocomplete="off" readonly required>
+                                            <input type="text" id="search-input" class="form-control" placeholder="Nama Akseptor" autocomplete="off" required>
 
                                             <script>
                                                 $(document).ready(function() {

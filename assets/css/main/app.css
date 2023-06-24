@@ -229,6 +229,18 @@
     cursor: pointer;
 }
 
+.ins-hover:hover{
+    color: #fff !important;
+    background-color: #435ebe !important;
+    cursor: pointer;
+}
+
+.kun-hover:hover{
+    color: #fff !important;
+    background-color: #435ebe !important;
+    cursor: pointer;
+}
+
 .ps {
     -ms-overflow-style: none;
     overflow: hidden !important;

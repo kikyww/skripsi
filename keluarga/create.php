@@ -12,11 +12,13 @@
         header("Location: ../index.php");
     }
     if (isset($_POST['submit'])) {
-        $kk = htmlspecialchars($_POST['kk']);
+        $kk = htmlspecialchars($_POST['no-kk']);
+        $nik = htmlspecialchars($_POST['nik']);
         $nama = htmlspecialchars($_POST['nama']);
+        $kepkel = htmlspecialchars($_POST['kepkel']);
         $tempat = htmlspecialchars($_POST['tempat']);
         $tgl = htmlspecialchars($_POST['tgl']);
-        $jk = htmlspecialchars($_POST['jk']);
+        $alamat = htmlspecialchars($_POST['alamat']);
         $telp = htmlspecialchars($_POST['telp']);
         $status = htmlspecialchars($_POST['status']);
         $keterangan = htmlspecialchars($_POST['keterangan']);
@@ -31,9 +33,9 @@
         } else {
             $idkeluarga = 1;
         }
-        $sql = "INSERT INTO tb_keluarga (id_keluarga, kepkel_id, nama_keluarga, tl_keluarga, lahir_keluarga, jk_keluarga, telp_keluarga, status_kb, keterangan_kb, jumlah_anak, kecamatan_id, kelurahan_id) VALUES ('$idkeluarga', '$kk', '$nama', '$tempat', '$tgl', '$jk', '$telp', '$status', '$keterangan', '$jmlanak', '$kecamatan', '$kelurahan')";
+        $sql = "INSERT INTO tb_keluarga (id_keluarga, no_kk, nik, nama_keluarga, kepala_keluarga, tl_keluarga, lahir_keluarga, alamat_keluarga, telp_keluarga, status_kb, keterangan_kb, jumlah_anak, kecamatan_id, kelurahan_id) VALUES ('$idkeluarga', '$kk', '$nik', '$nama', '$kepkel', '$tempat', '$tgl', '$alamat', '$telp', '$status', '$keterangan', '$jmlanak', '$kecamatan', '$kelurahan')";
         if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('Keluarga telah berhasil ditambahkan!');</script>";
+            echo "<script>alert('Akseptor telah berhasil ditambahkan!');</script>";
             echo "<meta http-equiv='refresh' content='0; url=keluarga.php?kec=".$kec."&kel=".$kel."'>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);
@@ -62,7 +64,7 @@
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="card-header">
-                            <h4 class="card-title">Tambah Kepala Keluarga <?= $kel ?></h4>
+                            <h4 class="card-title">Tambah Akseptor KB <?= $kel ?></h4>
                         </div>
                         <a class="btn btn-secondary" style="margin-right:28px;" href="keluarga.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
                     </div>
@@ -73,54 +75,31 @@
                                     <div class="row">
 
                                         <div class="col-md-4">
-                                            <label>Kepala Keluarga</label>
+                                            <label>No Kartu Keluarga</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="search-kk" class="form-control" placeholder="Nama Kepala Keluarga" autocomplete="off" required>
-                                            <input type="hidden" id="id-input" name="kk">
+                                            <input type="number" id="no-kk" class="form-control" name="no-kk" placeholder="68xxxxxxxxxxxxxx" autocomplete="off" required>
+                                        </div>
 
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('#search-kk').keyup(function() {
-                                                        var search = $(this).val()
-                                                        if (search.length >= 1) {                        
-                                                            $.ajax({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-                                                                url: 'search.php?kec=<?= $kec ?>&kel=<?= $kel ?>',
-                                                                type: 'POST',
-                                                                data: {search: search},
-                                                                dataType: 'html',
-                                                                success: function(response) {
-                                                                    $('#search-results').html(response)
-                                                                    if (!$(this).hasClass('disabled')) {
-                                                                        $('#search-results li').on('click', function() {
-                                                                            var id = $(this).attr('data-id')
-                                                                            var name = $(this).text()
-                                                                            $('#id-input').val(id)
-                                                                            $('#search-kk').val(name)
-                                                                            $('#search-results').html('')
-                                                                        })
-                                                                    }
-                                                                }   
-                                                            })
-                                                        } else {
-                                                            $('#search-results').html('')
-                                                        }
-                                                    })
-                                                    $('#search-kk').on('input', function() {
-                                                        if ($(this).val() === '') {
-                                                            $('#id-input').val('')
-                                                        }
-                                                    })
-                                                })
-                                            </script>                   
-                                            <ul id="search-results" class="list-group"></ul>
+                                        <div class="col-md-4">
+                                            <label>No Kartu Keluarga</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="number" id="nik" class="form-control" name="nik" placeholder="63xxxxxxxxxxxxxx" autocomplete="off" required>
                                         </div>
                                             
                                         <div class="col-md-4">
-                                            <label>Nama</label>
+                                            <label>Nama Akseptor</label>
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" autocomplete="off" required>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <label>Nama Kepala Keluarga</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <input type="text" name="kepkel" id="kepkel" class="form-control" placeholder="Nama Kepala Keluarga" autocomplete="off" required>
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -138,16 +117,10 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label>Jenis Kelamin</label>
+                                            <label>Alamat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="jk" id="basicSelect" required>
-                                                    <option value="" selected hidden>Jenis Kelamin</option>
-                                                    <option value="L">Laki-Laki</option>
-                                                    <option value="P">Perempuan</option>
-                                                </select>
-                                            </fieldset>
+                                            <input type="text" name="alamat" id="alamat" class="form-control" placeholder="Alamat Sekarang" autocomplete="off" required>
                                         </div>
 
                                         <div class="col-md-4">

@@ -94,26 +94,35 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-house-fill"></i>
-                    <span>Master Wilayah</span>
+                    <span>Master Admin</span>
                 </a>
                 <ul class="submenu ">
+                    <li class="submenu-item ">
+                        <a href="../kecamatan/kecamatan.php">Akun dan Registrasi</a>
+                    </li>
                     <li class="submenu-item ">
                         <a href="../kecamatan/kecamatan.php">Kecamatan</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="../kelurahan/kelurahan.php">Kelurahan</a>
                     </li>
+                    <li class="submenu-item ">
+                        <a href="../obat/obat.php">Obat/Alat KB</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="../jenis-inv/jenis.php">Jenis Intervensi</a>
+                    </li>
+                    <li class="submenu-item ">
+                        <a href="../opd/opd.php">OPD</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-thermometer-half"></i>
-                    <span>Master Obat</span>
+                    <span>Master Stok</span>
                 </a>
                 <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="../obat/obat.php">Obat/Alat KB</a>
-                    </li>
                     <li class="submenu-item ">
                         <a href="../stok/stok.php">Kelola Stok Obat/Alat</a>
                     </li>
@@ -122,11 +131,11 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
-                    <span>Master KB</span>
+                    <span>Data Akseptor KB</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../keluarga/select.php">Keluarga</a>
+                        <a href="../keluarga/kecamatan.php">Akseptor KB</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="../kb/kecamatan.php">Catatan KB</a>
@@ -139,14 +148,11 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
             <li class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-building"></i>
-                    <span>Master Intervensi</span>
+                    <span>Data Intervensi</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../jenis-inv/jenis.php">Jenis Intervensi</a>
-                    </li>
-                    <li class="submenu-item ">
-                        <a href="../opd/opd.php">OPD</a>
+                        <a href="../agenda/agenda.php">Agenda Intervensi</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="../intervensi/kecamatan.php">Intervensi</a>
@@ -156,7 +162,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
             <li class="sidebar-item has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-collection-fill"></i>
-                    <span>Laporan</span>
+                    <span>Laporan KB</span>
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item">
@@ -166,7 +172,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                         <a href="../l-obat/report.php">Obat/Alat Digunakan</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../l-lok/">Lokasi KB</a>
+                        <a href="../l-lokasi/report.php">Lokasi KB</a>
                     </li>
                     <li class="submenu-item">
                         <a href="../lt-kb/report.php">Laporan Tidak KB</a>
@@ -174,6 +180,15 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                     <li class="submenu-item">
                         <a href="../l-pus/report.php">Laporan PUS</a>
                     </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="bi bi-book-fill"></i>
+                    <span>Laporan Intervensi</span>
+                </a>
+                <ul class="submenu ">
                     <li class="submenu-item">
                         <a href="../laporan/">Laporan Intervensi</a>
                     </li>
@@ -229,7 +244,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../login/logout.php"><i class="icon-mid bi bi-box-arrow-left me-2"></i>Logout</a>
+                                        <a class="dropdown-item" href="../login/logout.php" onclick="return confirm('Ingin logout?');"><i class="icon-mid bi bi-box-arrow-left me-2"></i>Logout</a>
                                     </li>
                                 </ul>
                             </div>

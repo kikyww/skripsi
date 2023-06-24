@@ -8,7 +8,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT *, SUM(DATE_SUB(CURDATE(), INTERVAL 49 YEAR) >= tb_keluarga.lahir_keluarga) AS age_nonpus, SUM(DATE_SUB(CURDATE(), INTERVAL 50 YEAR) <= tb_keluarga.lahir_keluarga) AS age_pus FROM tb_keluarga INNER JOIN tb_kepkel ON tb_keluarga.kepkel_id = tb_kepkel.id_kepkel INNER JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_keluarga.kecamatan_id, tb_keluarga.kelurahan_id ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
+    $query = mysqli_query($konek, "SELECT *, SUM(DATE_SUB(CURDATE(), INTERVAL 49 YEAR) >= tb_keluarga.lahir_keluarga) AS age_nonpus, SUM(DATE_SUB(CURDATE(), INTERVAL 50 YEAR) <= tb_keluarga.lahir_keluarga) AS age_pus FROM tb_keluarga LEFT JOIN tb_kecamatan ON tb_keluarga.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_keluarga.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_keluarga.kecamatan_id, tb_keluarga.kelurahan_id ORDER BY tb_keluarga.kecamatan_id DESC, tb_keluarga.kelurahan_id DESC");
 ?>
 
 <div class="page-heading">
@@ -18,7 +18,7 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Laporan</a></li>
+                        <li class="breadcrumb-item"><a href="#">Laporan KB</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Laporan PUS</li>
                     </ol>
                 </nav>

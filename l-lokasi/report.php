@@ -3,11 +3,12 @@
     include '../koneksi.php';
     $id_user = $_SESSION['id_user'];
 
+
     if(!isset($id_user)){
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT * FROM tb_stok LEFT JOIN tb_obat ON tb_stok.obat_id = tb_obat.id_obat LEFT JOIN tb_kecamatan ON tb_stok.kecamatan_id = tb_kecamatan.id_kecamatan ORDER BY tb_stok.stok_stamp DESC");
+    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_kb.tgl_kb");
 
 ?>
 
@@ -19,7 +20,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Laporan KB</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Laporan Obat/Alat</li>
+                        <li class="breadcrumb-item active" aria-current="page">Laporan Tanggal Dan Lokasi KB</li>
                     </ol>
                 </nav>
             </div>
@@ -159,11 +160,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Obat / Alat KB</th>
-                            <th>Stok Awal</th>
-                            <th>Stok Sisa</th>
-                            <th>Tanggal Di Stok</th>
-                            <th>Tanggal Pengembalian</th>
+                            <th>Tanggal</th>
                             <th>Kecamatan</th>
                         </tr>
                     </thead>
@@ -175,11 +172,7 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
-                            <td><?= $row['nama_obat']; ?></td>
-                            <td><?= $row['stok_awal']; ?></td>
-                            <td><?= $row['stok_akhir']; ?></td>
-                            <td><?= date('d-m-Y', strtotime($row['tgl_awal'])); ?></td>
-                            <td><?= date('d-m-Y', strtotime($row['tgl_akhir'])); ?></td>
+                            <td><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
                             <td><?= $row['nama_kecamatan']; ?></td>
                         </tr>
                     <?php } ?>

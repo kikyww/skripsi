@@ -13,6 +13,6 @@ if(!isset($id_user)){
 $delete = mysqli_query($konek, "DELETE FROM tb_keluarga WHERE id_keluarga = '$id'");
 
 if($delete){
-    echo "<script>alert('Keluarga telah berhasil dihapus!');</script>";
+    echo "<script>alert('Akseptor telah berhasil dihapus!');</script>";
     echo "<meta http-equiv='refresh' content='0; url=keluarga.php?kec=".$kec."&kel=".$kel."'>";
 }

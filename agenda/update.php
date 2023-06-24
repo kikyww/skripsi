@@ -6,13 +6,11 @@
 
     $id_user = $_SESSION['id_user'];
     $id = $_GET['id'];
-    $kec = $_GET['kec'];
-    $kel = $_GET['kel'];
 
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.id_intervensi = '$id' AND tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE id_intervensi = '$id'");
         $row = $q->fetch_array();
     }
     
@@ -29,8 +27,9 @@
         $pesertaiii = htmlspecialchars($_POST['pesertaiii']);
         $instansi = htmlspecialchars($_POST['instansi']);
         $kunjungan = htmlspecialchars($_POST['kunjungan']);
+        $status = htmlspecialchars($_POST['status']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
-        $kelurahan = htmlspecialchars($_POST['kelurahan']);
+        $kelurahan = htmlspecialchars($_POST['kelurahan_id']);
 
         $namaFile = $_FILES['foto']['name'];
         $tmpFile = $_FILES['foto']['tmp_name'];
@@ -38,16 +37,16 @@
         $pathFile = $folderTujuan . $namaFile;
 
         if (move_uploaded_file($tmpFile, $pathFile)) {
-        $sql = "UPDATE tb_intervensi SET judul_intervensi = '$judul', tgl_intervensi = '$tgl', user_id = '$users', tempat_intervensi = '$tempat', deskripsi_intervensi= '$deskripsi', seksi_intervensi = '$seksi', jenis_id = '$kategori', pesertai_intervensi = '$pesertai', pesertaii_intervensi = '$pesertaii', pesertaiii_intervensi = '$pesertaiii', opd_id = '$instansi', kunjungan_id = '$kunjungan', foto_intervensi = '$namaFile', kecamatan_id = '$kecamatan', kelurahan_id= '$kelurahan' WHERE id_intervensi = '$id'";
-        if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('Intervensi Berhasil di Ubah!');</script>";
-            echo '<meta http-equiv="refresh" content="0; url=./intervensi.php?kec='. $kec .'&kel='. $kel .'">';
+            $sql = "UPDATE tb_intervensi SET judul_intervensi = '$judul', tgl_intervensi = '$tgl', user_id = '$users', tempat_intervensi = '$tempat', deskripsi_intervensi= '$deskripsi', seksi_intervensi = '$seksi', jenis_id = '$kategori', pesertai_intervensi = '$pesertai', pesertaii_intervensi = '$pesertaii', pesertaiii_intervensi = '$pesertaiii', opd_id = '$instansi', kunjungan_id = '$kunjungan', foto_intervensi = '$namaFile', status_intervensi = '$status', kecamatan_id = '$kecamatan', kelurahan_id = '$kelurahan' WHERE id_intervensi = '$id'";
+            if (mysqli_query($konek, $sql)) {
+                echo "<script>alert('Intervensi Berhasil di Ubah!');</script>";
+                echo '<meta http-equiv="refresh" content="0; url=./agenda.php">';
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($konek);
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($konek);
+            echo "<script>alert('Gagal Mengupload Foto!');</script>";
         }
-    } else {
-        echo "<script>alert('Gagal Mengupload Foto!');</script>";
-    }
     }
     mysqli_close($konek);
 ?>
@@ -116,7 +115,7 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <input type="radio" value="<?= $row['seksi_intervensi'] ?>" class="btn-check" name="seksi" id="<?= $row['seksi_intervensi'] ?>" autocomplete="off" checked>
-                                            <label class="btn btn-outline-primary m-1" for="keagamaan"><?= $row['seksi_intervensi'] ?></label>
+                                            <label class="btn btn-outline-primary m-1" for="<?= $row['seksi_intervensi'] ?>"><?= $row['seksi_intervensi'] ?></label>
                                             
                                             <input type="radio" value="Keagamaan" class="btn-check" name="seksi" id="keagamaan" autocomplete="off">
                                             <label class="btn btn-outline-primary m-1" for="keagamaan">Keagamaan</label>
@@ -366,6 +365,19 @@
                                         </div>
 
                                         <div class="col-md-4">
+                                            <label>Status Kegiatan</label>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <fieldset class="form-group">
+                                                <select class="form-select" name="status" id="status" required>
+                                                    <option value="<?= $row['status_intervensi'] ?>" selected hidden><?= $row['status_intervensi'] ?></option>
+                                                    <option value="Selesai">Selesai</option>
+                                                    <option value="Belum">Belum</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-md-4">
                                             <label>*Lampiran Foto Kegiatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
@@ -376,13 +388,17 @@
                                             <label>Nama Kecamatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                        <?php
-                                        $getKec = getKec();
-                                        foreach ($getKec as $dataKec):
-                                        ?>
-                                            <input type="text" id="kecamatan" class="form-control" name="kecamatan" value="<?= $dataKec['id_kecamatan']; ?>" hidden required readonly >
-                                        <?php endforeach; ?>
-                                            <input type="text" class="form-control" placeholder="<?= $kec; ?>" readonly>
+                                            <fieldset class="form-group">
+                                                <select class="form-select" name="kecamatan" id="filKecamatan" required>
+                                                    <option selected hidden>Pilih Kecamatan</option> 
+                                                    <?php
+                                                    $getKecamatan = getKecamatan();
+                                                    foreach ($getKecamatan as $dataKecamatan):
+                                                    ?>
+                                                    <option value="<?= $dataKecamatan['id_kecamatan'] ?>"><?= $dataKecamatan['nama_kecamatan']; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </fieldset>
                                         </div>
                                         
                                         <div class="col-md-4">
@@ -390,22 +406,33 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
-                                                <select class="form-select" name="kelurahan" id="basicSelect" required>
-                                                    <?php
-                                                    $getKel = getKel();
-                                                    foreach ($getKel as $dataKel):
-                                                    ?>
-                                                    <option value="<?= $dataKel['id_kelurahan'] ?>" selected hidden><?= $kel ?></option> 
-                                                    <?php endforeach; ?>
-                                                    <?php
-                                                    $getKelurahan = getKelurahan();
-                                                    foreach ($getKelurahan as $dataKelurahan):
-                                                    ?>
-                                                    <option value="<?= $dataKelurahan['id_kelurahan'] ?>"><?= $dataKelurahan['nama_kelurahan']; ?></option>
-                                                    <?php endforeach; ?>
+                                                <select class="form-select" name="kelurahan_id" id="filKelurahan" required>
+                                                    <option value="x" selected hidden>Pilih Kelurahan</option>
+                                                    <option value=""></option>
                                                 </select>
                                             </fieldset>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#filKecamatan').change(function() {
+                                                    var kecamatan_id = $(this).val();
+                                                    $.ajax({
+                                                        type : "POST",
+                                                        url : "../l-pus/get-kelurahan.php",
+                                                        data : {kecamatan_id : kecamatan_id},
+                                                        dataType : "json",
+                                                        success : function(data) {
+                                                            var options = '';
+                                                            $.each(data, function(index, value){
+                                                                options += '<option value="' + value.id_kelurahan + '">' + value.nama_kelurahan + '</option>';
+                                                            });
+                                                            $('#filKelurahan').html(options)
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        </script>
 
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Simpan</button>

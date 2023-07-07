@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
-    header('location:../login/login.php');
+    header('location:../auth/login.php');
     exit;
 }
 
@@ -98,7 +98,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item ">
-                        <a href="../kecamatan/kecamatan.php">Akun dan Registrasi</a>
+                        <a href="../akun/list.php">Akun dan Registrasi</a>
                     </li>
                     <li class="submenu-item ">
                         <a href="../kecamatan/kecamatan.php">Kecamatan</a>
@@ -117,18 +117,13 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
+            <li class="sidebar-item">
+                <a href="../stok/stok.php" class='sidebar-link'>
                     <i class="bi bi-thermometer-half"></i>
-                    <span>Master Stok</span>
+                    <span>Kelola Stok</span>
                 </a>
-                <ul class="submenu ">
-                    <li class="submenu-item ">
-                        <a href="../stok/stok.php">Kelola Stok Obat/Alat</a>
-                    </li>
-                </ul>
             </li>
-            <li class="sidebar-item  has-sub">
+            <li class="sidebar-item has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="bi bi-stack"></i>
                     <span>Data Akseptor KB</span>
@@ -190,13 +185,13 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                 </a>
                 <ul class="submenu ">
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan Intervensi</a>
+                        <a href="../l-intervensi/report.php">Laporan Intervensi</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan Sosialisasi</a>
+                        <a href="../l-sosialisasi/report.php">Laporan Sosialisasi</a>
                     </li>
                     <li class="submenu-item">
-                        <a href="../laporan/">Laporan Kunjungan</a>
+                        <a href="../l-kunjungan/report.php">Laporan Kunjungan</a>
                     </li>
                 </ul>
             </li>
@@ -244,7 +239,7 @@ if (!isset($_SESSION['id_user']) && $_SESSION['id_user'] == false) {
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="../login/logout.php" onclick="return confirm('Ingin logout?');"><i class="icon-mid bi bi-box-arrow-left me-2"></i>Logout</a>
+                                        <a class="dropdown-item" href="../auth/logout.php" onclick="return confirm('Ingin logout?');"><i class="icon-mid bi bi-box-arrow-left me-2"></i>Logout</a>
                                     </li>
                                 </ul>
                             </div>

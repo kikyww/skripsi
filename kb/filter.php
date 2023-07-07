@@ -20,7 +20,6 @@ if ($query->num_rows > 0) {
                 <td>$row[nama_keluarga]</td>
                 <td>$row[alamat_kepkel]</td>
                 <td>$row[tgl_kb]</td>
-                <td>$row[tgl_kembali]</td>
                 <td>$row[nama_obat]</td>
                 <td>$row[jumlah_obat]</td>
                 <td>

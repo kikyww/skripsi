@@ -87,7 +87,6 @@
                             <th>Kepala Keluarga</th>
                             <th>Alamat</th>
                             <th>Tanggal KB</th>
-                            <th>KB Ulang</th>
                             <th>Obat/Alat</th>
                             <th>Jumlah</th>
                             <th>Aksi</th>
@@ -105,7 +104,6 @@
                             <td><?= $row['kepala_keluarga'] ?></td>
                             <td><?= $row['alamat_keluarga'] ?></td>
                             <td><?= date('d-m-Y', strtotime($row['tgl_kb'])) ?></td>
-                            <td><?= date('d-m-Y', strtotime($row['tgl_kembali'])) ?></td>
                             <td><?= $row['nama_obat'] ?></td>
                             <td><?= $row['jumlah_obat'] ?></td>
                             <td>

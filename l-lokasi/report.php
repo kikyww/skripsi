@@ -3,12 +3,11 @@
     include '../koneksi.php';
     $id_user = $_SESSION['id_user'];
 
-
     if(!isset($id_user)){
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_kb.tgl_kb");
+    $query = mysqli_query($konek, "SELECT * FROM tb_kb LEFT JOIN tb_kecamatan ON tb_kb.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_kb.kelurahan_id = tb_kelurahan.id_kelurahan GROUP BY tb_kb.tgl_kb ORDER BY tb_kb.tgl_kb DESC");
 
 ?>
 
@@ -32,25 +31,10 @@
         <div class="card">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="card-header">
-                    Laporan Obat/Alat
+                    Laporan Tanggal Dan Lokasi KB
                 </div>
                 <div class="buttons">
-                    <button class="btn btn-primary" style="margin-right:30px;" id="rincian">Rincian</button>
-                </div>
-            </div>
-
-            <div class="col-12" id="btn-rincian">
-                <div class="card-header">
-                    <h4>Rincian Laporan Obat</h4>
-                </div>
-                <div class="card-body">
-                    <div class="buttons">
-                        <button class="btn btn-secondary" id="btn-filter">Date Filter</button>
-                        <button class="btn btn-secondary" id="btn-pdf">PDF</button>
-                        <button class="btn btn-secondary" id="csv-export">CSV (All)</button>
-                        <button class="btn btn-secondary" id="excel-export">Excell (All)</button>
-                        <a href="detail.php" class="btn btn-secondary">Detail</a>
-                    </div>
+                    <button class="btn btn-primary" style="margin-right:30px;" id="rincian">Filter</button>
                 </div>
             </div>
 
@@ -67,8 +51,6 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary" id="csv-start" style="margin-right:10px;">CSV</button>
-                        <button class="btn btn-primary" id="excel-start" style="margin-right:10px;">Excel</button>
                         <button type="submit" name="submit" class="btn btn-primary" id="pdf-start" style="margin-right:10px;">PDF</button>
                         <button class="btn btn-primary" id="filter-btn" style="margin-right:30px;">Filter</button>
                     </div>
@@ -94,64 +76,6 @@
                             }
                         })
                     })
-                
-                    $('#csv-start').click(function(event) {
-                        event.preventDefault()
-                        var start_date = $('#start_date').val()
-                        var end_date = $('#end_date').val()
-                        var url = 'export-csv.php'
-                        var xhr = new XMLHttpRequest()
-
-                        xhr.open('POST', url, true)
-                        xhr.responseType = 'blob'
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-
-                        xhr.onload = function() {
-                            if (this.status === 200) {
-                                var blob = new Blob([this.response], { type: 'text/csv' })
-                                var link = document.createElement('a')
-                                link.href = window.URL.createObjectURL(blob)
-                                link.download = 'data-obat.csv'
-                                link.click()
-                            }
-                        }
-                        xhr.send('start_date=' + start_date + '&end_date=' + end_date)
-                    })
-                
-                    $('#excel-start').click(function(event) {
-                        event.preventDefault()
-                        var start_date = $('#start_date').val()
-                        var end_date = $('#end_date').val()
-                        var url = 'export-excel.php'
-                        var xhr = new XMLHttpRequest()
-
-                        xhr.open('POST', url, true)
-                        xhr.responseType = 'blob'
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-
-                        xhr.onload = function() {
-                            if (this.status === 200) {
-                                var blob = new Blob([this.response], { type: 'text/xls' })
-                                var link = document.createElement('a')
-                                link.href = window.URL.createObjectURL(blob)
-                                link.download = 'data-obat.xlsx'
-                                link.click()
-                            }
-                        }
-                        xhr.send('start_date=' + start_date + '&end_date=' + end_date)
-                    })
-                })
-
-                $(document).on('click', '#csv-export', function(e) {
-                    e.preventDefault()
-                    var url = 'export-csv.php'
-                    window.open(url, '_blank')
-                })
-
-                $(document).on('click', '#excel-export', function(e) {
-                    e.preventDefault();
-                    var url = 'export-excel.php'
-                    window.open(url, '_blank')
                 })
             </script>
 
@@ -160,8 +84,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Kelurahan</th>
                             <th>Tanggal</th>
-                            <th>Kecamatan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,8 +96,8 @@
                     ?>
                         <tr>
                             <td><?= $no; ?></td>
+                            <td><?= $row['nama_kelurahan']; ?></td>
                             <td><?= date('d-m-Y', strtotime($row['tgl_kb'])); ?></td>
-                            <td><?= $row['nama_kecamatan']; ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>
@@ -183,23 +107,11 @@
     </section>
 
     <script>
-        $('#btn-rincian').hide()
         $('#filter_form').hide()
         $(document).ready(function(){
-            var isBtnHide = $('#btn-rincian').hide()
-            var isBtnShow = false
+            let isFilterHide = $('#filter_form').hide()
+            let isFilterShow = false
             $('#rincian').click(function(){
-                if(isBtnHide){
-                    $('#btn-rincian').show()
-                } if(isBtnShow) {
-                    $('#btn-rincian').hide()
-                }
-                isBtnShow = !isBtnShow
-            })
-
-            var isFilterHide = $('#filter_form').hide()
-            var isFilterShow = false
-            $('#btn-filter').click(function(){
                 if(isFilterHide){
                     $('#filter_form').show()
                 } if(isFilterShow) {
@@ -207,22 +119,6 @@
                 }
                 isFilterShow = !isFilterShow
             })
-
-
-            var isPDFShow = false
-            $('#btn-pdf').click(function(){
-                if(isFilterHide){
-                    $('#filter_form').show()
-                    $('#pdf-start').show()
-                    $('#btn-pdf').hide()                
-                } if(isPDFShow){
-                    $('#filter_form').hide()
-                    $('#pdf-start').hide()
-                    $('#btn-pdf').show()
-                }
-                isPDFShow = !isPDFShow
-            })
-
         })
     </script>
 

@@ -38,7 +38,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Kegiatan</th>
+                            <th>Judul Intervensi</th>
                             <th>Tanggal</th>
                             <th>Jenis</th>
                             <th>Tempat</th>
@@ -48,7 +48,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_intervensi.status_intervensi = 'Selesai' AND tb_intervensi.agenda_intervensi = '' ORDER BY tb_intervensi.tgl_intervensi DESC");
+                    $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel' AND tb_intervensi.status_intervensi = 'Selesai' ORDER BY tb_intervensi.tgl_intervensi DESC");
                     $no = 0;
                     while ($row = $query->fetch_array()) {
                         $no++;

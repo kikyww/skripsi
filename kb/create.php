@@ -142,10 +142,7 @@
                                             });
                                         </script>
 
-                                        <div class="col-md-4">
-                                            <label>Tanggal Kembali KB</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
+                                        <div class="col-md-8 form-group" hidden>
                                             <input type="date" name="enam" id="enambulan" class="form-control" placeholder="Tanggal KB" autocomplete="off" required>
                                         </div>
                                         

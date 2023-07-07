@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Jun 2023 pada 03.20
+-- Waktu pembuatan: 07 Jul 2023 pada 14.50
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -234,7 +234,8 @@ CREATE TABLE `tb_opd` (
 
 INSERT INTO `tb_opd` (`id_opd`, `nama_opd`) VALUES
 (1, 'opde'),
-(2, 'opdr');
+(2, 'opdr'),
+(3, 'Masyarakat Setempat');
 
 -- --------------------------------------------------------
 
@@ -274,6 +275,8 @@ CREATE TABLE `tb_user` (
   `id_user` int(11) NOT NULL,
   `nip` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
+  `telepon` varchar(15) NOT NULL,
+  `wilayah` varchar(255) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
   `roles` enum('ADMIN','PKB','KABID','PEGAWAI') NOT NULL
@@ -283,8 +286,8 @@ CREATE TABLE `tb_user` (
 -- Dumping data untuk tabel `tb_user`
 --
 
-INSERT INTO `tb_user` (`id_user`, `nip`, `nama`, `username`, `password`, `roles`) VALUES
-(1, 1, 'Admin', 'admin', 'admin', 'ADMIN');
+INSERT INTO `tb_user` (`id_user`, `nip`, `nama`, `telepon`, `wilayah`, `username`, `password`, `roles`) VALUES
+(1, 1, 'Admin', '', '', 'admin', 'admin', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -419,7 +422,7 @@ ALTER TABLE `tb_obat`
 -- AUTO_INCREMENT untuk tabel `tb_opd`
 --
 ALTER TABLE `tb_opd`
-  MODIFY `id_opd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_opd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_stok`
@@ -431,7 +434,7 @@ ALTER TABLE `tb_stok`
 -- AUTO_INCREMENT untuk tabel `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

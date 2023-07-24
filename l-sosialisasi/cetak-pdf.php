@@ -11,7 +11,7 @@ y<?php
     
     if (isset($_POST['submit'])) {
         if(isset($start_date) && isset($end_date)){
-            $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.agenda_intervensi = 'Agenda' AND tb_intervensi.tgl_intervensi BETWEEN '$start_date' AND '$end_date' ORDER BY tb_intervensi.id_intervensi DESC");
+            $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_catatan ON tb_catatan.intervensi_id = tb_intervensi.id_intervensi LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.agenda_intervensi = 'Agenda' AND tb_intervensi.tgl_intervensi BETWEEN '$start_date' AND '$end_date' ORDER BY tb_intervensi.tgl_intervensi ASC");
         }
     }
 ?>
@@ -32,6 +32,8 @@ y<?php
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Tempat</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Kategori</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>OPD Terkait</th>
+        <th rowspan=3 style='text-align:center; vertical-align: middle;'>Isi Catatan</th>
+        <th rowspan=3 style='text-align:center; vertical-align: middle;'>Saran</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Status</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Kecamatan</th>
         <th rowspan=3 style='text-align:center; vertical-align: middle;'>Kelurahan</th>
@@ -53,6 +55,8 @@ y<?php
             <td style='text-align:center;' class='td1'><?= $row['nama_jenis']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_opd']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['status_intervensi']; ?></td>
+            <td style='text-align:center;' class='td1'><?= $row['isi_catatan']; ?></td>
+            <td style='text-align:center;' class='td1'><?= $row['saran_catatan']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_kecamatan']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_kelurahan']; ?></td>
         </tr>

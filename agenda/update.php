@@ -6,12 +6,16 @@
 
     $id_user = $_SESSION['id_user'];
     $id = $_GET['id'];
+    $status = $_GET['status'];
 
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE id_intervensi = '$id'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE id_intervensi = '$id'");
         $row = $q->fetch_array();
+
+        $o = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd");
+        $rowOpd = $o->fetch_array();
     }
     
     if (isset($_POST['submit'])) {
@@ -27,7 +31,6 @@
         $pesertaiii = htmlspecialchars($_POST['pesertaiii']);
         $instansi = htmlspecialchars($_POST['instansi']);
         $kunjungan = htmlspecialchars($_POST['kunjungan']);
-        $status = htmlspecialchars($_POST['status']);
         $kecamatan = htmlspecialchars($_POST['kecamatan']);
         $kelurahan = htmlspecialchars($_POST['kelurahan_id']);
 
@@ -59,7 +62,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="./jenis.php">Intervensi</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Jenis Intervensi</li>
+                        <li class="breadcrumb-item active" aria-current="page">Update Intervensi</li>
                     </ol>
                 </nav>
             </div>
@@ -72,7 +75,7 @@
                 <div class="card">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="card-header">
-                            <h4 class="card-title">Update Jenis Intervensi</h4>
+                            <h4 class="card-title">Update Intervensi</h4>
                         </div>
                         <a class="btn btn-secondary" style="margin-right:28px;" href="./intervensi.php?kec=<?= $kec ?>&kel=<?= $kel ?>"><i class="fa fa-arrow-left"></i></a>
                     </div>
@@ -107,15 +110,13 @@
                                             <label>Deskripsi</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="deskripsi" class="form-control" value="<?= $row['deskripsi_intervensi'] ?>" name="deskripsi" placeholder="Deskripsi singkat pada kegiatan/intervensi yang telah di laksanakan" autocomplete="off" required>
+                                            <textarea type="text" id="deskripsi" class="form-control" name="deskripsi" placeholder="Deskripsi singkat pada kegiatan/intervensi yang telah di laksanakan" autocomplete="off" required></textarea>
                                         </div>
 
                                         <div class="col-md-4">
                                             <label>Seksi Kegiatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="radio" value="<?= $row['seksi_intervensi'] ?>" class="btn-check" name="seksi" id="<?= $row['seksi_intervensi'] ?>" autocomplete="off" checked>
-                                            <label class="btn btn-outline-primary m-1" for="<?= $row['seksi_intervensi'] ?>"><?= $row['seksi_intervensi'] ?></label>
                                             
                                             <input type="radio" value="Keagamaan" class="btn-check" name="seksi" id="keagamaan" autocomplete="off">
                                             <label class="btn btn-outline-primary m-1" for="keagamaan">Keagamaan</label>
@@ -157,7 +158,7 @@
                                                     $('#kategori').on('click', function() {
                                                         $.ajax({
                                                         type: 'GET',
-                                                        url: 'jenis_get.php',
+                                                        url: '../intervensi/jenis_get.php',
                                                         success: function(response) {
                                                             $('#kategori-results').html(response);
                                                         }
@@ -169,7 +170,7 @@
                                                     if (input.trim() !== '') {
                                                         $.ajax({
                                                             type: 'GET',
-                                                            url: 'jenis_search.php',
+                                                            url: '../intervensi/jenis_search.php',
                                                             data: {
                                                                 keyword: input
                                                             },
@@ -185,7 +186,7 @@
                                                 function getDataFromDatabase() {
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: 'jenis_get.php',
+                                                        url: '../intervensi/jenis_get.php',
                                                         success: function(response) {
                                                             $('#kategori-results').html(response);
                                                         }
@@ -246,7 +247,7 @@
                                                     $('#instansi').on('click', function() {
                                                         $.ajax({
                                                         type: 'GET',
-                                                        url: 'ins_get.php',
+                                                        url: '../intervensi/ins_get.php',
                                                         success: function(response) {
                                                             $('#instansi-results').html(response);
                                                         }
@@ -258,7 +259,7 @@
                                                     if (input.trim() !== '') {
                                                         $.ajax({
                                                             type: 'GET',
-                                                            url: 'ins_search.php',
+                                                            url: '../intervensi/ins_search.php',
                                                             data: {
                                                                 keyword: input
                                                             },
@@ -274,7 +275,7 @@
                                                 function getDataFromDatabase() {
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: 'ins_get.php',
+                                                        url: '../intervensi/ins_get.php',
                                                         success: function(response) {
                                                             $('#instansi-results').html(response);
                                                         }
@@ -303,15 +304,15 @@
                                             <label>Kunjungan OPD</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="hidden" id="id_kunjungan" class="form-control" value="<?= $row['kunjungan_id'] ?>" name="kunjungan" required>
-                                            <input type="text" id="kunjungan" value="<?= $row['nama_opd'] ?>" class="form-control" placeholder="Kunjungan OPD" autocomplete="off" required>
+                                            <input type="hidden" id="id_kunjungan" class="form-control" value="<?= $rowOpd['kunjungan_id'] ?>" name="kunjungan" required>
+                                            <input type="text" id="kunjungan" value="<?= $rowOpd['nama_opd'] ?>" class="form-control" placeholder="Kunjungan OPD" autocomplete="off" required>
                                         
                                             <script>
                                                 $(document).ready(function() {
                                                     $('#kunjungan').on('click', function() {
                                                         $.ajax({
                                                         type: 'GET',
-                                                        url: 'opd_get.php',
+                                                        url: '../intervensi/opd_get.php',
                                                         success: function(response) {
                                                             $('#kunjungan-results').html(response);
                                                         }
@@ -323,7 +324,7 @@
                                                     if (input.trim() !== '') {
                                                         $.ajax({
                                                             type: 'GET',
-                                                            url: 'opd_search.php',
+                                                            url: '../intervensi/opd_search.php',
                                                             data: {
                                                                 keyword: input
                                                             },
@@ -339,7 +340,7 @@
                                                 function getDataFromDatabase() {
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: 'opd_get.php',
+                                                        url: '../intervensi/opd_get.php',
                                                         success: function(response) {
                                                             $('#kunjungan-results').html(response);
                                                         }
@@ -365,19 +366,6 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label>Status Kegiatan</label>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="status" id="status" required>
-                                                    <option value="<?= $row['status_intervensi'] ?>" selected hidden><?= $row['status_intervensi'] ?></option>
-                                                    <option value="Selesai">Selesai</option>
-                                                    <option value="Belum">Belum</option>
-                                                </select>
-                                            </fieldset>
-                                        </div>
-
-                                        <div class="col-md-4">
                                             <label>*Lampiran Foto Kegiatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
@@ -388,9 +376,10 @@
                                             <label>Nama Kecamatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
+                                            
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="kecamatan" id="filKecamatan" required>
-                                                    <option selected hidden>Pilih Kecamatan</option> 
+                                                    <option selected value="<?= $row['id_kecamatan'] ?>"><?= $row['nama_kecamatan'] ?></option> 
                                                     <?php
                                                     $getKecamatan = getKecamatan();
                                                     foreach ($getKecamatan as $dataKecamatan):
@@ -406,33 +395,11 @@
                                         </div>
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
-                                                <select class="form-select" name="kelurahan_id" id="filKelurahan" required>
-                                                    <option value="x" selected hidden>Pilih Kelurahan</option>
-                                                    <option value=""></option>
+                                                <select class="form-select" name="kelurahan_id" id="filKelurahan"  required>
+                                                <option selected value="<?= $row['id_kelurahan'] ?>"><?= $row['nama_kelurahan'] ?></option> 
                                                 </select>
                                             </fieldset>
                                         </div>
-
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#filKecamatan').change(function() {
-                                                    var kecamatan_id = $(this).val();
-                                                    $.ajax({
-                                                        type : "POST",
-                                                        url : "../l-pus/get-kelurahan.php",
-                                                        data : {kecamatan_id : kecamatan_id},
-                                                        dataType : "json",
-                                                        success : function(data) {
-                                                            var options = '';
-                                                            $.each(data, function(index, value){
-                                                                options += '<option value="' + value.id_kelurahan + '">' + value.nama_kelurahan + '</option>';
-                                                            });
-                                                            $('#filKelurahan').html(options)
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        </script>
 
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Simpan</button>

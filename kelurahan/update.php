@@ -18,7 +18,7 @@
 
         $sql = "UPDATE tb_kelurahan SET kecamatan_id = '$kecamatan', nama_kelurahan = '$kelurahan' WHERE id_kelurahan = '$id'";
         if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('$row[nama_kelurahan] Berhasil di Ubah!');</script>";
+            echo "<script>alert('Data berhasil di ubah!');</script>";
             echo '<meta http-equiv="refresh" content="0; url=kelurahan.php">';
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);

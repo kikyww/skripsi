@@ -12,8 +12,11 @@
     if (!isset($id_user)) {
         header("Location: ../index.php");
     } else if(isset($id)){
-        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.id_intervensi = '$id' AND tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'");
+        $q = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.id_intervensi = '$id' AND tb_kecamatan.nama_kecamatan = '$kec' AND tb_kelurahan.nama_kelurahan = '$kel'");
         $row = $q->fetch_array();
+
+        $o = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd");
+        $rowOpd = $o->fetch_array();
     }
     
     if (isset($_POST['submit'])) {
@@ -304,8 +307,8 @@
                                             <label>Kunjungan OPD</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="hidden" id="id_kunjungan" class="form-control" value="<?= $row['kunjungan_id'] ?>" name="kunjungan" required>
-                                            <input type="text" id="kunjungan" value="<?= $row['nama_opd'] ?>" class="form-control" placeholder="Kunjungan OPD" autocomplete="off" required>
+                                            <input type="hidden" id="id_kunjungan" class="form-control" value="<?= $rowOpd['kunjungan_id'] ?>" name="kunjungan" required>
+                                            <input type="text" id="kunjungan" value="<?= $rowOpd['nama_opd'] ?>" class="form-control" placeholder="Kunjungan OPD" autocomplete="off" required>
                                         
                                             <script>
                                                 $(document).ready(function() {
@@ -369,7 +372,7 @@
                                             <label>*Lampiran Foto Kegiatan</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="file" id="foto" class="form-control" value="<?= $row['foto_intervensi'] ?>" name="foto" autocomplete="off" required>
+                                            <input type="file" id="foto" class="form-control" value="<?= $row['foto_intervensi'] ?>" name="foto" autocomplete="off">
                                         </div>
 
                                         <div class="col-md-4">

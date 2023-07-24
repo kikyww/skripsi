@@ -8,7 +8,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.agenda_intervensi = 'Agenda' ORDER BY tb_intervensi.id_intervensi DESC");
+    $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_catatan ON tb_catatan.intervensi_id = tb_intervensi.id_intervensi LEFT JOIN tb_opd ON tb_intervensi.opd_id = tb_opd.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE tb_intervensi.agenda_intervensi = 'Agenda' ORDER BY tb_intervensi.tgl_intervensi DESC");
 ?>
 
 <div class="page-heading">
@@ -166,6 +166,7 @@
                             <th class="text-center">Kategori</th>
                             <th class="text-center">OPD Terkait</th>
                             <th class="text-center">Status</th>
+                            <th class="text-center">Saran</th>
                             <th class="text-center">Kecamatan</th>
                             <th class="text-center">Kelurahan</th>
                         </tr>
@@ -185,6 +186,13 @@
                             <td class="text-center"><?= $row['nama_jenis'] ?></td>
                             <td class="text-center"><?= $row['nama_opd'] ?></td>
                             <td class="text-center"><?= $row['status_intervensi'] ?></td>
+                            <?php 
+                            if ($row['saran_catatan'] == true) {
+                                echo"<td class='text-center'>$row[saran_catatan]</td>";
+                            } else {
+                                echo"<td class='text-center'>-</td>";
+                            }
+                            ?>
                             <td class='text-center'><?= $row['nama_kecamatan'] ?></td>
                             <td class='text-center'><?= $row['nama_kelurahan'] ?></td>
                         </tr>

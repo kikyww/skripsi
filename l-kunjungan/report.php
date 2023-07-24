@@ -35,7 +35,7 @@
                     Laporan Kunjungan OPD
                 </div>
                 <div class="buttons">
-                    <a href="./rincian.php" class="btn btn-primary" style="margin-right:30px;">Rincian</a>
+                    <!-- <a href="./rincian.php" class="btn btn-primary" style="margin-right:30px;">Rincian</a> -->
                 </div>
             </div>
 

@@ -11,6 +11,6 @@ if(!isset($id_user)){
 $delete = mysqli_query($konek, "DELETE FROM tb_kelurahan WHERE id_kelurahan = '$id'");
 
 if($delete){
-    echo "<script>alert('kelurahan berhasil dihapus');</script>";
+    echo "<script>alert('Data berhasil dihapus');</script>";
     echo '<meta http-equiv="refresh" content="1;url=kelurahan.php">';
 }

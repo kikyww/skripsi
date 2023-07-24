@@ -40,14 +40,22 @@ if (isset($_POST['login'])) {
     <link rel="shortcut icon" href="../assets/images/logo/favicon.png" type="image/png">
 </head>
 
+<style>
+    #auth-right{
+        background-image: url(../assets/images/logo/dashboard.jpg);
+        background-repeat: no-repeat;
+    }
+</style>
+
+
 <body>
     <div id="auth">
         
 <div class="row h-100">
     <div class="col-lg-5 col-12">
         <div id="auth-left">
-            <div class="auth-logo">
-                <a href="index.html"><img src="../assets/images/logo/logo.svg" alt="Logo"></a>
+            <div class="auth-logo log">
+                <h3><img src="../assets/images/logo/bkkbn.png" alt="Logo">DPPKBPM</h3>
             </div>
             <?php if(isset($error)){ ?>
             <div class="alert alert-danger">
@@ -70,15 +78,13 @@ if (isset($_POST['login'])) {
                 <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" name="login" type="submit">Log in</button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
-                <p class="text-gray-600">Don't have an account? <a href="auth-register.html" class="font-bold">Sign
-                        up</a>.</p>
-                <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p>
+                <p><a class="font-bold" href="./forgot.php">Lupa Pasword?</a>.</p>
             </div>
         </div>
     </div>
     <div class="col-lg-7 d-none d-lg-block">
-        <div id="auth-right">
-
+        <div class="d-flex justify-content-center align-items-center" id="auth-right">
+            <img src="../assets/images/logo/pemko.png" height="300" alt="logo" />
         </div>
     </div>
 </div>

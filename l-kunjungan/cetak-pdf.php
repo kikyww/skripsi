@@ -12,7 +12,7 @@
     
     if (isset($_POST['submit'])) {
         if(isset($filKecamatan) && isset($filKelurahan)){
-            $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE o.nama_opd <> 'Masyarakat Setempat' AND o.nama_opd = '$opd' AND tb_intervensi.kecamatan_id = '$filKecamatan' AND tb_intervensi.kelurahan_id = '$filKelurahan' AND tb_intervensi.status_intervensi = 'Selesai' ORDER BY tb_intervensi.tgl_intervensi DESC");
+            $query = mysqli_query($konek, "SELECT * FROM tb_intervensi LEFT JOIN tb_jenisinv ON tb_intervensi.jenis_id = tb_jenisinv.id_jenis LEFT JOIN tb_opd AS o ON tb_intervensi.kunjungan_id = o.id_opd LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan WHERE o.nama_opd <> 'Masyarakat Setempat' AND o.nama_opd = '$opd' AND tb_intervensi.kecamatan_id = '$filKecamatan' AND tb_intervensi.kelurahan_id = '$filKelurahan' ORDER BY tb_intervensi.tgl_intervensi DESC");
         } 
     }
 ?>

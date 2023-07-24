@@ -20,7 +20,7 @@
         }
         $sql = "INSERT INTO tb_kelurahan (id_kelurahan, kecamatan_id, nama_kelurahan) VALUES ('$idkelurahan', '$kecamatan', '$kelurahan')";
         if (mysqli_query($konek, $sql)) {
-            echo "<script>alert('kelurahan telah berhasil ditambahkan!');</script>";
+            echo "<script>alert('Data telah berhasil ditambahkan!');</script>";
             echo '<meta http-equiv="refresh" content="0; url=kelurahan.php">';
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($konek);

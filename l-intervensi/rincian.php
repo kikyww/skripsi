@@ -8,7 +8,7 @@
         header('Location: ../index.php');
     }
 
-    $query = mysqli_query($konek, "SELECT *, SUM(tb_intervensi.status_intervensi = 'Selesai') AS jumlah FROM tb_intervensi LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_kecamatan.nama_kecamatan = '$kec' GROUP BY tb_kelurahan.id_kelurahan ORDER BY tb_kelurahan.nama_kelurahan ASC");
+    $query = mysqli_query($konek, "SELECT *, SUM(tb_intervensi.status_intervensi = 'Selesai') AS jumlah FROM tb_intervensi LEFT JOIN tb_kelurahan ON tb_intervensi.kelurahan_id = tb_kelurahan.id_kelurahan LEFT JOIN tb_kecamatan ON tb_intervensi.kecamatan_id = tb_kecamatan.id_kecamatan WHERE tb_intervensi.status_intervensi = 'Selesai' tb_kecamatan.nama_kecamatan = '$kec' GROUP BY tb_kelurahan.id_kelurahan ORDER BY tb_kelurahan.nama_kelurahan ASC");
 
 ?>
 

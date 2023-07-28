@@ -54,9 +54,20 @@ y<?php
             <td style='text-align:center;' class='td1'><?= $row['tempat_intervensi']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_jenis']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_opd']; ?></td>
+
+            <?php if($row['isi_catatan'] == false){ ?>
+                <td style='text-align:center;' class='td1'>-</td>
+            <?php } else {?>
+                <td style='text-align:center;' class='td1'><?= $row['isi_catatan']; ?></td>
+            <?php } ?>
+
+            <?php if($row['saran_catatan'] == false){ ?>
+                <td style='text-align:center;' class='td1'>-</td>
+            <?php } else {?>
+                <td style='text-align:center;' class='td1'><?= $row['saran_catatan']; ?></td>
+            <?php } ?>
+
             <td style='text-align:center;' class='td1'><?= $row['status_intervensi']; ?></td>
-            <td style='text-align:center;' class='td1'><?= $row['isi_catatan']; ?></td>
-            <td style='text-align:center;' class='td1'><?= $row['saran_catatan']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_kecamatan']; ?></td>
             <td style='text-align:center;' class='td1'><?= $row['nama_kelurahan']; ?></td>
         </tr>

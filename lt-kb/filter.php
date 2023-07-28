@@ -13,7 +13,7 @@ if ($query->num_rows > 0) {
         echo"
         <tr>
         <td class=text-center> $no </td>
-        <td class=text-center> $row[NIK] </td>
+        <td class=text-center> $row[nik] </td>
         <td class=text-center> $row[nama_keluarga] </td>
         <td class=text-center> $row[kepala_keluarga] </td>
         <td class=text-center> $row[status_kb] </td>

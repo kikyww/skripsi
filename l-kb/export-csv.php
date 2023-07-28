@@ -14,10 +14,20 @@ header('Content-Disposition: attachment; filename=data-kb.csv');
 
 $output = fopen('php://output', 'w');
 
-fputcsv($output, array('nama_keluarga', 'tgl_kb', 'tgl_kembali', 'nama_obat', 'jumlah_obat', 'nama_kelurahan', 'nama_kecamatan'));
+// fputcsv($output, array('nama_keluarga', 'tgl_kb', 'tgl_kembali', 'nama_obat', 'jumlah_obat', 'nama_kelurahan', 'nama_kecamatan'));
 
 while($row = mysqli_fetch_assoc($query)) {
-    fputcsv($output, $row);
+    fputcsv($output, array(
+        $row['nama_keluarga'],
+        $row['tgl_kb'],
+        $row['tgl_kembali'],
+        $row['nama_obat'],
+        $row['jumlah_obat'],
+        $row['status_kb'],
+        $row['nama_kecamatan'],
+        $row['nama_kelurahan'],
+        $row['kb_stamp']
+    ));
 }
 
 fclose($output);

@@ -16,6 +16,7 @@ $output = fopen('php://output', 'w');
 
 while($row = mysqli_fetch_assoc($query)) {
     fputcsv($output, array(
+        $row['nik'],
         $row['nama_keluarga'],
         $row['kepala_keluarga'],
         $row['status_kb'],

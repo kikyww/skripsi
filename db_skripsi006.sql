@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Jul 2023 pada 14.50
+-- Waktu pembuatan: 28 Jul 2023 pada 17.31
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_skripsi006`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_catatan`
+--
+
+CREATE TABLE `tb_catatan` (
+  `id_catatan` int(11) NOT NULL,
+  `intervensi_id` int(11) NOT NULL,
+  `judul_catatan` varchar(255) NOT NULL,
+  `isi_catatan` varchar(255) NOT NULL,
+  `saran_catatan` varchar(255) NOT NULL,
+  `catatan_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_catatan`
+--
+
+INSERT INTO `tb_catatan` (`id_catatan`, `intervensi_id`, `judul_catatan`, `isi_catatan`, `saran_catatan`, `catatan_stamp`) VALUES
+(2, 4, 'Ditunda', 'Diatur ulang untuk pertemuannya', 'Secepatnya', '2023-07-20 12:08:29'),
+(3, 3, 'Aman', 'Aman dan tertib', 'Ditingkatkan lagi ', '2023-07-20 12:09:20'),
+(4, 3, 'Telat', 'Telat 30 menit namun sosialisasi berjalan lancard', 'ditingkatkan lagi dalam hal ketepatan waktunya', '2023-07-20 12:11:10');
 
 -- --------------------------------------------------------
 
@@ -44,7 +68,7 @@ CREATE TABLE `tb_intervensi` (
   `opd_id` int(11) NOT NULL,
   `kunjungan_id` int(11) NOT NULL,
   `foto_intervensi` varchar(255) NOT NULL,
-  `status_intervensi` enum('Selesai','Belum') NOT NULL,
+  `status_intervensi` enum('Selesai','Belum','Ditunda') NOT NULL,
   `agenda_intervensi` varchar(10) NOT NULL,
   `intervensi_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -55,9 +79,17 @@ CREATE TABLE `tb_intervensi` (
 
 INSERT INTO `tb_intervensi` (`id_intervensi`, `kecamatan_id`, `kelurahan_id`, `user_id`, `judul_intervensi`, `tgl_intervensi`, `tempat_intervensi`, `deskripsi_intervensi`, `jenis_id`, `seksi_intervensi`, `pesertai_intervensi`, `pesertaii_intervensi`, `pesertaiii_intervensi`, `opd_id`, `kunjungan_id`, `foto_intervensi`, `status_intervensi`, `agenda_intervensi`, `intervensi_stamp`) VALUES
 (1, 1, 1, 1, 'tes', '2023-02-22', 'tes', 'tes', 2, 'Kasih Sayang', 'orang', '', '', 1, 2, 'Screenshot (7).png', 'Selesai', '', '2023-06-22 09:54:20'),
-(2, 1, 1, 1, 's', '2023-12-12', 's', 's', 1, 'Sosisal Budaya', 's', '', '', 2, 2, 'Screenshot (14).png', 'Selesai', '', '2023-06-22 09:58:31'),
-(3, 1, 1, 1, 'tes agenda', '2023-02-25', 'tes agenda', 'p', 2, 'Pendidikan', 'p', '', '', 2, 1, 'Screenshot (10).png', 'Selesai', 'Agenda', '2023-06-23 03:00:27'),
-(4, 1, 3, 1, 'tes agenda 2', '2023-05-25', 'jl. tes agenda 2', '', 2, '', '', '', '', 2, 1, '', 'Selesai', 'Agenda', '2023-06-22 10:49:12');
+(2, 1, 1, 1, 'Gotong Royong', '2023-12-12', 'Jl. HKSN ', 'Kegiatan bulanan gotong royong', 1, 'Sosisal Budaya', 'Masyarakat Setempat', '', '', 3, 7, 'Screenshot (19).png', 'Selesai', '', '2023-07-20 12:51:36'),
+(3, 1, 1, 1, 'Sosialisasi Kampung KB', '2023-02-25', 'Amd Permai', 'Deskripsi', 2, 'Pendidikan', 'p', '', '', 14, 3, 'Screenshot (10).png', 'Selesai', 'Agenda', '2023-07-20 10:21:20'),
+(4, 1, 3, 1, 'Sosialisasi Hasil Laut', '2023-05-25', 'jl. HKSN', 'p', 1, '', '', '', '', 2, 14, '', 'Ditunda', 'Agenda', '2023-07-20 10:18:36'),
+(5, 2, 2, 1, 'tes p', '2023-07-16', 'disini', '', 1, '', '', '', '', 3, 3, '', 'Selesai', 'Agenda', '2023-07-17 08:43:32'),
+(6, 2, 2, 1, 'sadfhjah', '2023-07-17', 'aisodjasfais', '', 2, '', '', '', '', 1, 1, '', 'Selesai', 'Agenda', '2023-07-17 09:34:29'),
+(7, 1, 4, 1, 'Penyuluhan KB', '2023-07-22', 'Alalak tengah', 'Penyuluhan kb diadakan ke kampung kb pada alalak selatan', 5, 'Reproduksi', 'Ibu yang memiliki anak', 'Ibu Hamil', '', 14, 14, 'PerkembanganKB.png', 'Selesai', 'Agenda', '2023-07-27 05:04:17'),
+(8, 1, 1, 1, 'Sosialisasi Pencegahan Stunting', '2023-07-19', 'Alalak Selatan Rt. 3', 'Sosialisasi pencegahan sutunting dari dinas KB ', 6, 'Perlindungan', 'Ibu hamil', 'ibu yang memiliki balita', '', 14, 14, 'Screenshot (14).png', 'Selesai', 'Agenda', '2023-07-20 13:13:11'),
+(9, 1, 1, 1, 'Maulid Nabi Muhammad SAW', '2023-07-18', 'Komp. Herlina', 'Melakukan Maulid Nabi rutin tahunan', 1, 'Keagamaan', 'Masyarakat Setempat', 'asfjhasf', '', 3, 3, 'Screenshot (17).png', 'Selesai', 'Agenda', '2023-07-20 13:14:42'),
+(10, 1, 1, 1, 'Sosialisasi', '2023-07-19', 'Komp. Surya Gemilang', 'Sosialisasi tentang gerkaan hidup sehat', 4, 'Lainnya', 'Ibu yang memiliki anak', '', '', 3, 2, 'Screenshot (13).png', 'Selesai', '', '2023-07-20 13:10:56'),
+(11, 1, 1, 1, 'Pencanangan SMPN 3 HKSN', '2023-07-16', 'Jl. HKSN', '', 1, '', '', '', '', 14, 14, '', 'Ditunda', 'Agenda', '2023-07-27 05:04:56'),
+(12, 1, 1, 1, 'Sosialisasi Pencegahan Stunting', '2023-07-13', 'Jl. AMD Permai', '', 6, '', '', '', '', 14, 3, '', 'Belum', 'Agenda', '2023-07-20 10:29:15');
 
 -- --------------------------------------------------------
 
@@ -77,8 +109,20 @@ CREATE TABLE `tb_jenisinv` (
 
 INSERT INTO `tb_jenisinv` (`id_jenis`, `nama_jenis`, `deskripsi_jenisinv`) VALUES
 (1, 'Lainnya', 'Kategori belum terdaftar'),
-(2, 'p', 'ini p'),
-(3, 'L', 'ini l');
+(2, 'Pelayanan Administrasi Kependudukan', ''),
+(3, 'Rumah Data Kependudukan dan Informasi Keluarga (Rumah DataKu)', ''),
+(4, 'Program Gerakan Masyarakat Hidup Sehat (GERMAS)', ''),
+(5, 'Program Indonesia Sehat dengan Pendekatan Keluarga (PISPK)', ''),
+(6, 'Bina Keluarga Balita (BKB)', ''),
+(7, 'Bina Keluarga Remaja (BKR)', ''),
+(8, 'PIK Remaja', ''),
+(9, 'Komunikasi, Informasi dan Edukasi (KIE) Kesehatan Reproduksi dan Keluarga Berencana bagi Keluarga', ''),
+(10, 'Bimbingan Calon Pengantin', ''),
+(11, 'Bimbingan, penyuluhan dan konsultasi keagamaan', ''),
+(12, 'KIE Pencegahan, Perlindungan Perempuan dan Anak dari kekerasan', ''),
+(13, 'Advokasi dan KIE pemberian makan bayi dan anak ASI eksklusif', ''),
+(14, 'Kawasan Tanpa Rokok (KTR) dan implementasi Rumah Tanpa Asap Rokok', ''),
+(15, 'Penggerakan Pelayanan Keluarga Berencana dan Kesehatan Reproduksi', '');
 
 -- --------------------------------------------------------
 
@@ -112,7 +156,17 @@ INSERT INTO `tb_kb` (`id_kb`, `keluarga_id`, `kecamatan_id`, `kelurahan_id`, `tg
 (6, 1, 1, 1, '2023-08-27', '2024-02-27', 5, 2, 1, '2023-06-15 05:36:30'),
 (7, 5, 1, 1, '2023-08-27', '2024-02-27', 5, 2, 1, '2023-06-15 05:15:42'),
 (8, 4, 1, 3, '2023-08-27', '2024-02-27', 2, 1, 1, '2023-06-15 05:16:44'),
-(9, 1, 1, 1, '2023-05-03', '2023-12-03', 5, 2, 1, '2023-06-19 02:37:47');
+(9, 1, 1, 1, '2023-05-03', '2023-12-03', 5, 2, 1, '2023-06-19 02:37:47'),
+(10, 12, 3, 7, '2023-07-27', '2024-01-27', 2, 8, 1, '2023-07-27 14:48:33'),
+(11, 13, 3, 7, '2023-07-27', '2024-01-27', 5, 9, 1, '2023-07-27 14:48:55'),
+(12, 14, 4, 9, '2023-07-28', '2024-01-28', 2, 10, 1, '2023-07-28 03:33:10'),
+(13, 15, 5, 8, '2023-07-15', '2024-01-15', 4, 12, 1, '2023-07-28 03:52:21'),
+(14, 2, 1, 1, '2023-07-15', '2024-01-15', 2, 1, 1, '2023-07-28 05:50:18'),
+(15, 1, 1, 1, '2023-07-20', '2024-01-20', 2, 1, 1, '2023-07-28 05:50:55'),
+(16, 5, 1, 1, '2023-07-20', '2024-01-20', 2, 1, 1, '2023-07-28 05:51:38'),
+(17, 3, 2, 2, '2023-07-20', '2024-01-20', 5, 3, 1, '2023-07-28 05:53:40'),
+(18, 3, 2, 2, '2023-07-20', '2024-01-20', 4, 4, 1, '2023-07-28 05:54:08'),
+(19, 3, 2, 2, '2023-07-20', '2024-01-20', 4, 4, 1, '2023-07-28 05:54:27');
 
 -- --------------------------------------------------------
 
@@ -172,7 +226,14 @@ INSERT INTO `tb_keluarga` (`id_keluarga`, `no_kk`, `nik`, `nama_keluarga`, `kepa
 (5, '2733988900002374', '6863889065389001', 'Nisa', 'Udin', 'Banjarmasins', '1973-03-20', 'Jl. HKSN', '0897656565', 'KB', 'KB', '', 3, 1, 1),
 (6, '680064512765002', '671237896689017', 'Sumarni', 'Suratno', 'Banjarmasin', '1972-04-27', 'Kuin Selatan', '089623425363', 'Tidak KB', 'Lainnya', 'Non-PUS', 2, 1, 3),
 (7, '8927654399001003', '8927654399001774', 'Tini', 'Toro', 'Banjarmasin', '1973-01-19', 'Jl. HKSN', '08864377354', 'Tidak KB', 'Belum Konfirmasi', '', 4, 2, 2),
-(8, '1928765438910987', '6897887452987456', 'Siti', 'Ujang', 'Banjarmasin', '2001-02-06', 'Komp. Surya Gemilang', '087663887261', 'Tidak KB', 'Lainnya', 'PUS', 3, 1, 1);
+(8, '1928765438910987', '6897887452987456', 'Siti', 'Ujang', 'Banjarmasin', '2001-02-06', 'Komp. Surya Gemilang', '087663887261', 'Tidak KB', 'Lainnya', 'PUS', 3, 1, 1),
+(9, '6721467124624827', '6724271467214672', 'Puji', 'Puja', 'Banjarmasin', '1996-03-20', 'JL. Alalak Selatan', '08972475214', 'Tidak KB', 'Program Hamil', '', 2, 1, 1),
+(10, '6841827417242674', '6151248248346715', 'Lusi', 'Lusa', 'Banjarmasin', '1996-09-01', 'JL. HKSN', '0887343746743', 'Tidak KB', 'Program Hamil', 'Ingin menambah anak', 3, 1, 1),
+(11, '6812748162462716', '6312381236812673', 'Yuna', 'Yudi', 'Pelaihari', '1998-12-16', 'Komp. HKSN', '0892842748176', 'Tidak KB', 'Belum Konfirmasi', '', 2, 1, 1),
+(12, '6818876909872234', '6309900210610000', 'Rini', 'Rino', 'Banjarmasin', '1998-03-19', 'Jl. Antasan Besar', '089783656372', 'KB', 'KB', '', 2, 3, 7),
+(13, '6828467257468006', '6398754893211003', 'Asma', 'Asmi', 'Banjarmasin', '1999-10-02', 'Jl. Antasan Besar', '89653453153', 'KB', 'KB', '', 1, 3, 7),
+(14, '6856786539003874', '6347858475847854', 'Fira', 'Firo', 'Banjarmasin', '1994-05-09', 'Mantuil', '086524323548', 'KB', 'KB', '', 2, 4, 9),
+(15, '6874658938563001', '6378143763246005', 'Uji', 'Ujang', 'Banjarmasin', '1992-11-19', 'Benua Anyar', '098237482345', 'KB', 'KB', '', 3, 5, 8);
 
 -- --------------------------------------------------------
 
@@ -192,9 +253,14 @@ CREATE TABLE `tb_kelurahan` (
 
 INSERT INTO `tb_kelurahan` (`id_kelurahan`, `kecamatan_id`, `nama_kelurahan`) VALUES
 (1, 1, 'Alalak Selatan'),
-(2, 2, 'Sutoyo S.'),
+(2, 2, 'Basirih'),
 (3, 1, 'Alalak Utara'),
-(4, 1, 'Alalak Tengah');
+(4, 1, 'Alalak Tengah'),
+(5, 2, 'Teluk Tiram'),
+(6, 2, 'Belitung Selatan'),
+(7, 3, 'Antasan Besar'),
+(8, 5, 'Benua Anyar'),
+(9, 4, 'Mantuil');
 
 -- --------------------------------------------------------
 
@@ -233,9 +299,25 @@ CREATE TABLE `tb_opd` (
 --
 
 INSERT INTO `tb_opd` (`id_opd`, `nama_opd`) VALUES
-(1, 'opde'),
-(2, 'opdr'),
-(3, 'Masyarakat Setempat');
+(1, 'Dinas Perhubungan'),
+(2, 'Dinas Kelautan dan Perikanan'),
+(3, 'Masyarakat Setempat'),
+(4, 'Dinas Pariwisata'),
+(5, 'Dinas Energi dan Sumber Daya Mineral'),
+(6, 'Dinas Dukcapil'),
+(7, 'TNI - POLRI'),
+(8, 'Kanwil Kementrian Hukum dan HAM'),
+(9, 'Dinas Kominfo'),
+(10, 'Dinas Koperasi'),
+(11, 'Dinas Perindustrian'),
+(12, 'Dinas Perdagangan'),
+(13, 'Dinas Pertanian'),
+(14, 'OPD Pengendalian Penduduk dan KB'),
+(15, 'Dinas Ketenagakerjaan'),
+(16, 'Dinas Pekerjaan Umum dan Perumahan Rakyat'),
+(17, 'Dinas Kehutanan dan Lingkungan Hidup'),
+(18, 'Dinas Bina Marga dan Penataan Ruang'),
+(19, 'Kanwil Kementrian Agama');
 
 -- --------------------------------------------------------
 
@@ -259,11 +341,17 @@ CREATE TABLE `tb_stok` (
 --
 
 INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_akhir`, `tgl_awal`, `tgl_akhir`, `stok_stamp`) VALUES
-(1, 1, 2, 9600, 8967, '2023-04-20', '2023-09-20', '2023-04-18 04:28:47'),
-(2, 1, 5, 7800, 7795, '2023-04-20', '2023-09-20', '2023-04-20 06:27:41'),
-(3, 2, 5, 9000, 8995, '2023-04-24', '2023-11-24', '2023-04-24 12:55:06'),
-(4, 2, 4, 8000, 7998, '2023-04-24', '2023-11-24', '2023-04-24 12:55:44'),
-(6, 1, 4, 400, 399, '2026-05-10', '2026-12-10', '2026-05-10 03:21:20');
+(1, 1, 2, 9600, 8964, '2023-04-20', '2024-04-20', '2023-04-18 04:28:47'),
+(2, 1, 5, 7800, 7795, '2023-04-20', '2024-04-20', '2023-04-20 06:27:41'),
+(3, 2, 5, 9000, 8994, '2023-04-24', '2024-04-24', '2023-04-24 12:55:06'),
+(4, 2, 4, 8000, 7996, '2023-04-24', '2024-04-24', '2023-04-24 12:55:44'),
+(6, 1, 4, 400, 399, '2026-05-10', '2027-05-10', '2026-05-10 03:21:20'),
+(7, 1, 2, 3000, 3000, '2023-06-15', '2024-06-15', '2023-07-20 07:02:41'),
+(8, 3, 2, 8000, 7999, '2023-07-27', '2024-07-27', '2023-07-27 14:41:17'),
+(9, 3, 5, 6000, 5999, '2023-07-27', '2024-07-27', '2023-07-27 14:41:54'),
+(10, 4, 2, 8000, 7999, '2023-07-01', '2024-07-01', '2023-07-28 03:32:15'),
+(11, 5, 5, 7000, 7000, '2023-07-01', '2024-07-01', '2023-07-28 03:33:59'),
+(12, 5, 4, 5000, 4999, '2023-07-01', '2024-07-01', '2023-07-28 03:39:37');
 
 -- --------------------------------------------------------
 
@@ -287,11 +375,19 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `nip`, `nama`, `telepon`, `wilayah`, `username`, `password`, `roles`) VALUES
-(1, 1, 'Admin', '', '', 'admin', 'admin', 'ADMIN');
+(1, 1, 'Admin', '', '', 'admin', 'admin', 'ADMIN'),
+(2, 877888888, 'as', '76767676765', 'Banjarmasin Tengah', 'as', 'as', 'KABID');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `tb_catatan`
+--
+ALTER TABLE `tb_catatan`
+  ADD PRIMARY KEY (`id_catatan`),
+  ADD KEY `intervensi_id` (`intervensi_id`);
 
 --
 -- Indeks untuk tabel `tb_intervensi`
@@ -377,22 +473,28 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_catatan`
+--
+ALTER TABLE `tb_catatan`
+  MODIFY `id_catatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_intervensi`
 --
 ALTER TABLE `tb_intervensi`
-  MODIFY `id_intervensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_intervensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_jenisinv`
 --
 ALTER TABLE `tb_jenisinv`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kb`
 --
 ALTER TABLE `tb_kb`
-  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kecamatan`
@@ -404,13 +506,13 @@ ALTER TABLE `tb_kecamatan`
 -- AUTO_INCREMENT untuk tabel `tb_keluarga`
 --
 ALTER TABLE `tb_keluarga`
-  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelurahan`
 --
 ALTER TABLE `tb_kelurahan`
-  MODIFY `id_kelurahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kelurahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_obat`
@@ -422,13 +524,13 @@ ALTER TABLE `tb_obat`
 -- AUTO_INCREMENT untuk tabel `tb_opd`
 --
 ALTER TABLE `tb_opd`
-  MODIFY `id_opd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_opd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_stok`
 --
 ALTER TABLE `tb_stok`
-  MODIFY `id_stok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_stok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_user`
@@ -439,6 +541,12 @@ ALTER TABLE `tb_user`
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `tb_catatan`
+--
+ALTER TABLE `tb_catatan`
+  ADD CONSTRAINT `tb_catatan_ibfk_1` FOREIGN KEY (`intervensi_id`) REFERENCES `tb_intervensi` (`id_intervensi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_intervensi`

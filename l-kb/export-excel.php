@@ -35,7 +35,7 @@ while($row = mysqli_fetch_assoc($query)) {
     fwrite($output, $row['nik'] . "\t");
     fwrite($output, $row['nama_keluarga'] . "\t");
     fwrite($output, $row['kepala_keluarga'] . "\t");
-    fwrite($output, $row['alamat_kepkel'] . "\t");
+    fwrite($output, $row['alamat_keluarga'] . "\t");
     fwrite($output, $row['tl_keluarga'] . ',' . date('d-m-Y', strtotime($row['lahir_keluarga'])) . "\t");
     fwrite($output, $row['telp_keluarga'] . "\t");
     fwrite($output, $row['tgl_kb'] . "\t");

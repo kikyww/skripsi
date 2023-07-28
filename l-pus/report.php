@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary" id="csv-start" style="margin-right:10px;">CSV</button>
+                        <!-- <button class="btn btn-primary" id="csv-start" style="margin-right:10px;">CSV</button> -->
                         <button class="btn btn-primary" id="excel-start" style="margin-right:10px;">Excel</button>
                         <button type="submit" name="submit" class="btn btn-primary" id="pdf-start" style="margin-right:10px;">PDF</button>
                         <button class="btn btn-primary" id="filter-btn" style="margin-right:30px;">Filter</button>

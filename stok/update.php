@@ -87,12 +87,12 @@
                                         <div class="col-md-8 form-group">
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="obat" id="basicSelect" required>
-                                                    <option value="<?= $row['id_obat'] ?>" selected hidden><?= $row['nama_obat'] ?></option>
+                                                    <option value="<?= $row['id_obat'] ?>" selected hidden><?= $row['nama_obat'] ?> | <?= $row['jenis_obat'] ?></option>
                                                     <?php
                                                     $getObat = getObat();
                                                     foreach ($getObat as $dataObat):
                                                     ?>
-                                                    <option value="<?= $dataObat['id_obat'] ?>"><?= $dataObat['nama_obat']; ?></option>
+                                                    <option value="<?= $dataObat['id_obat'] ?>"><?= $dataObat['nama_obat']; ?> | <?= $dataObat['jenis_obat'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </fieldset>

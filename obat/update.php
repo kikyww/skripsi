@@ -66,13 +66,7 @@
                                             <label>Jenis Obat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="jenis" id="basicSelect" required>
-                                                    <option value="" selected hidden><?= $row['jenis_obat'] ?></option>
-                                                    <option value="Non-MKJP">Non-MKJP</option>
-                                                    <option value="MKJP">MKJP</option>
-                                                </select>
-                                            </fieldset>
+                                            <input type="text" id="obat" class="form-control" name="jenis" value="<?= $row['jenis_obat'] ?>" required>
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" id="success" class="btn btn-primary me-1 mb-1">Ubah</button>

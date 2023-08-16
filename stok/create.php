@@ -89,7 +89,7 @@
                                                     $getObat = getObat();
                                                     foreach ($getObat as $dataObat):
                                                     ?>
-                                                    <option value="<?= $dataObat['id_obat'] ?>"><?= $dataObat['nama_obat']; ?></option>
+                                                    <option value="<?= $dataObat['id_obat'] ?>"><?= $dataObat['nama_obat']; ?> | <?= $dataObat['jenis_obat'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </fieldset>

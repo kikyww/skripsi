@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Jul 2023 pada 17.31
+-- Waktu pembuatan: 16 Agu 2023 pada 02.27
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -166,7 +166,9 @@ INSERT INTO `tb_kb` (`id_kb`, `keluarga_id`, `kecamatan_id`, `kelurahan_id`, `tg
 (16, 5, 1, 1, '2023-07-20', '2024-01-20', 2, 1, 1, '2023-07-28 05:51:38'),
 (17, 3, 2, 2, '2023-07-20', '2024-01-20', 5, 3, 1, '2023-07-28 05:53:40'),
 (18, 3, 2, 2, '2023-07-20', '2024-01-20', 4, 4, 1, '2023-07-28 05:54:08'),
-(19, 3, 2, 2, '2023-07-20', '2024-01-20', 4, 4, 1, '2023-07-28 05:54:27');
+(19, 3, 2, 2, '2023-07-20', '2024-01-20', 4, 4, 1, '2023-07-28 05:54:27'),
+(20, 16, 1, 1, '2023-08-05', '2023-11-05', 2, 1, 1, '2023-08-05 03:42:10'),
+(21, 1, 1, 1, '2023-08-15', '2023-11-15', 2, 1, 1, '2023-08-15 05:13:20');
 
 -- --------------------------------------------------------
 
@@ -219,7 +221,7 @@ CREATE TABLE `tb_keluarga` (
 --
 
 INSERT INTO `tb_keluarga` (`id_keluarga`, `no_kk`, `nik`, `nama_keluarga`, `kepala_keluarga`, `tl_keluarga`, `lahir_keluarga`, `alamat_keluarga`, `telp_keluarga`, `status_kb`, `keterangan_kb`, `alasan_kb`, `jumlah_anak`, `kecamatan_id`, `kelurahan_id`) VALUES
-(1, '7865466789006121', '6865466789067435', 'Arfina', 'Adit', 'Banjarmasin', '2001-08-08', 'Jl. Hksn', '086374673647', 'KB', 'KB', '', 4, 1, 1),
+(1, '7865466789006121', '6865466789067435', 'Arfina', 'Adit', 'Banjarmasin', '2001-08-08', 'Jl. Hksn', '086374673647', 'Tidak KB', 'Hamil', 'Sedang Hamil', 4, 1, 1),
 (2, '1237865411789556', '6826378456729000', 'Meyii', 'Rizky', 'Banjarmasinn', '2003-03-04', 'Komp. Amd', '97876767565999', 'KB', 'KB', '', 4, 1, 1),
 (3, '6876514298000023', '6287655437865001', 'Yaya', 'Kikyw', 'Banjarmasin', '2000-07-20', 'Kayutangi 2', '087248248', 'KB', 'KB', '', 0, 2, 2),
 (4, '6799987600200323', '6872998765228950', 'nyai', 'Adit', 'Banjarmasin', '2000-03-03', 'Komp. Herlina', '08967345534', 'KB', 'KB', '', 3, 1, 3),
@@ -233,7 +235,8 @@ INSERT INTO `tb_keluarga` (`id_keluarga`, `no_kk`, `nik`, `nama_keluarga`, `kepa
 (12, '6818876909872234', '6309900210610000', 'Rini', 'Rino', 'Banjarmasin', '1998-03-19', 'Jl. Antasan Besar', '089783656372', 'KB', 'KB', '', 2, 3, 7),
 (13, '6828467257468006', '6398754893211003', 'Asma', 'Asmi', 'Banjarmasin', '1999-10-02', 'Jl. Antasan Besar', '89653453153', 'KB', 'KB', '', 1, 3, 7),
 (14, '6856786539003874', '6347858475847854', 'Fira', 'Firo', 'Banjarmasin', '1994-05-09', 'Mantuil', '086524323548', 'KB', 'KB', '', 2, 4, 9),
-(15, '6874658938563001', '6378143763246005', 'Uji', 'Ujang', 'Banjarmasin', '1992-11-19', 'Benua Anyar', '098237482345', 'KB', 'KB', '', 3, 5, 8);
+(15, '6874658938563001', '6378143763246005', 'Uji', 'Ujang', 'Banjarmasin', '1992-11-19', 'Benua Anyar', '098237482345', 'KB', 'KB', '', 3, 5, 8),
+(16, '6767673757454675', '5748758475847857', 'Nisa', 'Niso', 'Banjarmasin', '2000-08-04', 'Jl. Hksn', '08976565656', 'KB', 'KB', '', 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -270,7 +273,7 @@ INSERT INTO `tb_kelurahan` (`id_kelurahan`, `kecamatan_id`, `nama_kelurahan`) VA
 
 CREATE TABLE `tb_obat` (
   `id_obat` int(11) NOT NULL,
-  `jenis_obat` enum('MKJP','Non-MKJP') NOT NULL,
+  `jenis_obat` varchar(50) NOT NULL,
   `nama_obat` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -279,9 +282,13 @@ CREATE TABLE `tb_obat` (
 --
 
 INSERT INTO `tb_obat` (`id_obat`, `jenis_obat`, `nama_obat`) VALUES
-(2, 'Non-MKJP', 'Suntik'),
-(4, 'Non-MKJP', 'Kondom'),
-(5, 'Non-MKJP', 'Pil KB');
+(2, 'Pil-KB', 'Marvelon'),
+(4, 'Kondom', 'Durex'),
+(5, 'Pil-KB', 'Yasmin'),
+(6, 'Suntik', 'Depo-Provera (medroxyprogesterone)'),
+(7, 'Pil-KB', 'Diane-35'),
+(8, 'Pil-KB', 'Microgynon'),
+(9, 'Pil-KB', 'Logynon');
 
 -- --------------------------------------------------------
 
@@ -341,12 +348,12 @@ CREATE TABLE `tb_stok` (
 --
 
 INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_akhir`, `tgl_awal`, `tgl_akhir`, `stok_stamp`) VALUES
-(1, 1, 2, 9600, 8964, '2023-04-20', '2024-04-20', '2023-04-18 04:28:47'),
+(1, 1, 2, 9600, 8962, '2023-04-20', '2024-04-20', '2023-04-18 04:28:47'),
 (2, 1, 5, 7800, 7795, '2023-04-20', '2024-04-20', '2023-04-20 06:27:41'),
 (3, 2, 5, 9000, 8994, '2023-04-24', '2024-04-24', '2023-04-24 12:55:06'),
 (4, 2, 4, 8000, 7996, '2023-04-24', '2024-04-24', '2023-04-24 12:55:44'),
 (6, 1, 4, 400, 399, '2026-05-10', '2027-05-10', '2026-05-10 03:21:20'),
-(7, 1, 2, 3000, 3000, '2023-06-15', '2024-06-15', '2023-07-20 07:02:41'),
+(7, 1, 7, 3000, 3000, '2023-06-15', '2024-06-15', '2023-07-20 07:02:41'),
 (8, 3, 2, 8000, 7999, '2023-07-27', '2024-07-27', '2023-07-27 14:41:17'),
 (9, 3, 5, 6000, 5999, '2023-07-27', '2024-07-27', '2023-07-27 14:41:54'),
 (10, 4, 2, 8000, 7999, '2023-07-01', '2024-07-01', '2023-07-28 03:32:15'),
@@ -361,7 +368,7 @@ INSERT INTO `tb_stok` (`id_stok`, `kecamatan_id`, `obat_id`, `stok_awal`, `stok_
 
 CREATE TABLE `tb_user` (
   `id_user` int(11) NOT NULL,
-  `nip` int(11) NOT NULL,
+  `nip` bigint(20) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `telepon` varchar(15) NOT NULL,
   `wilayah` varchar(255) NOT NULL,
@@ -376,7 +383,8 @@ CREATE TABLE `tb_user` (
 
 INSERT INTO `tb_user` (`id_user`, `nip`, `nama`, `telepon`, `wilayah`, `username`, `password`, `roles`) VALUES
 (1, 1, 'Admin', '', '', 'admin', 'admin', 'ADMIN'),
-(2, 877888888, 'as', '76767676765', 'Banjarmasin Tengah', 'as', 'as', 'KABID');
+(2, 76868786867686867, 'KaBid', '76767676765', '', 'kabid', 'kabid', 'KABID'),
+(3, 787348786547, 'PKB Banjarmasin Utara', '08897676775', 'Banjarmasin Utara', 'pkbutara', 'pkbutara', 'PKB');
 
 --
 -- Indexes for dumped tables
@@ -465,8 +473,8 @@ ALTER TABLE `tb_stok`
 --
 ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `nip` (`nip`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `nip` (`nip`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -494,7 +502,7 @@ ALTER TABLE `tb_jenisinv`
 -- AUTO_INCREMENT untuk tabel `tb_kb`
 --
 ALTER TABLE `tb_kb`
-  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_kb` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kecamatan`
@@ -506,7 +514,7 @@ ALTER TABLE `tb_kecamatan`
 -- AUTO_INCREMENT untuk tabel `tb_keluarga`
 --
 ALTER TABLE `tb_keluarga`
-  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_keluarga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_kelurahan`

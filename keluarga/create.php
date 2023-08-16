@@ -198,6 +198,23 @@
         </div>
     </section>
 
+    <script>
+        let kk = document.getElementById('no-kk')
+        let nik = document.getElementById('nik')
+
+        kk.addEventListener('input', function() {
+            if(this.value.length > 16){
+                this.value = this.value.slice(0, 16)
+            }
+        })
+
+        nik.addEventListener('input', function() {
+            if(this.value.length > 16){
+                this.value = this.value.slice(0, 16)
+            }
+        })
+    </script>
+
 <?php 
     include '../utilities/footer.php';
     mysqli_close($konek);

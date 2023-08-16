@@ -43,6 +43,7 @@
                     <thead>
                         <tr>
                             <th>Obat/Alat</th>
+                            <th>Jenis Obat/Alat</th>
                             <th>Stok Awal</th>
                             <th>Sisa Stok</th>
                             <th>Tanggal di Stok</th>
@@ -58,6 +59,7 @@
                     echo"
                         <tr>
                             <td>$row[nama_obat]</td>
+                            <td>$row[jenis_obat]</td>
                             <td>$row[stok_awal]</td>
                             <td>$row[stok_akhir]</td>
                             <td>".date('d-m-Y', strtotime($row['tgl_awal']))." </td>

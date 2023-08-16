@@ -42,7 +42,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    $query = mysqli_query($konek, "SELECT * FROM tb_obat ORDER BY jenis_obat = 'Non-MKJP' DESC");
+                    $query = mysqli_query($konek, "SELECT * FROM tb_obat ORDER BY jenis_obat ASC");
                     $no = 0;
                     while ($row = $query->fetch_array()) {
                         $no++;

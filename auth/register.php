@@ -82,7 +82,7 @@
                                     <div class="col-md-6 col-12">
                                         <fieldset class="form-group">
                                             <label for="wilayah">Wilayah</label>
-                                            <select class="form-select" autocomplete="off" name="wilayah" id="basicSelect" required>
+                                            <select class="form-select" autocomplete="off" name="wilayah" id="basicSelect">
                                                 <option value="" selected hidden>Pilih Wilayah</option>
                                                 <?php
                                                 $getKecamatan = getKecamatan();
@@ -129,6 +129,17 @@
             </div>
         </div>
     </section>
+
+    <script>
+        let nip = document.getElementById('nip')
+
+        nip.addEventListener('input', function() {
+            if(this.value.length > 20){
+                this.value = this.value.slice(0, 20)
+            }
+        })
+
+    </script>
 
 <?php 
     include '../utilities/footer.php';

@@ -68,13 +68,8 @@
                                             <label>Jenis Obat</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="jenis" id="basicSelect" required>
-                                                    <option value="" selected hidden>Pilih Salah Satu</option>
-                                                    <option value="Non-MKJP">Non-MKJP</option>
-                                                    <option value="MKJP">MKJP</option>
-                                                </select>
-                                            </fieldset>
+                                            <input type="text" id="obat" class="form-control" name="jenis"
+                                                placeholder="Nama Obat/Alat" autocomplete="off" required>
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" name="submit" class="btn btn-primary me-1 mb-1">Tambah</button>

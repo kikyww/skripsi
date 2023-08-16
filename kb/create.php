@@ -135,7 +135,7 @@
                                                 $('#tgl').on('change', function() {
                                                     var selectedDate = $(this).val();
                                                     var newDate = new Date(selectedDate);
-                                                    newDate.setMonth(newDate.getMonth() + 6);
+                                                    newDate.setMonth(newDate.getMonth() + 3);
                                                     var formattedDate = newDate.toISOString().substr(0, 10);
                                                     $('#enambulan').val(formattedDate);
                                                 });

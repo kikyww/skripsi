@@ -126,6 +126,17 @@
         </div>
     </section>
 
+    <script>
+        let nip = document.getElementById('nip')
+
+        nip.addEventListener('input', function() {
+            if(this.value.length > 20){
+                this.value = this.value.slice(0, 20)
+            }
+        })
+
+    </script>
+
 <?php 
     include '../utilities/footer.php';
     mysqli_close($konek);
